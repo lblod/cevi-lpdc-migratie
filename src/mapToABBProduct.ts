@@ -80,12 +80,11 @@ export function mapProcedure(procedure: string | undefined): Procedure | undefin
     return procedure ? new Procedure(uuid(), procedure) : undefined;
 }
 
-function mapInfoUrlsToMoreInfo(infoUrls?: Url[]): Website[] | undefined {
+export function mapInfoUrlsToMoreInfo(infoUrls?: Url[]): Website[] | undefined {
     if (infoUrls && infoUrls.length > 0) {
         return infoUrls.map((infoUrl: Url) => new Website(
             uuid(),
             infoUrl.title,
-            undefined,
             infoUrl.location
         ))
     }

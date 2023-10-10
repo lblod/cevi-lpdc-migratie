@@ -4,11 +4,11 @@ import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
     mapAmountToApplyToCost,
-    mapConditionsToRequirement, mapProcedure,
+    mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapProcedure,
     mapProductType,
     mapToABBProduct
 } from "../src/mapToABBProduct";
-import {ProductType} from "../src/types";
+import {ProductType, Url} from "../src/types";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -179,7 +179,7 @@ describe("map xml to ceviproduct", () => {
 describe("map ceviProduct to abbProduct", () => {
 
     test('map minimal item from xml to ceviProduct and to abbProduct', () => {
-       //TODO LPDC-718: create a minimal item from xml (almost optional) and test only the really required fields here
+        //TODO LPDC-718: create a minimal item from xml (almost optional) and test only the really required fields here
     });
 
     test('map full item from xml to ceviProduct and to abbProduct', () => {
@@ -209,6 +209,16 @@ describe("map ceviProduct to abbProduct", () => {
             },
             exception: `&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;\r\n&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;\r\n&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
             additionalDescription: `&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;\r\n&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;`,
+            moreInfo: [
+                {
+                    title: "Inburgering.be",
+                    location: "http://www.inburgering.be",
+                },
+                {
+                    title: "Contactgegevens voor een inburgeringstraject",
+                    location: "https://integratie-inburgering.be/contact",
+                }
+            ],
             targetAudience: [],
             keywords: [],
             theme: [],
@@ -232,9 +242,6 @@ describe("map ceviProduct to abbProduct", () => {
                     }
                 }
             ],
-            procedure: {
-                description: "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;"
-            },
             createdBy: gemeente_URL,
             status: "CONCEPT"
         })
@@ -354,5 +361,29 @@ describe("map ceviProduct to abbProduct", () => {
             });
         });
     });
+
+    describe('mapInfoUrlsToMoreInfo', () => {
+
+        test('Missing InfoUrls, results in No URL', () => {
+            const result = mapInfoUrlsToMoreInfo(undefined);
+            expect(result).toBeUndefined();
+        });
+
+        test('Maps InfoUrls to URLs', () => {
+            const infoUrl1: Url = {sequenceNumber: "ignored", title: "title1", location: "location1"};
+            const infoUrl2: Url = {sequenceNumber: "ignoredagain", title: "title2", location: "location2"};
+            const result = mapInfoUrlsToMoreInfo([infoUrl1, infoUrl2]);
+            expect(result).toMatchObject([
+                {
+                    title: "title1",
+                    location: "location1"
+                },
+                {
+                    title: "title2",
+                    location: "location2"
+                }]);
+        });
+
+    })
 
 });
