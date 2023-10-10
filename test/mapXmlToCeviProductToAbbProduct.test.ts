@@ -1,8 +1,9 @@
-import {expect, test} from 'vitest';
+import {expect, test, describe} from 'vitest';
 import {beforeAll} from "vitest";
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
-import {mapToABBProduct} from "../src/mapToABBProduct";
+import {mapProductType, mapToABBProduct} from "../src/mapToABBProduct";
+import {ProductType} from "../src/types";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -32,7 +33,9 @@ test('map xml to ceviProduct', async () => {
             id: "fabba05c-ad35-48e3-ba03-a8947852c38e",
             value: "Onderneming",
         }],
-        {id: "0", value: "Algemeen"},
+        {
+            id: "39376414-2a3a-4c64-8e26-93b3048c41ef",
+            value: "Advies en begeleiding",},
         [{
             id: "403050",
             value: "Horeca",
@@ -162,14 +165,20 @@ test('map xml to ceviProduct', async () => {
 });
 
 test('map ceviProduct to abbProduct', () => {
-    const abbProducts = ceviProducts.map((ceviProduct: CeviProduct) => mapToABBProduct(ceviProduct, new Date(), gemeente_URL));
+    const migrationDate = new Date();
+    const abbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL);
 
-    expect(abbProducts[0]).toMatchObject({
-        targetAudience: [],
-        keywords: [],
+    expect(abbProduct).toMatchObject({
+        productId: undefined,
+        //TODO LPDC-718: hoe de product Id te koppelen?
+        //TODO LPDC-718: hoe de link naar het ipdc concept te koppelen?
         title: "Levenloos geboren kind/foetus",
         description: "&lt;p&gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&lt;/p&gt;\r\n&lt;p&gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&lt;/p&gt;",
-        productId: undefined,
+        startDate: "2023-09-10",
+        endDate: "2023-10-12",
+        productType: "AdviesBegeleiding",
+        targetAudience: [],
+        keywords: [],
         theme: [],
         competentAuthorityLevel: ["Lokaal"],
         competentAuthority: [gemeente_URL],
@@ -198,6 +207,60 @@ test('map ceviProduct to abbProduct', () => {
         status: "CONCEPT"
     })
 })
+
+describe('mapProductType', () => {
+
+    test('Advies en begeleiding', () => {
+       const ceviProductType: ProductType = {id: "ignored", value: "Advies en begeleiding"};
+       expect(mapProductType(ceviProductType)).toEqual("AdviesBegeleiding");
+    });
+
+    test('Algemeen', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Algemeen"};
+        expect(mapProductType(ceviProductType)).toBeUndefined();
+    });
+
+    test('Beschikbaar stellen van infrastructuur en materiaal', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Beschikbaar stellen van infrastructuur en materiaal"};
+        expect(mapProductType(ceviProductType)).toEqual("InfrastructuurMateriaal");
+    });
+
+    test('Bewijs', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Bewijs"};
+        expect(mapProductType(ceviProductType)).toEqual("Bewijs");
+    });
+
+    test('Digitaal sociaal huis', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Digitaal sociaal huis"};
+        expect(mapProductType(ceviProductType)).toBeUndefined();
+    });
+
+    test('Financieel voordeel', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Financieel voordeel"};
+        expect(mapProductType(ceviProductType)).toEqual("FinancieelVoordeel");
+    });
+
+    test('Financiële verplichting', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Financiële verplichting"};
+        expect(mapProductType(ceviProductType)).toEqual("FinancieleVerplichting");
+    });
+
+    test('Infrastructuur en materiaal', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Infrastructuur en materiaal"};
+        expect(mapProductType(ceviProductType)).toEqual("InfrastructuurMateriaal");
+    });
+
+    test('Toelating', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Toelating"};
+        expect(mapProductType(ceviProductType)).toEqual("Toelating");
+    });
+
+    test('Something otherwise unknown', () => {
+        const ceviProductType: ProductType = {id: "ignored", value: "Something otherwise unknown"};
+        expect(mapProductType(ceviProductType)).toBeUndefined();
+    });
+
+});
 
 // test('mapToABBProduct from a cevi product with title "This is a test cevi product" should generate an abb product with the same title', () => {
 //     const ceviProduct: CeviProduct = new CeviProduct(undefined, undefined, undefined, 'This is a test cevi product');

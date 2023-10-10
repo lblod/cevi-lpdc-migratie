@@ -18,12 +18,10 @@ import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
-export function mapToABBProduct(product: CeviProduct, timestamp: Date, lokaalBestuur: string): AbbProduct {
+export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuur: string): AbbProduct {
 
     const targetAudience: TargetAudience[] = mapTargetGroupsToTargetAudience(product.targetGroups);
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
-    const title: string | undefined = product.title ? product.title : undefined;
-    const description: string | undefined = product.description ? product.description : undefined;
     const additionalDescription: string | undefined = product.additionalInfo ? product.additionalInfo : undefined;
     const exception: string | undefined = product.exceptions ? product.exceptions : undefined;
     const theme: Theme[] = mapCeviThemesToTheme(product.themes);
@@ -43,12 +41,12 @@ export function mapToABBProduct(product: CeviProduct, timestamp: Date, lokaalBes
         `http://data.lblod.info/id/public-service/${uuid()}`,
         targetAudience,
         uuid(),
-        timestamp,
-        timestamp,
+        migrationDate,
+        migrationDate,
         contactPoints,
         keywords,
-        title,
-        description,
+        product.title,
+        product.description,
         additionalDescription,
         exception,
         undefined,
@@ -59,8 +57,8 @@ export function mapToABBProduct(product: CeviProduct, timestamp: Date, lokaalBes
         executingAuthority,
         undefined,
         productType,
-        undefined,
-        undefined,
+        product.startDate,
+        product.endDate,
         productId,
         undefined,
         undefined,
@@ -216,12 +214,12 @@ function mapTargetGroupsToTargetAudience(ceviTargetGroups: TargetGroup[]): Targe
         .filter((targetAudience): targetAudience is TargetAudience => !!targetAudience);
 }
 
-function mapProductType(ceviProductType: ProductType): PublicServiceType | undefined {
+export function mapProductType(ceviProductType: ProductType): PublicServiceType | undefined {
     const publicServiceTypeMapping: Record<string, PublicServiceType> = {
         'Advies en begeleiding': PublicServiceType.AdviesBegeleiding,
         'Beschikbaar stellen van infrastructuur en materiaal': PublicServiceType.InfrastructuurMateriaal,
         'Bewijs': PublicServiceType.Bewijs,
-        'Financieel Voordeel': PublicServiceType.FinancieelVoordeel,
+        'Financieel voordeel': PublicServiceType.FinancieelVoordeel,
         'Financiële verplichting': PublicServiceType.FinancieleVerplichting,
         'Infrastructuur en materiaal': PublicServiceType.InfrastructuurMateriaal,
         'Toelating': PublicServiceType.Toelating,
