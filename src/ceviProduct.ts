@@ -13,80 +13,42 @@ import {
 } from './types';
 
 export class CeviProduct {
-    id: string;
-    source: Source;
-    targetGroups: TargetGroup[];
-    productType: ProductType;
-    themes: CeviTheme[];
-    deliveringDepartments: Department[];
-    authorisedDepartments: Department[];
-    keywords: Keyword[];
-    name?: string;
-    title?: string;
-    description?: string;
-    startDate?: string;
-    endDate?: string;
-    conditions?: string;
-    bringToApply?: string;
-    legalText?: string;
-    amountToApply?: string;
-    procedure?: string;
-    exceptions?: string;
-    additionalInfo?: string;
-    infoUrls?: Url[];
-    forms?: Form[];
-    enrichedLinks?: string;
-    defaultTheme?: DefaultTheme;
-    relatedProducts?: ProductReference;
-    attachments?: string;
-    geographicalApplicationAreas?: {
-        federalApplicationAreas?: string,
-        regionalApplicationAreas?: string,
-        provincialApplicationAreas?: string,
-        municipalApplicationAreas?: string,
-    }
-    clusters?: string;
-    uploadedAttachments?: UploadedAttachment[];
-    timestampLastUpdate?: string;
-    isInternal?: string;
 
-
-    constructor(id: string, source: Source, targetGroups: TargetGroup[], productType: ProductType, themes: CeviTheme[], deliveringDepartments: Department[], authorisedDepartments: Department[], keywords: Keyword[], name?: string, title?: string, description?: string, startDate?: string, endDate?: string, conditions?: string, bringToApply?: string, legalText?: string, amountToApply?: string, procedure?: string, exceptions?: string, additionalInfo?: string, infoUrls?: Url[], forms?: Form[], enrichedLinks?: string, defaultTheme?: DefaultTheme, relatedProducts?: ProductReference, attachments?: string, geographicalApplicationAreas?: {
-        federalApplicationAreas?: string;
-        regionalApplicationAreas?: string;
-        provincialApplicationAreas?: string;
-        municipalApplicationAreas?: string
-    }, clusters?: string, uploadedAttachments?: UploadedAttachment[], timestampLastUpdate?: string, isInternal?: string) {
-        this.id = id;
-        this.source = source;
-        this.targetGroups = targetGroups;
-        this.productType = productType;
-        this.themes = themes;
-        this.deliveringDepartments = deliveringDepartments;
-        this.authorisedDepartments = authorisedDepartments;
-        this.keywords = keywords;
-        this.name = name;
-        this.title = title;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.conditions = conditions;
-        this.bringToApply = bringToApply;
-        this.legalText = legalText;
-        this.amountToApply = amountToApply;
-        this.procedure = procedure;
-        this.exceptions = exceptions;
-        this.additionalInfo = additionalInfo;
-        this.infoUrls = infoUrls;
-        this.forms = forms;
-        this.enrichedLinks = enrichedLinks;
-        this.defaultTheme = defaultTheme;
-        this.relatedProducts = relatedProducts;
-        this.attachments = attachments;
-        this.geographicalApplicationAreas = geographicalApplicationAreas;
-        this.clusters = clusters;
-        this.uploadedAttachments = uploadedAttachments;
-        this.timestampLastUpdate = timestampLastUpdate;
-        this.isInternal = isInternal;
+    constructor(public id: string,
+                public source: Source,
+                public targetGroups: TargetGroup[],
+                public productType: ProductType,
+                public themes: CeviTheme[],
+                public deliveringDepartments: Department[],
+                public authorisedDepartments: Department[],
+                public keywords: Keyword[],
+                public name?: string,
+                public title?: string,
+                public description?: string,
+                public startDate?: string,
+                public endDate?: string,
+                public conditions?: string,
+                public bringToApply?: string,
+                public legalText?: string,
+                public amountToApply?: string,
+                public procedure?: string,
+                public exceptions?: string,
+                public additionalInfo?: string,
+                public infoUrls?: Url[],
+                public forms?: Form[],
+                public enrichedLinks?: string,
+                public defaultTheme?: DefaultTheme,
+                public relatedProducts?: ProductReference,
+                public attachments?: string,
+                public geographicalApplicationAreas?: {
+                    federalApplicationAreas?: string;
+                    regionalApplicationAreas?: string;
+                    provincialApplicationAreas?: string;
+                    municipalApplicationAreas?: string
+                },
+                public clusters?: string,
+                public uploadedAttachments?: UploadedAttachment[],
+                public timestampLastUpdate?: string,
+                public isInternal?: string) {
     }
 }

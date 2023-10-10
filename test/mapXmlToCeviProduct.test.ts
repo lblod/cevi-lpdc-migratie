@@ -3,13 +3,15 @@ import {beforeAll} from "vitest";
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {mapToABBProduct} from "../src/mapToABBProduct";
-import {AbbProduct} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
-let abbProducts: AbbProduct[] = [];
+
+const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af";
+
 beforeAll(async () => {
-    ceviProducts = await readCeviXml('src/resources/LPDC_Stekene.xml');
-    abbProducts = ceviProducts.map((ceviProduct: CeviProduct) => mapToABBProduct(ceviProduct, new Date(), 'Stekene'));
+    ceviProducts = await readCeviXml('src/resources/LPDC_CEVI.xml');
+
+
 })
 
 test('The mapXmlToCeviProduct function should generate as 2nd instance an object with id 210001', () => {
@@ -95,6 +97,8 @@ test('map xml to ceviProduct', async () => {
 });
 
 test('map ceviProduct to abbProduct', () => {
+    const abbProducts = ceviProducts.map((ceviProduct: CeviProduct) => mapToABBProduct(ceviProduct, new Date(), gemeente_URL));
+
     expect(abbProducts[0]).toMatchObject({
         targetAudience: [],
         keywords: [],
@@ -103,9 +107,9 @@ test('map ceviProduct to abbProduct', () => {
         productId: undefined,
         theme: [],
         competentAuthorityLevel: ["Lokaal"],
-        competentAuthority: ["Stekene (Gemeente)"],
+        competentAuthority: [gemeente_URL],
         executingAuthorityLevel: ["Lokaal"],
-        executingAuthority: ["Stekene (Gemeente)"],
+        executingAuthority: [gemeente_URL],
         contactPoints: [
             {
                 url: "www.stekene.be",
@@ -125,7 +129,7 @@ test('map ceviProduct to abbProduct', () => {
         procedure: {
             description: "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;"
         },
-        createdBy: "Stekene",
+        createdBy: gemeente_URL,
         status: "CONCEPT"
     })
 })

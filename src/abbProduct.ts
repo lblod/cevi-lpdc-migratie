@@ -5,72 +5,40 @@ import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
 
 export class AbbProduct {
-    id: string;
-    targetAudience: TargetAudience[];
-    uuid: string;
-    created: Date;
-    modified: Date;
-    contactPoints: ContactPoint[];
-    keywords?: string[];
-    title?: string;
-    description?: string;
-    additionalDescription?: string;
-    exception?: string;
-    regulation?: string;
-    theme?: Theme[];
-    competentAuthorityLevel?: CompetentAuthorityLevel[];
-    competentAuthority?: string[];
-    executingAuthorityLevel?: ExecutingAuthorityLevel[];
-    executingAuthority?: string[];
-    resourceLanguage?: ResourceLanguage[];
-    productType?: PublicServiceType;
-    startDate?: string;
-    endDate?: string;
-    productId?: string;
-    yourEuropeCategory?: YourEuropeCategory[];
-    publicationMedium?: PublicationMedium;
-    requirement?: Requirement;
-    procedure?: Procedure;
-    moreInfo?: Website[];
-    cost?: Cost[];
-    financialAdvantage?: string;
-    spatial?: string;
-    createdBy?: string;
-    status?: StatusPublicService;
 
-    constructor(id: string, targetAudience: TargetAudience[], uuid: string, created: Date, modified: Date, contactPoints: ContactPoint[], keywords: string[], title?: string, description?: string, additionalDescription?: string, exception?: string, regulation?: string, theme?: Theme[], competentAuthorityLevel?: CompetentAuthorityLevel[], competentAuthority?: string[], executingAuthorityLevel?: ExecutingAuthorityLevel[], executingAuthority?: string[], resourceLanguage?: ResourceLanguage[], productType?: PublicServiceType, startDate?: string, endDate?: string, productId?: string, yourEuropeCategory?: YourEuropeCategory[], publicationMedium?: PublicationMedium, requirement?: Requirement, procedure?: Procedure, moreInfo?: Website[], cost?: Cost[], financialAdvantage?: string, spatial?: string, createdBy?: string, status?: StatusPublicService) {
-        this.id = id;
-        this.targetAudience = targetAudience;
-        this.uuid = uuid;
-        this.created = created;
-        this.modified = modified;
-        this.contactPoints = contactPoints;
-        this.keywords = keywords;
-        this.title = title;
-        this.description = description;
-        this.additionalDescription = additionalDescription;
-        this.exception = exception;
-        this.regulation = regulation;
-        this.theme = theme;
-        this.competentAuthorityLevel = competentAuthorityLevel;
-        this.competentAuthority = competentAuthority;
-        this.executingAuthorityLevel = executingAuthorityLevel;
-        this.executingAuthority = executingAuthority;
-        this.resourceLanguage = resourceLanguage;
-        this.productType = productType;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.productId = productId;
-        this.yourEuropeCategory = yourEuropeCategory;
-        this.publicationMedium = publicationMedium;
-        this.requirement = requirement;
-        this.procedure = procedure;
-        this.moreInfo = moreInfo;
-        this.cost = cost;
-        this.financialAdvantage = financialAdvantage;
-        this.spatial = spatial;
-        this.createdBy = createdBy;
-        this.status = status;
+    constructor(
+        public id: string,
+        public targetAudience: TargetAudience[],
+        public uuid: string,
+        public created: Date,
+        public modified: Date,
+        public contactPoints: ContactPoint[],
+        public keywords: string[],
+        public title?: string | undefined,
+        public description?: string | undefined,
+        public additionalDescription?: string | undefined,
+        public exception?: string | undefined,
+        public regulation?: undefined,
+        public theme?: Theme[],
+        public competentAuthorityLevel?: CompetentAuthorityLevel[],
+        public competentAuthority?: string[],
+        public executingAuthorityLevel?: ExecutingAuthorityLevel[],
+        public executingAuthority?: string[],
+        public resourceLanguage?: undefined,
+        public productType?: PublicServiceType | undefined,
+        public startDate?: undefined,
+        public endDate?: undefined,
+        public productId?: string | undefined,
+        public yourEuropeCategory?: undefined,
+        public publicationMedium?: undefined,
+        public requirement?: Requirement | undefined,
+        public procedure?: Procedure | undefined,
+        public moreInfo?: Website[] | undefined,
+        public cost?: Cost[] | undefined,
+        public financialAdvantage?: undefined,
+        public spatial?: undefined,
+        public createdBy?: string,
+        public status?: StatusPublicService) {
     }
 }
 

@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "lib": ["es2021"],
-    "allowJs": true,
+    "allowJs": false,
     "outDir": "build",
     "rootDir": "src",
     "strict": true,

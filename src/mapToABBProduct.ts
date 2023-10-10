@@ -311,7 +311,7 @@ function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthori
         } else if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Federaal) {
             return 'Federale overheidsdiensten';
         } else {
-            return `${lokaalBestuur} (Gemeente)`;
+            return lokaalBestuur;
         }
     })
 }
@@ -338,14 +338,14 @@ function mapAuthorisedDepartmentsToCompetentAuthorityLevel(ceviAuthorisedDepartm
         .map((ceviAuthorisedDepartment: Department) => mapAuthorisedDepartmentToCompetentAuthorityLevel(ceviAuthorisedDepartment));
 }
 
-function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuur: string): string[] {
+function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuur: string): string [] {
     return abbCompetentAuthorityLevel.map((abbCompetentAuthorityLevel: CompetentAuthorityLevel) => {
         if (abbCompetentAuthorityLevel === CompetentAuthorityLevel.Vlaams) {
             return 'Administratieve diensten van de Vlaamse overheid';
         } else if (abbCompetentAuthorityLevel === CompetentAuthorityLevel.Federaal) {
             return 'Federale overheidsdiensten';
         } else {
-            return `${lokaalBestuur} (Gemeente)`;
+            return lokaalBestuur;
         }
     })
 }
