@@ -34,7 +34,7 @@ export class AbbProduct {
         public requirement: Requirement | undefined,
         public procedure: Procedure | undefined,
         public moreInfo: Website[] | undefined,
-        public cost: Cost[] | undefined,
+        public cost: Cost | undefined,
         public financialAdvantage: undefined,
         public spatial: undefined,
         public createdBy: string,

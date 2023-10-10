@@ -32,7 +32,6 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
     const productId: string | undefined = mapProductId(product.id, product.source);
     const procedure: Procedure | undefined = mapProcedure(product.procedure);
     const moreInfo: Website[] | undefined = mapInfoUrlsToMoreInfo(product.infoUrls);
-    const cost: Cost | undefined = mapAmountToApplyToCost(product.amountToApply);
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${uuid()}`,
@@ -62,7 +61,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         mapConditionsToRequirement(product.conditions, product.bringToApply),
         procedure,
         moreInfo,
-        cost,
+        mapAmountToApplyToCost(product.amountToApply),
         undefined,
         undefined,
         lokaalBestuur,
