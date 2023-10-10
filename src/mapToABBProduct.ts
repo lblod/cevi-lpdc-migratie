@@ -20,7 +20,6 @@ import {ContactPointAddress} from "./contactPointAddress";
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuur: string): AbbProduct {
     const targetAudience: TargetAudience[] = mapTargetGroupsToTargetAudience(product.targetGroups);
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
-    const additionalDescription: string | undefined = product.additionalInfo ? product.additionalInfo : undefined;
     const theme: Theme[] = mapCeviThemesToTheme(product.themes);
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuur);
@@ -40,7 +39,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         keywords,
         product.title,
         product.description,
-        additionalDescription,
+        product.additionalInfo,
         product.exceptions,
         undefined,
         theme,
