@@ -80,16 +80,8 @@ export function mapConditionsToRequirement(conditions: string | undefined, bring
     return undefined;
 }
 
-function mapProcedure(procedure?: string): Procedure | undefined {
-    if (procedure) {
-        return new Procedure(
-            uuid(),
-            undefined,
-            procedure,
-            undefined
-        )
-    }
-    return undefined;
+export function mapProcedure(procedure: string | undefined): Procedure | undefined {
+    return procedure ? new Procedure(uuid(), procedure) : undefined;
 }
 
 function mapInfoUrlsToMoreInfo(infoUrls?: Url[]): Website[] | undefined {
