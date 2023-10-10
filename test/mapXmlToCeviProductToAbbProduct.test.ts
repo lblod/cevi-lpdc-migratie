@@ -4,11 +4,11 @@ import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
     mapAmountToApplyToCost,
-    mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapProcedure,
+    mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapProcedureAndForms,
     mapProductType,
     mapToABBProduct
 } from "../src/mapToABBProduct";
-import {ProductType, Url} from "../src/types";
+import {Form, ProductType, Url} from "../src/types";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -189,7 +189,7 @@ describe("map ceviProduct to abbProduct", () => {
         expect(abbProduct).toMatchObject({
             productId: undefined,
             //TODO LPDC-718: hoe de product Id te koppelen?
-            //TODO LPDC-718: hoe de link naar het ipdc concept te koppelen?
+            //TODO LPDC-718: hoe de link naar het ipdc concept te koppelen? En is dat wel nodig ? Want soms worden nogal diepe links gemaakt van instantie naar concept ...
             title: "Levenloos geboren kind/foetus",
             description: "&lt;p&gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&lt;/p&gt;\r\n&lt;p&gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&lt;/p&gt;",
             startDate: "2023-09-10",
@@ -205,7 +205,13 @@ describe("map ceviProduct to abbProduct", () => {
                 description: `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`
             },
             procedure: {
-                description: "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;"
+                description: "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;",
+                websites: [
+                    {
+                        description: "Geboortepremie - Aanvraagformulier",
+                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684",
+                    }
+                ]
             },
             exception: `&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;\r\n&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;\r\n&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
             additionalDescription: `&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;\r\n&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;`,
@@ -333,7 +339,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     describe('mapAmountToApplyToCost', () => {
 
-        test('Missing AmountToApply, results in No Cost', () => {
+        test('Absent AmountToApply, results in No Cost', () => {
             const result = mapAmountToApplyToCost(undefined);
             expect(result).toBeUndefined();
         });
@@ -347,26 +353,78 @@ describe("map ceviProduct to abbProduct", () => {
 
     });
 
-    describe('mapProcedure', () => {
+    describe('mapProcedureAndForms', () => {
 
-        test('Missing Procedure, results in No Procedure', () => {
-            const result = mapProcedure(undefined);
+        test('Procedure and Forms Absent, results in No Procedure', () => {
+            const result = mapProcedureAndForms(undefined, undefined);
             expect(result).toBeUndefined();
         });
 
-        test('Procedure, results in a Procedure', () => {
-            const result = mapProcedure('procedure');
+        test('Procedure Present and Forms Absent, results in a Procedure without websites', () => {
+            const result = mapProcedureAndForms('procedure', undefined);
             expect(result).toMatchObject({
                 description: 'procedure'
             });
         });
+
+        test('Procedure Present and Forms Empty, results in a Procedure with empty', () => {
+            const result = mapProcedureAndForms('procedure', []);
+            expect(result).toMatchObject({
+                description: 'procedure',
+                websites: []
+            });
+        });
+
+        test('Procedure and Forms Present, results in a Procedure with websites', () => {
+            const form1: Form = {sequenceNumber: "ignored", title: "title1", location: "location1"};
+            const form2: Form = {sequenceNumber: "ignoredagain", title: "title2", location: "location2"};
+            const result = mapProcedureAndForms('procedure', [form1, form2]);
+            expect(result).toMatchObject({
+                description: 'procedure',
+                websites: [
+                    {
+                        description: "title1",
+                        location: "location1"
+                    },
+                    {
+                        description: "title2",
+                        location: "location2"
+                    }
+                ]
+            });
+        });
+
+        test('Procedure Absent and Forms Present, results in an empty Procedure with websites', () => {
+            const form1: Form = {sequenceNumber: "ignored", title: "title1", location: "location1"};
+            const form2: Form = {sequenceNumber: "ignoredagain", title: "title2", location: "location2"};
+            const result = mapProcedureAndForms(undefined, [form1, form2]);
+            expect(result).toMatchObject({
+                description: undefined,
+                websites: [
+                    {
+                        description: "title1",
+                        location: "location1"
+                    },
+                    {
+                        description: "title2",
+                        location: "location2"
+                    }
+                ]
+            });
+        });
+
     });
 
     describe('mapInfoUrlsToMoreInfo', () => {
 
-        test('Missing InfoUrls, results in No URL', () => {
+        test('Absent InfoUrls, results in No URL', () => {
             const result = mapInfoUrlsToMoreInfo(undefined);
             expect(result).toBeUndefined();
+        });
+
+        test('Empty InfoUrls, results in Empty URL', () => {
+            const result = mapInfoUrlsToMoreInfo([]);
+            expect(result).toEqual([]);
         });
 
         test('Maps InfoUrls to URLs', () => {

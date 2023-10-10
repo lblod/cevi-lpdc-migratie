@@ -11,7 +11,7 @@ import {
 } from "./abbProduct";
 import {Evidence, Requirement} from "./requirement";
 import {Procedure} from "./procedure";
-import {CeviTheme, Department, Keyword, ProductType, Source, TargetGroup, Url} from "./types";
+import {CeviTheme, Department, Form, Keyword, ProductType, Source, TargetGroup, Url} from "./types";
 import {Website} from "./website";
 import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
@@ -27,7 +27,6 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
     const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuur);
     const keywords: string[] = mapKeywords(product.keywords);
     const productId: string | undefined = mapProductId(product.id, product.source);
-    const moreInfo: Website[] | undefined = mapInfoUrlsToMoreInfo(product.infoUrls);
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${uuid()}`,
@@ -55,8 +54,8 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         undefined,
         undefined,
         mapConditionsToRequirement(product.conditions, product.bringToApply),
-        mapProcedure(product.procedure),
-        moreInfo,
+        mapProcedureAndForms(product.procedure, product.forms),
+        mapInfoUrlsToMoreInfo(product.infoUrls),
         mapAmountToApplyToCost(product.amountToApply),
         undefined,
         undefined,
@@ -76,19 +75,30 @@ export function mapConditionsToRequirement(conditions: string | undefined, bring
     return undefined;
 }
 
-export function mapProcedure(procedure: string | undefined): Procedure | undefined {
-    return procedure ? new Procedure(uuid(), procedure) : undefined;
-}
-
-export function mapInfoUrlsToMoreInfo(infoUrls?: Url[]): Website[] | undefined {
-    if (infoUrls && infoUrls.length > 0) {
-        return infoUrls.map((infoUrl: Url) => new Website(
+export function mapProcedureAndForms(procedure: string | undefined, forms: Form[] | undefined): Procedure | undefined {
+    if (procedure || forms) {
+        return new Procedure(
             uuid(),
-            infoUrl.title,
-            infoUrl.location
-        ))
+            procedure,
+            mapFormsToWebsite(forms));
     }
     return undefined;
+}
+
+function mapFormsToWebsite(forms: Form[] | undefined) : Website[] | undefined {
+    return forms?.map((form: Form) => new Website(
+        uuid(),
+        undefined,
+        form.title,
+        form.location));
+}
+
+export function mapInfoUrlsToMoreInfo(infoUrls: Url[] | undefined): Website[] | undefined {
+    return infoUrls?.map((infoUrl: Url) => new Website(
+        uuid(),
+        infoUrl.title,
+        undefined,
+        infoUrl.location));
 }
 
 export function mapAmountToApplyToCost(amountToApply?: string): Cost | undefined {

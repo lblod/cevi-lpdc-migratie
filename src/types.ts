@@ -16,8 +16,8 @@ type Url = {
 
 type Form = {
     sequenceNumber?: string,
-    title?: string,
-    location?: string
+    title: string,
+    location: string
 }
 
 type Keyword = {
