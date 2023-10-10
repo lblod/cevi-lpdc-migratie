@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://www.cevi.be/LPDC.Export.Webservice"><?xml version="1.0" encoding="utf-8"?>
+<ProductCatalog>
+  <Products>
+    <Product>
+      <Id>210043</Id>
+      <Source>
+        <Id>0</Id>
+        <Value>Cevi</Value>
+      </Source>
+      <Name>Doodgeboren kind/foetus - begraving</Name>
+      <Title>Levenloos geboren kind/foetus</Title>
+      <Description>&amp;lt;p&amp;gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&amp;lt;/p&amp;gt;</Description>
+      <StartDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></StartDate>
+      <EndDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></EndDate>
+      <ProductType>
+        <Id>0</Id>
+        <Value>Algemeen</Value>
+      </ProductType>
+      <Conditions></Conditions>
+      <BringToApply></BringToApply>
+      <LegalText></LegalText>
+      <AmountToApply></AmountToApply>
+      <Procedure>&amp;lt;p&amp;gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&amp;lt;/p&amp;gt;</Procedure>
+      <Exceptions></Exceptions>
+      <AdditionalInfo></AdditionalInfo>
+      <InfoUrls />
+      <Forms />
+      <EnrichedLinks />
+      <Keywords />
+      <TargetGroups />
+      <Themes />
+      <DefaultTheme>
+        <Id></Id>
+        <Value></Value>
+      </DefaultTheme>
+      <RelatedProducts />
+      <Attachments />
+      <DeliveringDepartments>
+        <Department>
+          <Id>210</Id>
+          <Name>Burgerzaken</Name>
+          <Addresses>
+            <Address>
+              <Id>40f3bed2-3cf4-4927-bbd5-7ceed31ae341</Id>
+              <Name>Stadionstraat 2</Name>
+              <Street>Stadionstraat</Street>
+              <HouseNumber>2</HouseNumber>
+              <BoxNumber></BoxNumber>
+              <ZipCode>9190</ZipCode>
+              <Municipality>Stekene</Municipality>
+              <Phone>03 790 02 12</Phone>
+              <Fax>03 790 02 10</Fax>
+              <Website>www.stekene.be</Website>
+              <Email>Bevolking&amp;amp;BS@stekene.be</Email>
+              <Facebook></Facebook>
+              <Twitter></Twitter>
+              <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Dinsdag&amp;amp;nbsp;&amp;amp;nbsp;08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Woensdag 08:30-12;00; 13:30-16:30;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Donderdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Vrijdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Zaterdag 09:00-12:00&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</OpeningHours>
+            </Address>
+          </Addresses>
+        </Department>
+      </DeliveringDepartments>
+      <AuthorisedDepartments>
+        <Department>
+          <Id>210</Id>
+          <Name>Burgerzaken</Name>
+          <Addresses>
+            <Address>
+              <Id>40f3bed2-3cf4-4927-bbd5-7ceed31ae341</Id>
+              <Name>Stadionstraat 2</Name>
+              <Street>Stadionstraat</Street>
+              <HouseNumber>2</HouseNumber>
+              <BoxNumber></BoxNumber>
+              <ZipCode>9190</ZipCode>
+              <Municipality>Stekene</Municipality>
+              <Phone>03 790 02 12</Phone>
+              <Fax>03 790 02 10</Fax>
+              <Website>www.stekene.be</Website>
+              <Email>Bevolking&amp;amp;BS@stekene.be</Email>
+              <Facebook></Facebook>
+              <Twitter></Twitter>
+              <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Dinsdag&amp;amp;nbsp;&amp;amp;nbsp;08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Woensdag 08:30-12;00; 13:30-16:30;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Donderdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Vrijdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Zaterdag 09:00-12:00&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</OpeningHours>
+            </Address>
+          </Addresses>
+        </Department>
+      </AuthorisedDepartments>
+      <GeographicalApplicationAreas>
+        <FederalApplicationAreas />
+        <RegionalApplicationAreas />
+        <ProvincialApplicationAreas />
+        <MunicipalApplicationAreas />
+      </GeographicalApplicationAreas>
+      <Clusters />
+      <UploadedAttachments />
+      <TimeStampLastUpdate>2020-10-02T13:21:31.7</TimeStampLastUpdate>
+      <IsInternal>false</IsInternal>
+    </Product>
+    <Product>
+      <Id>210001</Id>
+      <Source>
+        <Id>0</Id>
+        <Value>Cevi</Value>
+      </Source>
+      <Name>Wettigen handtekening</Name>
+      <Title>Wettigen handtekening</Title>
+      <Description>&amp;lt;div&amp;gt;
+&amp;lt;p&amp;gt;Het wettigen/legaliseren van een handtekening is een daad waarbij een overheid de echtheid van een handtekening schriftelijk bevestigt.&amp;lt;/p&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;p&amp;gt;De burgemeester of zijn gemachtigde gaat na of de te legaliseren handtekening overeenstemt met die van de persoon van wie de identiteit wordt vastgesteld. Een handtekening op een wit vel papier kan nooit gelegaliseerd worden.&amp;lt;/p&amp;gt;</Description>
+      <StartDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></StartDate>
+      <EndDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></EndDate>
+      <ProductType>
+        <Id>0</Id>
+        <Value>Algemeen</Value>
+      </ProductType>
+      <Conditions>&amp;lt;ul&amp;gt;
+&amp;lt;li&amp;gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;</Conditions>
+      <BringToApply>&amp;lt;ul&amp;gt;
+&amp;lt;li&amp;gt;Het document waarop de handtekening staat en gewettigd moet worden&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;De identiteitskaart van diegene wiens handtekening gewettigd moet worden&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;</BringToApply>
+      <LegalText></LegalText>
+      <AmountToApply>&amp;lt;p&amp;gt;De wettiging van een handtekening is gratis.&amp;lt;/p&amp;gt;</AmountToApply>
+      <Procedure>&amp;lt;p&amp;gt;Het is niet mogelijk om dit digitaal aan te vragen. Je kan hiervoor terecht bij dienst Burgerzaken in het gemeentehuis.&amp;lt;/p&amp;gt;</Procedure>
+      <Exceptions></Exceptions>
+      <AdditionalInfo></AdditionalInfo>
+      <InfoUrls />
+      <Forms />
+      <EnrichedLinks />
+      <Keywords />
+      <TargetGroups />
+      <Themes />
+      <DefaultTheme>
+        <Id></Id>
+        <Value></Value>
+      </DefaultTheme>
+      <RelatedProducts />
+      <Attachments />
+      <DeliveringDepartments>
+        <Department>
+          <Id>210</Id>
+          <Name>Burgerzaken</Name>
+          <Addresses>
+            <Address>
+              <Id>40f3bed2-3cf4-4927-bbd5-7ceed31ae341</Id>
+              <Name>Stadionstraat 2</Name>
+              <Street>Stadionstraat</Street>
+              <HouseNumber>2</HouseNumber>
+              <BoxNumber></BoxNumber>
+              <ZipCode>9190</ZipCode>
+              <Municipality>Stekene</Municipality>
+              <Phone>03 790 02 12</Phone>
+              <Fax>03 790 02 10</Fax>
+              <Website>www.stekene.be</Website>
+              <Email>Bevolking&amp;amp;BS@stekene.be</Email>
+              <Facebook></Facebook>
+              <Twitter></Twitter>
+              <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Dinsdag&amp;amp;nbsp;&amp;amp;nbsp;08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Woensdag 08:30-12;00; 13:30-16:30;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Donderdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Vrijdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Zaterdag 09:00-12:00&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</OpeningHours>
+            </Address>
+          </Addresses>
+        </Department>
+      </DeliveringDepartments>
+      <AuthorisedDepartments>
+        <Department>
+          <Id>210</Id>
+          <Name>Burgerzaken</Name>
+          <Addresses>
+            <Address>
+              <Id>40f3bed2-3cf4-4927-bbd5-7ceed31ae341</Id>
+              <Name>Stadionstraat 2</Name>
+              <Street>Stadionstraat</Street>
+              <HouseNumber>2</HouseNumber>
+              <BoxNumber></BoxNumber>
+              <ZipCode>9190</ZipCode>
+              <Municipality>Stekene</Municipality>
+              <Phone>03 790 02 12</Phone>
+              <Fax>03 790 02 10</Fax>
+              <Website>www.stekene.be</Website>
+              <Email>Bevolking&amp;amp;BS@stekene.be</Email>
+              <Facebook></Facebook>
+              <Twitter></Twitter>
+              <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Dinsdag&amp;amp;nbsp;&amp;amp;nbsp;08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Woensdag 08:30-12;00; 13:30-16:30;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Donderdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Vrijdag 08:30-12:00;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Zaterdag 09:00-12:00&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</OpeningHours>
+            </Address>
+          </Addresses>
+        </Department>
+      </AuthorisedDepartments>
+      <GeographicalApplicationAreas>
+        <FederalApplicationAreas />
+        <RegionalApplicationAreas />
+        <ProvincialApplicationAreas />
+        <MunicipalApplicationAreas />
+      </GeographicalApplicationAreas>
+      <Clusters />
+      <UploadedAttachments />
+      <TimeStampLastUpdate>2020-10-05T11:25:00.667</TimeStampLastUpdate>
+      <IsInternal>false</IsInternal>
+    </Product>
+  </Products>
+</ProductCatalog></string>
