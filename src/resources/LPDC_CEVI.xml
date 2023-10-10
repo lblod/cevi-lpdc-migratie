@@ -12,25 +12,94 @@
       <Title>Levenloos geboren kind/foetus</Title>
       <Description>&amp;lt;p&amp;gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&amp;lt;/p&amp;gt;</Description>
-      <StartDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></StartDate>
-      <EndDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></EndDate>
+      <StartDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2023-09-10</StartDate>
+      <EndDate xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2023-10-12</EndDate>
       <ProductType>
         <Id>0</Id>
         <Value>Algemeen</Value>
       </ProductType>
-      <Conditions></Conditions>
-      <BringToApply></BringToApply>
-      <LegalText></LegalText>
-      <AmountToApply></AmountToApply>
+        <Conditions>&amp;lt;ul&amp;gt;
+&amp;lt;li&amp;gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;</Conditions>
+        <BringToApply>&amp;lt;p&amp;gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&amp;lt;/p&amp;gt;
+&amp;lt;ul&amp;gt;
+&amp;lt;li&amp;gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;Eventueel het huwelijksboekje van de overledene.&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;voor begravingen buiten het grondgebied van Stekene: &amp;amp;lsquo;toelating tot begraven&amp;amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;</BringToApply>
+      <LegalText>Some Legal Text</LegalText>
+        <AmountToApply>&amp;lt;p&amp;gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</AmountToApply>
       <Procedure>&amp;lt;p&amp;gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&amp;lt;/p&amp;gt;</Procedure>
-      <Exceptions></Exceptions>
-      <AdditionalInfo></AdditionalInfo>
-      <InfoUrls />
-      <Forms />
-      <EnrichedLinks />
-      <Keywords />
-      <TargetGroups />
-      <Themes />
+        <Exceptions>&amp;lt;p&amp;gt;&amp;lt;b&amp;gt;Vellen van bomen wegens acuut gevaar&amp;lt;/b&amp;gt;&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</Exceptions>
+        <AdditionalInfo>&amp;lt;p&amp;gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&amp;lt;/p&amp;gt;
+&amp;lt;p&amp;gt;De folder met inschrijvingsformulier wordt&amp;amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&amp;lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&amp;gt;activiteitenloket&amp;lt;/a&amp;gt;).&amp;lt;/p&amp;gt;</AdditionalInfo>
+        <InfoUrls>
+            <Url>
+                <SequenceNumber>1</SequenceNumber>
+                <Title>Inburgering.be</Title>
+                <Location>http://www.inburgering.be</Location>
+            </Url>
+            <Url>
+                <SequenceNumber>2</SequenceNumber>
+                <Title>Contactgegevens voor een inburgeringstraject</Title>
+                <Location>https://integratie-inburgering.be/contact</Location>
+            </Url>
+        </InfoUrls>
+        <Forms>
+            <Form>
+                <SequenceNumber>1</SequenceNumber>
+                <Title>Geboortepremie - Aanvraagformulier</Title>
+                <Location>http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;amp;FormId=874684</Location>
+            </Form>
+        </Forms>
+      <EnrichedLinks>Enriched links</EnrichedLinks>
+        <Keywords>
+            <Keyword>
+                <Id>120032b</Id>
+                <Value>luier</Value>
+            </Keyword>
+            <Keyword>
+                <Id>604ca901-1fb5-4ec2-b37f-a68d4a4b2041</Id>
+                <Value>luiers</Value>
+            </Keyword>
+            <Keyword>
+                <Id>120032c</Id>
+                <Value>pamper</Value>
+            </Keyword>
+            <Keyword>
+                <Id>120032a</Id>
+                <Value>herbruikbaar</Value>
+            </Keyword>
+        </Keywords>
+        <TargetGroups>
+            <TargetGroup>
+                <Id>6d606a0f-a4f5-4976-90ee-c8884fe1846b</Id>
+                <Value>Burger</Value>
+            </TargetGroup>
+            <TargetGroup>
+                <Id>fabba05c-ad35-48e3-ba03-a8947852c38e</Id>
+                <Value>Onderneming</Value>
+            </TargetGroup>
+        </TargetGroups>
+        <Themes>
+            <Theme>
+                <Id>403050</Id>
+                <Value>Horeca</Value>
+            </Theme>
+            <Theme>
+                <Id>108030</Id>
+                <Value>Vergunningen</Value>
+            </Theme>
+        </Themes>
       <DefaultTheme>
         <Id></Id>
         <Value></Value>
@@ -38,6 +107,16 @@
       <RelatedProducts />
       <Attachments />
       <DeliveringDepartments>
+          <Department>
+              <Id>c2e69322-6ec4-4786-b05a-3ebc8beed3f5</Id>
+              <Name>Federale overheid</Name>
+              <Addresses />
+          </Department>
+          <Department>
+              <Id>ddfc31ff-909b-439d-a4d6-66c6b17801ed</Id>
+              <Name>Vlaamse overheid</Name>
+              <Addresses />
+          </Department>
         <Department>
           <Id>210</Id>
           <Name>Burgerzaken</Name>
@@ -47,7 +126,7 @@
               <Name>Stadionstraat 2</Name>
               <Street>Stadionstraat</Street>
               <HouseNumber>2</HouseNumber>
-              <BoxNumber></BoxNumber>
+              <BoxNumber>B</BoxNumber>
               <ZipCode>9190</ZipCode>
               <Municipality>Stekene</Municipality>
               <Phone>03 790 02 12</Phone>
@@ -66,36 +145,57 @@
             </Address>
           </Addresses>
         </Department>
+          <Department>
+              <Id>12</Id>
+              <Name>Team Cultuur, Sport en Vrije tijd</Name>
+              <Addresses />
+          </Department>
       </DeliveringDepartments>
       <AuthorisedDepartments>
-        <Department>
-          <Id>210</Id>
-          <Name>Burgerzaken</Name>
-          <Addresses>
-            <Address>
-              <Id>40f3bed2-3cf4-4927-bbd5-7ceed31ae341</Id>
-              <Name>Stadionstraat 2</Name>
-              <Street>Stadionstraat</Street>
-              <HouseNumber>2</HouseNumber>
-              <BoxNumber></BoxNumber>
-              <ZipCode>9190</ZipCode>
-              <Municipality>Stekene</Municipality>
-              <Phone>03 790 02 12</Phone>
-              <Fax>03 790 02 10</Fax>
-              <Website>www.stekene.be</Website>
-              <Email>Bevolking&amp;amp;BS@stekene.be</Email>
-              <Facebook></Facebook>
-              <Twitter></Twitter>
-              <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
+          <Department>
+              <Id>10</Id>
+              <Name>Team Lokale economie, Toerisme en Werk</Name>
+              <Addresses />
+          </Department>
+
+          <Department>
+              <Id>ddfc31ff-909b-439d-a4d6-66c6b17801ed</Id>
+              <Name>Vlaamse overheid</Name>
+              <Addresses />
+          </Department>
+          <Department>
+              <Id>200</Id>
+              <Name>Burger &amp;amp; Welzijnszaken</Name>
+              <Addresses>
+                  <Address>
+                      <Id>40f3bed2-3cf4-4927-bbd5-7ceed31ae341</Id>
+                      <Name>Stadionstraat 2</Name>
+                      <Street>Stadionstraat</Street>
+                      <HouseNumber>2</HouseNumber>
+                      <BoxNumber>D</BoxNumber>
+                      <ZipCode>9190</ZipCode>
+                      <Municipality>Stekene</Municipality>
+                      <Phone>03 790 02 12</Phone>
+                      <Fax>03 790 02 10</Fax>
+                      <Website>www.stekene.be</Website>
+                      <Email>Bevolking&amp;amp;BS@stekene.be</Email>
+                      <Facebook></Facebook>
+                      <Twitter></Twitter>
+                      <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Dinsdag&amp;amp;nbsp;&amp;amp;nbsp;08:30-12:00;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Woensdag 08:30-12;00; 13:30-16:30;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Donderdag 08:30-12:00;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Vrijdag 08:30-12:00;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Zaterdag 09:00-12:00&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</OpeningHours>
-            </Address>
-          </Addresses>
-        </Department>
+                  </Address>
+              </Addresses>
+          </Department>
+          <Department>
+              <Id>c2e69322-6ec4-4786-b05a-3ebc8beed3f5</Id>
+              <Name>Federale overheid</Name>
+              <Addresses />
+          </Department>
       </AuthorisedDepartments>
       <GeographicalApplicationAreas>
         <FederalApplicationAreas />
@@ -141,7 +241,6 @@
       <Exceptions></Exceptions>
       <AdditionalInfo></AdditionalInfo>
       <InfoUrls />
-      <Forms />
       <EnrichedLinks />
       <Keywords />
       <TargetGroups />

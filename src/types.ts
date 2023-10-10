@@ -61,8 +61,8 @@ type Address = {
     fax?: string,
     website?: string,
     email?: string,
-    facebook?: string,
-    twitter?: string,
+    facebook?: string, //ignored
+    twitter?: string, //ignored
     openingHours?: string
 }
 
