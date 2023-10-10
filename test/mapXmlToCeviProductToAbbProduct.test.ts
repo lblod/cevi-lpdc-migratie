@@ -2,7 +2,7 @@ import {expect, test, describe} from 'vitest';
 import {beforeAll} from "vitest";
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
-import {mapProductType, mapToABBProduct} from "../src/mapToABBProduct";
+import {mapConditionsToRequirement, mapProductType, mapToABBProduct} from "../src/mapToABBProduct";
 import {ProductType} from "../src/types";
 
 let ceviProducts: CeviProduct[] = [];
@@ -35,7 +35,8 @@ test('map xml to ceviProduct', async () => {
         }],
         {
             id: "39376414-2a3a-4c64-8e26-93b3048c41ef",
-            value: "Advies en begeleiding",},
+            value: "Advies en begeleiding",
+        },
         [{
             id: "403050",
             value: "Horeca",
@@ -81,11 +82,11 @@ test('map xml to ceviProduct', async () => {
             address: {},
             id: "10",
             name: "Team Lokale economie, Toerisme en Werk",
-        },{
+        }, {
             address: {},
             id: "ddfc31ff-909b-439d-a4d6-66c6b17801ed",
             name: "Vlaamse overheid",
-        },{
+        }, {
             id: "200",
             name: "Burger &amp; Welzijnszaken",
             address: {
@@ -102,8 +103,9 @@ test('map xml to ceviProduct', async () => {
                 email: "Bevolking&amp;BS@stekene.be",
                 facebook: undefined,
                 twitter: undefined,
-                openingHours: `&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;\r\n&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`}
-        },{
+                openingHours: `&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;\r\n&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;\r\n&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`
+            }
+        }, {
             address: {},
             id: "c2e69322-6ec4-4786-b05a-3ebc8beed3f5",
             name: "Federale overheid",
@@ -143,9 +145,11 @@ test('map xml to ceviProduct', async () => {
             title: "Contactgegevens voor een inburgeringstraject",
         },],
         [
-            {sequenceNumber: "1",
-            title: "Geboortepremie - Aanvraagformulier",
-            location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684"}
+            {
+                sequenceNumber: "1",
+                title: "Geboortepremie - Aanvraagformulier",
+                location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684"
+            }
         ],
         `Enriched links`,
         {id: undefined, value: undefined},
@@ -177,6 +181,12 @@ test('map ceviProduct to abbProduct', () => {
         startDate: "2023-09-10",
         endDate: "2023-10-12",
         productType: "AdviesBegeleiding",
+        requirement: {
+            description: `&lt;ul&gt;\r\n&lt;li&gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&lt;/li&gt;\r\n&lt;li&gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&lt;/li&gt;\r\n&lt;li&gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&lt;/li&gt;\r\n&lt;/ul&gt;`,
+            evidence: {
+                description: `&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;\r\n&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;\r\n&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;\r\n&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;\r\n&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;\r\n&lt;/ul&gt;`,
+            }
+        },
         targetAudience: [],
         keywords: [],
         theme: [],
@@ -211,8 +221,8 @@ test('map ceviProduct to abbProduct', () => {
 describe('mapProductType', () => {
 
     test('Advies en begeleiding', () => {
-       const ceviProductType: ProductType = {id: "ignored", value: "Advies en begeleiding"};
-       expect(mapProductType(ceviProductType)).toEqual("AdviesBegeleiding");
+        const ceviProductType: ProductType = {id: "ignored", value: "Advies en begeleiding"};
+        expect(mapProductType(ceviProductType)).toEqual("AdviesBegeleiding");
     });
 
     test('Algemeen', () => {
@@ -221,7 +231,10 @@ describe('mapProductType', () => {
     });
 
     test('Beschikbaar stellen van infrastructuur en materiaal', () => {
-        const ceviProductType: ProductType = {id: "ignored", value: "Beschikbaar stellen van infrastructuur en materiaal"};
+        const ceviProductType: ProductType = {
+            id: "ignored",
+            value: "Beschikbaar stellen van infrastructuur en materiaal"
+        };
         expect(mapProductType(ceviProductType)).toEqual("InfrastructuurMateriaal");
     });
 
@@ -262,29 +275,26 @@ describe('mapProductType', () => {
 
 });
 
-// test('mapToABBProduct from a cevi product with title "This is a test cevi product" should generate an abb product with the same title', () => {
-//     const ceviProduct: CeviProduct = new CeviProduct(undefined, undefined, undefined, 'This is a test cevi product');
-//     const abbProduct: AbbProduct = mapToABBProduct(ceviProduct);
-//     expect(abbProduct.title).toEqual(new Literal('This is a test cevi product'));
-// })
-//
-// test('mapToABBProduct from a cevi product without title should generate an abb product without title', () => {
-//     const ceviProduct: CeviProduct = new CeviProduct();
-//     const abbProduct: AbbProduct = mapToABBProduct(ceviProduct);
-//     expect(abbProduct.title).toBeUndefined();
-// })
-//
-// test('mapToABBProduct from a cevi product with conditions "&lt;p&gt;De natuurvergunning moet aangevraagd worden door de eigenaar van het perceel waarop de vegetaties of de kleine landschapselementen aanwezig zijn.&lt;/p&gt;"' +
-//     'should generate an abb product with requirement "&lt;p&gt;De natuurvergunning moet aangevraagd worden door de eigenaar van het perceel waarop de vegetaties of de kleine landschapselementen aanwezig zijn.&lt;/p&gt;"', () => {
-//     const ceviProduct: CeviProduct = new CeviProduct(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "&lt;p&gt;De natuurvergunning moet aangevraagd worden door de eigenaar van het perceel waarop de vegetaties of de kleine landschapselementen aanwezig zijn.&lt;/p&gt;");
-//     const abbProduct: AbbProduct = mapToABBProduct(ceviProduct);
-//     expect(abbProduct.requirement?.description).toEqual(new Literal("&lt;p&gt;De natuurvergunning moet aangevraagd worden door de eigenaar van het perceel waarop de vegetaties of de kleine landschapselementen aanwezig zijn.&lt;/p&gt;"));
-// })
-//
-// test('mapToABBProduct from a cevi product without conditions and with BringToApply "&lt;p&gt;Dien het aanvraagdossier in voor 31 mei, 12 uur.&lt;/p&gt;" should generate an abb product with' +
-//     'requirement "Bewijsstukken mee te brengen" and with evidence "&lt;p&gt;Dien het aanvraagdossier in voor 31 mei, 12 uur.&lt;/p&gt;"', () => {
-//     const ceviProduct: CeviProduct = new CeviProduct(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "&lt;p&gt;Dien het aanvraagdossier in voor 31 mei, 12 uur.&lt;/p&gt;");
-//     const abbProduct: AbbProduct = mapToABBProduct(ceviProduct);
-//     expect(abbProduct.requirement?.description).toEqual(new Literal("Bewijsstukken mee te brengen"));
-//     expect(abbProduct.requirement?.evidence?.description).toEqual(new Literal("&lt;p&gt;Dien het aanvraagdossier in voor 31 mei, 12 uur.&lt;/p&gt;"));
-// })
+describe('mapConditionsToRequirement', () => {
+
+    test('Conditions nor BringToApply present, results in no Requirement', () => {
+        const result = mapConditionsToRequirement(undefined, undefined);
+        expect(result).toBeUndefined();
+    });
+
+    test('Conditions But Not BringToApply present, results in Requirement without Evidence', () => {
+        const result = mapConditionsToRequirement('conditions', undefined);
+        expect(result).toMatchObject({description: `conditions`, evidence: undefined})
+    });
+
+    test('Conditions and BringToApply present, results in Requirement with Evidence', () => {
+        const result = mapConditionsToRequirement('conditions', 'bringToApply');
+        expect(result).toMatchObject({description: `conditions`, evidence: {description: 'bringToApply'}})
+    });
+
+    test('BringToApply But Not Conditions present, results in Requirement (with fixed description \'Bewijsstukken mee te brengen\') with Evidence', () => {
+        const result = mapConditionsToRequirement(undefined, 'bringToApply');
+        expect(result).toMatchObject({description: `Bewijsstukken mee te brengen`, evidence: {description: 'bringToApply'}})
+    });
+
+});

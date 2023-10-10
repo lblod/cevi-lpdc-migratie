@@ -9,8 +9,7 @@ import {
     TargetAudience,
     Theme
 } from "./abbProduct";
-import {Requirement} from "./requirement";
-import {Evidence} from "./evidence";
+import {Requirement, Evidence} from "./requirement";
 import {Procedure} from "./procedure";
 import {CeviTheme, Department, Keyword, ProductType, Source, TargetGroup, Url} from "./types";
 import {Website} from "./website";
@@ -19,7 +18,6 @@ import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuur: string): AbbProduct {
-
     const targetAudience: TargetAudience[] = mapTargetGroupsToTargetAudience(product.targetGroups);
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
     const additionalDescription: string | undefined = product.additionalInfo ? product.additionalInfo : undefined;
@@ -74,39 +72,13 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
 }
 
 
-function mapConditionsToRequirement(conditions?: string, bringToApply?: string): Requirement | undefined {
-    if (bringToApply) {
-        if (!conditions) {
-            return new Requirement(
-                uuid(),
-                undefined,
-                'Bewijsstukken mee te brengen',
-                new Evidence(
-                    uuid(),
-                    bringToApply,
-                    undefined
-                ))
-        } else {
-            return new Requirement(
-                uuid(),
-                undefined,
-                conditions,
-                new Evidence(
-                    uuid(),
-                    bringToApply,
-                    undefined
-                )
-            )
-        }
-    }
-    if (conditions) {
+export function mapConditionsToRequirement(conditions: string | undefined, bringToApply: string | undefined): Requirement | undefined {
+    if (bringToApply || conditions) {
         return new Requirement(
             uuid(),
-            undefined,
-            conditions,
-            undefined
-        )
-    }
+            conditions || 'Bewijsstukken mee te brengen',
+            bringToApply ? new Evidence(uuid(), bringToApply) : undefined);
+    } 
     return undefined;
 }
 
