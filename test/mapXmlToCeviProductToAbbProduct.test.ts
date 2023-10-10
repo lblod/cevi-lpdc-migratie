@@ -2,7 +2,12 @@ import {expect, test, describe} from 'vitest';
 import {beforeAll} from "vitest";
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
-import {mapConditionsToRequirement, mapProductType, mapToABBProduct} from "../src/mapToABBProduct";
+import {
+    mapAmountToApplyToCost,
+    mapConditionsToRequirement,
+    mapProductType,
+    mapToABBProduct
+} from "../src/mapToABBProduct";
 import {ProductType} from "../src/types";
 
 let ceviProducts: CeviProduct[] = [];
@@ -187,6 +192,9 @@ test('map ceviProduct to abbProduct', () => {
                 description: `&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;\r\n&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;\r\n&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;\r\n&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;\r\n&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;\r\n&lt;/ul&gt;`,
             }
         },
+        cost: {
+            description: `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`
+        },
         targetAudience: [],
         keywords: [],
         theme: [],
@@ -297,4 +305,19 @@ describe('mapConditionsToRequirement', () => {
         expect(result).toMatchObject({description: `Bewijsstukken mee te brengen`, evidence: {description: 'bringToApply'}})
     });
 
+});
+
+describe('mapAmountToApplyToCost', () => {
+
+    test('Missing AmountToApply, results in No Cost', () => {
+        const result = mapAmountToApplyToCost(undefined);
+        expect(result).toBeUndefined();
+    });
+
+    test('AmountToApply, results in a Cost', () => {
+        const result = mapAmountToApplyToCost('amount to apply');
+        expect(result).toMatchObject({
+            description: 'amount to apply'
+        });
+    });
 });

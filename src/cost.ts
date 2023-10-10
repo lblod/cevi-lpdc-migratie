@@ -1,12 +1,6 @@
 export class Cost {
-
-    uuid?: string;
-    title?: string;
-    description?: string;
-
-    constructor(uuid?: string, title?: string, description?: string) {
-        this.uuid = uuid;
-        this.title = title;
-        this.description = description;
+    constructor(
+        private uuid: string,
+        private description: string) {
     }
 }

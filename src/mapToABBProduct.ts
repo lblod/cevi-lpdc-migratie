@@ -9,7 +9,7 @@ import {
     TargetAudience,
     Theme
 } from "./abbProduct";
-import {Requirement, Evidence} from "./requirement";
+import {Evidence, Requirement} from "./requirement";
 import {Procedure} from "./procedure";
 import {CeviTheme, Department, Keyword, ProductType, Source, TargetGroup, Url} from "./types";
 import {Website} from "./website";
@@ -30,10 +30,9 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
     const keywords: string[] = mapKeywords(product.keywords);
     const productType: PublicServiceType | undefined = mapProductType(product.productType);
     const productId: string | undefined = mapProductId(product.id, product.source);
-    const requirement: Requirement | undefined = mapConditionsToRequirement(product.conditions, product.bringToApply);
     const procedure: Procedure | undefined = mapProcedure(product.procedure);
     const moreInfo: Website[] | undefined = mapInfoUrlsToMoreInfo(product.infoUrls);
-    const cost: Cost[] | undefined = mapAmountToApplyToCost(product.amountToApply);
+    const cost: Cost | undefined = mapAmountToApplyToCost(product.amountToApply);
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${uuid()}`,
@@ -60,7 +59,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         productId,
         undefined,
         undefined,
-        requirement,
+        mapConditionsToRequirement(product.conditions, product.bringToApply),
         procedure,
         moreInfo,
         cost,
@@ -78,7 +77,7 @@ export function mapConditionsToRequirement(conditions: string | undefined, bring
             uuid(),
             conditions || 'Bewijsstukken mee te brengen',
             bringToApply ? new Evidence(uuid(), bringToApply) : undefined);
-    } 
+    }
     return undefined;
 }
 
@@ -106,17 +105,8 @@ function mapInfoUrlsToMoreInfo(infoUrls?: Url[]): Website[] | undefined {
     return undefined;
 }
 
-function mapAmountToApplyToCost(amountToApply?: string): Cost[] | undefined {
-    if (amountToApply) {
-        const costs: Cost[] = [];
-        costs.push(new Cost(
-            uuid(),
-            undefined,
-            amountToApply,
-        ))
-        return costs;
-    }
-    return undefined
+export function mapAmountToApplyToCost(amountToApply?: string): Cost | undefined {
+    return amountToApply ? new Cost(uuid(), amountToApply) : undefined;
 }
 
 function mapContactPoints(deliveringDepartments: Department[], authorisedDepartments: Department[]): ContactPoint[] {
