@@ -21,16 +21,13 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
     const targetAudience: TargetAudience[] = mapTargetGroupsToTargetAudience(product.targetGroups);
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
     const additionalDescription: string | undefined = product.additionalInfo ? product.additionalInfo : undefined;
-    const exception: string | undefined = product.exceptions ? product.exceptions : undefined;
     const theme: Theme[] = mapCeviThemesToTheme(product.themes);
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuur);
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
     const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuur);
     const keywords: string[] = mapKeywords(product.keywords);
-    const productType: PublicServiceType | undefined = mapProductType(product.productType);
     const productId: string | undefined = mapProductId(product.id, product.source);
-    const procedure: Procedure | undefined = mapProcedure(product.procedure);
     const moreInfo: Website[] | undefined = mapInfoUrlsToMoreInfo(product.infoUrls);
 
     return new AbbProduct(
@@ -44,7 +41,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         product.title,
         product.description,
         additionalDescription,
-        exception,
+        product.exceptions,
         undefined,
         theme,
         competentAuthorityLevel,
@@ -52,14 +49,14 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         executingAuthorityLevel,
         executingAuthority,
         undefined,
-        productType,
+        mapProductType(product.productType),
         product.startDate,
         product.endDate,
         productId,
         undefined,
         undefined,
         mapConditionsToRequirement(product.conditions, product.bringToApply),
-        procedure,
+        mapProcedure(product.procedure),
         moreInfo,
         mapAmountToApplyToCost(product.amountToApply),
         undefined,

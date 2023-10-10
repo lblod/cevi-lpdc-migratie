@@ -178,6 +178,9 @@ describe("map xml to ceviproduct", () => {
 
 describe("map ceviProduct to abbProduct", () => {
 
+    test('map minimal item from xml to ceviProduct and to abbProduct', () => {
+       //TODO LPDC-718: create a minimal item from xml (almost optional) and test only the really required fields here
+    });
 
     test('map full item from xml to ceviProduct and to abbProduct', () => {
         const migrationDate = new Date();
@@ -204,6 +207,7 @@ describe("map ceviProduct to abbProduct", () => {
             procedure: {
                 description: "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;"
             },
+            exception: `&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;\r\n&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;\r\n&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
             targetAudience: [],
             keywords: [],
             theme: [],
