@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import convert from "xml-js";
+import * as fs from "fs/promises";
+import * as convert from "xml-js";
 import {CeviProduct} from "./ceviProduct";
 import {mapXmlToCeviProduct} from "./mapXmlToCeviProduct";
 
