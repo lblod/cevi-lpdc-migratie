@@ -3,13 +3,13 @@ import {beforeAll} from "vitest";
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
-    mapAmountToApplyToCost,
+    mapAmountToApplyToCost, mapCeviThemesToTheme,
     mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapKeywords, mapProcedureAndForms,
     mapProductType, mapTargetGroupsToTargetAudience,
     mapToABBProduct
 } from "../src/mapToABBProduct";
 import {Form, Keyword, ProductType, Url} from "../src/types";
-import {TargetAudience} from "../src/abbProduct";
+import {TargetAudience, Theme} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -49,8 +49,12 @@ describe("map xml to ceviproduct", () => {
                 value: "Horeca",
             }, {
                 id: "108030",
-                value: "Vergunningen",
-            },],
+                value: "Cultuur, Sport en Vrije Tijd",
+            },
+                {
+                    id: "108031",
+                    value: "Mobiliteit en Openbare Werken",
+                }],
             [{
                 address: {},
                 id: "c2e69322-6ec4-4786-b05a-3ebc8beed3f5",
@@ -236,7 +240,10 @@ describe("map ceviProduct to abbProduct", () => {
                 TargetAudience.Burger,
                 TargetAudience.Onderneming,
             ],
-            theme: [],
+            theme: [
+                Theme.CultuurSportVrijeTijd,
+                Theme.MobiliteitOpenbareWerken,
+            ],
             competentAuthorityLevel: ["Lokaal"],
             competentAuthority: [gemeente_URL],
             executingAuthorityLevel: ["Lokaal"],
@@ -511,6 +518,51 @@ describe("map ceviProduct to abbProduct", () => {
             const result = mapTargetGroupsToTargetAudience([{id: 'ignored', value: 'Some unknown value'},]);
             expect(result).toEqual([]);
         })
+
+    });
+
+    describe('mapCeviThemesToThemes', () => {
+
+        test('Empty cevi themes, results in empty themes', () => {
+            const result = mapCeviThemesToTheme([]);
+            expect(result).toEqual([]);
+        });
+
+        test('Maps cevi themes to themes', () => {
+            const result = mapCeviThemesToTheme([
+                {id: 'ignored', value: 'Bouwen en Wonen'},
+                {id: 'ignored', value: 'Burger en Overheid'},
+                {id: 'ignored', value: 'Cultuur, Sport en Vrije Tijd'},
+                {id: 'ignored', value: 'Economie en Werk'},
+                {id: 'ignored', value: 'Energie'},
+                {id: 'ignored', value: 'Energieloket'},
+                {id: 'ignored', value: 'Milieu en Energie'},
+                {id: 'ignored', value: 'Mobiliteit en Openbare Werken'},
+                {id: 'ignored', value: 'Onderwijs en Wetenschap'},
+                {id: 'ignored', value: 'Welzijn en Gezondheid'},
+            ]);
+            expect(result).toEqual([
+                Theme.BouwenWonen
+                , Theme.BurgerOverheid
+                , Theme.CultuurSportVrijeTijd
+                , Theme.EconomieWerk
+                , Theme.MilieuEnergie
+                , Theme.MilieuEnergie
+                , Theme.MilieuEnergie
+                , Theme.MobiliteitOpenbareWerken
+                , Theme.OnderwijsWetenschap
+                , Theme.WelzijnGezondheid]);
+        });
+
+        test('Filters unknown cevi themes', () => {
+            const result = mapCeviThemesToTheme([{id: 'ignored', value: 'unknown'}]);
+            expect(result).toEqual([]);
+        });
+
+        test('Filters undefined cevi theme values', () => {
+            const result = mapCeviThemesToTheme([{id: 'ignored', value: undefined}]);
+            expect(result).toEqual([]);
+        });
 
     });
 

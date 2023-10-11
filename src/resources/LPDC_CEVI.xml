@@ -97,7 +97,11 @@
             </Theme>
             <Theme>
                 <Id>108030</Id>
-                <Value>Vergunningen</Value>
+                <Value>Cultuur, Sport en Vrije Tijd</Value>
+            </Theme>
+            <Theme>
+                <Id>108031</Id>
+                <Value>Mobiliteit en Openbare Werken</Value>
             </Theme>
         </Themes>
       <DefaultTheme>

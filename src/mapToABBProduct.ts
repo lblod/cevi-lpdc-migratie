@@ -19,7 +19,6 @@ import {ContactPointAddress} from "./contactPointAddress";
 
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
-    const theme: Theme[] = mapCeviThemesToTheme(product.themes);
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuurUrl);
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
@@ -40,7 +39,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         product.additionalInfo,
         product.exceptions,
         undefined,
-        theme,
+        mapCeviThemesToTheme(product.themes),
         competentAuthorityLevel,
         competentAuthority,
         executingAuthorityLevel,
@@ -192,7 +191,6 @@ export function mapProductType(ceviProductType: ProductType): PublicServiceType 
 }
 
 function mapCeviThemeToTheme(ceviTheme: CeviTheme): Theme | undefined {
-    const ceviThemeValues: string[] = [];
     const themeMapping: Record<string, Theme> = {
         'Bouwen en Wonen': Theme.BouwenWonen,
         'Burger en Overheid': Theme.BurgerOverheid,
@@ -206,7 +204,6 @@ function mapCeviThemeToTheme(ceviTheme: CeviTheme): Theme | undefined {
         'Welzijn en Gezondheid': Theme.WelzijnGezondheid
     }
     if (ceviTheme.value) {
-        ceviThemeValues.push(ceviTheme.value);
         const abbTheme: Theme = themeMapping[ceviTheme.value];
         if (abbTheme) {
             return abbTheme;
@@ -219,7 +216,7 @@ function mapCeviThemeToTheme(ceviTheme: CeviTheme): Theme | undefined {
     }
 }
 
-function mapCeviThemesToTheme(ceviThemes: CeviTheme[]): Theme[] {
+export function mapCeviThemesToTheme(ceviThemes: CeviTheme[]): Theme[] {
     return ceviThemes
         .map(mapCeviThemeToTheme)
         .filter((theme): theme is Theme => !!theme);
