@@ -2,8 +2,8 @@ import {beforeAll, describe, expect, test} from 'vitest';
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
-    mapAmountToApplyToCost,
-    mapCeviThemesToTheme,
+    mapAmountToApplyToCost, mapAuthorisedDepartmentsToCompetentAuthorityLevel,
+    mapCeviThemesToTheme, mapCompetentAuthorityBasedOnCompetentAuthorityLevel,
     mapConditionsToRequirement,
     mapDeliveringDepartmentsToExecutingAuthorityLevel,
     mapExecutingAuthorityBasedOnExecutingAuthorityLevel,
@@ -15,7 +15,7 @@ import {
     mapToABBProduct
 } from "../src/mapToABBProduct";
 import {Form, Keyword, ProductType, Url} from "../src/types";
-import {ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
+import {CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -250,7 +250,10 @@ describe("map ceviProduct to abbProduct", () => {
                 Theme.CultuurSportVrijeTijd,
                 Theme.MobiliteitOpenbareWerken,
             ],
-            competentAuthorityLevel: ["Lokaal"],
+            competentAuthorityLevel: [
+                CompetentAuthorityLevel.Federaal,
+                CompetentAuthorityLevel.Lokaal,
+                CompetentAuthorityLevel.Vlaams],
             competentAuthority: [gemeente_URL],
             executingAuthorityLevel: [
                 ExecutingAuthorityLevel.Federaal,
@@ -663,6 +666,100 @@ describe("map ceviProduct to abbProduct", () => {
                 ExecutingAuthorityLevel.Vlaams,
                 ExecutingAuthorityLevel.Federaal,
                 ExecutingAuthorityLevel.Lokaal],
+                'lokaalBestuurUrl');
+
+            expect(result).toEqual([
+                'https://data.vlaanderen.be/id/organisatie/OVO000001',
+                'https://data.vlaanderen.be/id/organisatie/OVO027227',
+                'lokaalBestuurUrl'])
+        });
+    });
+
+    describe('mapAuthorisedDepartmentsToCompetentAuthorityLevel', () => {
+
+        test('Empty Authorised departments themes, results in empty Competent authority levels', () => {
+            const result = mapAuthorisedDepartmentsToCompetentAuthorityLevel([]);
+            expect(result).toEqual([]);
+        });
+
+        test('Translates Authorised departments themes Vlaamse Overheid directly, Federale Overheid directly, all else becomes Lokale overheid', () => {
+            const result = mapAuthorisedDepartmentsToCompetentAuthorityLevel([
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Departement Cultuur',
+                    address: {}
+                },
+            ]);
+            expect(result).toEqual([
+                CompetentAuthorityLevel.Federaal,
+                CompetentAuthorityLevel.Lokaal,
+                CompetentAuthorityLevel.Vlaams])
+        });
+
+        test('Translates delivering departments themes ; and filters duplicates', () => {
+            const result = mapAuthorisedDepartmentsToCompetentAuthorityLevel([
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Departement Cultuur',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Departement Groendienst',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+            ]);
+            expect(result).toEqual([
+                CompetentAuthorityLevel.Federaal,
+                CompetentAuthorityLevel.Lokaal,
+                CompetentAuthorityLevel.Vlaams,])
+        });
+
+    });
+
+    describe('mapCompetentAuthorityBasedOnCompetentAuthorityLevel', () => {
+
+        test('Empty delivering competentAuthorityLevel, results in empty competent authority', () => {
+            const result = mapCompetentAuthorityBasedOnCompetentAuthorityLevel([], 'lokaalBestuurUrl');
+            expect(result).toEqual([]);
+        });
+
+        test('Translates to Vlaamse Overheid url, to Federale Overheid url, all else to lokaalBestuurUrl', () => {
+            const result = mapCompetentAuthorityBasedOnCompetentAuthorityLevel([
+                    CompetentAuthorityLevel.Vlaams,
+                    CompetentAuthorityLevel.Federaal,
+                    CompetentAuthorityLevel.Lokaal],
                 'lokaalBestuurUrl');
 
             expect(result).toEqual([

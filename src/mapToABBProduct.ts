@@ -18,13 +18,12 @@ import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
-    const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
+    const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments); //TODO LPDC-718: migration correct? what if both are present ? how to migrate?
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuurUrl);
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
     const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuurUrl);
-    const keywords: string[] = mapKeywords(product.keywords);
-    const productId: string | undefined = mapProductId(product.id, product.source);
+    const productId: string | undefined = mapProductId(product.id, product.source); //
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${uuid()}`,
@@ -33,7 +32,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         migrationDate,
         migrationDate,
         contactPoints,
-        keywords,
+        mapKeywords(product.keywords),
         product.title,
         product.description,
         product.additionalInfo,
@@ -250,26 +249,19 @@ export function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecuting
     })
 }
 
-function mapAuthorisedDepartmentToCompetentAuthorityLevel(ceviAuthorisedDepartment: Department): CompetentAuthorityLevel {
-    const competentAuthorityLevelMapping: Record<string, CompetentAuthorityLevel> = {
-        'Vlaamse overheid': CompetentAuthorityLevel.Vlaams,
-        'Federale overheid': CompetentAuthorityLevel.Federaal
-    }
-    if (ceviAuthorisedDepartment.name) {
-        const abbCompetentAuthorityLevel: CompetentAuthorityLevel = competentAuthorityLevelMapping[ceviAuthorisedDepartment.name];
-        if (abbCompetentAuthorityLevel) {
-            return abbCompetentAuthorityLevel;
-        } else {
-            return CompetentAuthorityLevel.Lokaal;
-        }
-    } else {
-        return CompetentAuthorityLevel.Lokaal;
-    }
+export function mapAuthorisedDepartmentsToCompetentAuthorityLevel(ceviDepartments: Department[]): CompetentAuthorityLevel[] {
+    return [...new Set(ceviDepartments.map(mapAuthorisedDepartmentToCompetentAuthorityLevel))].sort()
 }
 
-function mapAuthorisedDepartmentsToCompetentAuthorityLevel(ceviAuthorisedDepartments: Department[]): CompetentAuthorityLevel[] {
-    return ceviAuthorisedDepartments
-        .map((ceviAuthorisedDepartment: Department) => mapAuthorisedDepartmentToCompetentAuthorityLevel(ceviAuthorisedDepartment));
+function mapAuthorisedDepartmentToCompetentAuthorityLevel(ceviDepartment: Department): CompetentAuthorityLevel {
+    switch (ceviDepartment.name) {
+        case 'Vlaamse overheid':
+            return CompetentAuthorityLevel.Vlaams;
+        case  'Federale overheid':
+            return CompetentAuthorityLevel.Federaal;
+        default:
+            return CompetentAuthorityLevel.Lokaal;
+    }
 }
 
 export function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuurUrl: string): string [] {

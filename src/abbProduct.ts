@@ -116,12 +116,14 @@ export enum Theme {
     MobiliteitOpenbareWerken = 'MobiliteitOpenbareWerken'
 }
 
+//TODO LPDC-718: same as CompetentAuthorityLevel ? meaning: same data used in different context ? why a new type? so Create only one?
 export enum ExecutingAuthorityLevel {
     Lokaal = 'Lokaal',
     Vlaams = 'Vlaams',
     Federaal = 'Federaal',
 }
 
+//TODO LPDC-718: same as ExecutingAuthorityLevel ? meaning: same data used in different context ? why a new type? so Create only one?
 export enum CompetentAuthorityLevel {
     Vlaams = 'Vlaams',
     Federaal = 'Federaal',
