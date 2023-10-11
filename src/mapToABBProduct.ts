@@ -237,8 +237,9 @@ function mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDepartment: Depart
     }
 }
 
-function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthorityLevel: ExecutingAuthorityLevel[], lokaalBestuurUrl: string): string[] {
-    return abbExecutingAuthorityLevel.map((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
+export function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthorityLevel: ExecutingAuthorityLevel[], lokaalBestuurUrl: string): string[] {
+    return abbExecutingAuthorityLevel
+        .map((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
         if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
             return 'https://data.vlaanderen.be/id/organisatie/OVO000001';
         } else if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Federaal) {

@@ -1,5 +1,4 @@
-import {expect, test, describe} from 'vitest';
-import {beforeAll} from "vitest";
+import {beforeAll, describe, expect, test} from 'vitest';
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
@@ -7,6 +6,7 @@ import {
     mapCeviThemesToTheme,
     mapConditionsToRequirement,
     mapDeliveringDepartmentsToExecutingAuthorityLevel,
+    mapExecutingAuthorityBasedOnExecutingAuthorityLevel,
     mapInfoUrlsToMoreInfo,
     mapKeywords,
     mapProcedureAndForms,
@@ -14,7 +14,7 @@ import {
     mapTargetGroupsToTargetAudience,
     mapToABBProduct
 } from "../src/mapToABBProduct";
-import {Address, Form, Keyword, ProductType, Url} from "../src/types";
+import {Form, Keyword, ProductType, Url} from "../src/types";
 import {ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
@@ -256,7 +256,10 @@ describe("map ceviProduct to abbProduct", () => {
                 ExecutingAuthorityLevel.Federaal,
                 ExecutingAuthorityLevel.Lokaal,
                 ExecutingAuthorityLevel.Vlaams],
-            executingAuthority: [gemeente_URL],
+            executingAuthority: [
+                'https://data.vlaanderen.be/id/organisatie/OVO027227',
+                gemeente_URL,
+                'https://data.vlaanderen.be/id/organisatie/OVO000001'],
             contactPoints: [
                 {
                     url: "www.stekene.be",
@@ -646,6 +649,27 @@ describe("map ceviProduct to abbProduct", () => {
                 ExecutingAuthorityLevel.Vlaams,])
         });
 
+    });
+
+    describe('mapExecutingAuthorityBasedOnExecutingAuthorityLevel', () => {
+
+        test('Empty delivering executingAuthorityLevel, results in empty executing authority', () => {
+            const result = mapExecutingAuthorityBasedOnExecutingAuthorityLevel([], 'lokaalBestuurUrl');
+            expect(result).toEqual([]);
+        });
+
+        test('Translates to Vlaamse Overheid url, to Federale Overheid url, all else to lokaalBestuurUrl', () => {
+            const result = mapExecutingAuthorityBasedOnExecutingAuthorityLevel([
+                ExecutingAuthorityLevel.Vlaams,
+                ExecutingAuthorityLevel.Federaal,
+                ExecutingAuthorityLevel.Lokaal],
+                'lokaalBestuurUrl');
+
+            expect(result).toEqual([
+                'https://data.vlaanderen.be/id/organisatie/OVO000001',
+                'https://data.vlaanderen.be/id/organisatie/OVO027227',
+                'lokaalBestuurUrl'])
+        });
     });
 
 });
