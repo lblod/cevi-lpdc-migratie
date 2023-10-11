@@ -11,6 +11,16 @@ export class TripleArray {
         return this.triples.map(triple => triple.toString())
     }
 
+    join(other: TripleArray | undefined): TripleArray {
+        if (other) {
+            return new TripleArray([
+                ...this.triples,
+                ...other.triples
+            ])
+        }
+        return new TripleArray([...this.triples]);
+    }
+
 }
 
 export class Triple {
@@ -22,6 +32,13 @@ export class Triple {
     }
     static createIfDefined(subject: Uri, predicate: Uri, object: Literal | Uri | undefined): Triple | undefined {
         return object ? new Triple(subject, predicate, object) : undefined;
+    }
+
+    static create(subject: Uri, predicate: Uri, object: Literal | Uri): Triple {
+        if (!object) {
+            throw new Error('Triple cannot be created!');
+        }
+        return new Triple(subject, predicate, object);
     }
 
     getSubjectValue() {
@@ -41,6 +58,10 @@ export class Triple {
 export class Uri {
 
     constructor(private value: string) {
+    }
+
+    static createIfDefined(value?: string): Uri | undefined {
+        return value ? new Uri(value) : undefined;
     }
 
     getValue(): string {
@@ -67,6 +88,13 @@ export class Literal {
 
     static createIfDefined(value?: string, language?: Language, dataType?: string): Literal | undefined {
         return value ? new Literal(value, language, dataType) : undefined;
+    }
+
+    static create(value: string, language?: Language, dataType?: string): Literal {
+        if (!value) {
+            throw new Error('Literal cannot be created!');
+        }
+        return new Literal(value);
     }
 
     getValue(): string {
@@ -103,7 +131,6 @@ export const Predicates = {
     modified: new Uri('http://purl.org/dc/terms/modified'),
     source: new Uri('http://purl.org/dc/terms/source'),
     createdBy: new Uri('http://purl.org/pav/createdBy'),
-    hasExecutingAuthority: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority'),
     status: new Uri('http://www.w3.org/ns/adms#status'),
     hasRequirement: new Uri('http://vocab.belgif.be/ns/publicservice#hasRequirement'),
     chosenForm: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#chosenForm'),
@@ -125,7 +152,9 @@ export const Predicates = {
     targetAudience: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience'),
     language: new Uri('http://publications.europa.eu/resource/authority/language'),
     competentAuthorityLevel: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel'),
+    hasCompetentAuthority: new Uri('http://data.europa.eu/m8g/hasCompetentAuthority'),
     executingAuthorityLevel: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel'),
+    hasExecutingAuthority: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority'),
     keyword: new Uri('http://www.w3.org/ns/dcat#keyword'),
     productType: new Uri('http://purl.org/dc/terms/type'),
     conceptTag: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#conceptTag'),

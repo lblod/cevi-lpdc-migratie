@@ -17,14 +17,14 @@ import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
-export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuur: string): AbbProduct {
+export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
     const targetAudience: TargetAudience[] = mapTargetGroupsToTargetAudience(product.targetGroups);
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
     const theme: Theme[] = mapCeviThemesToTheme(product.themes);
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
-    const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuur);
+    const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuurUrl);
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
-    const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuur);
+    const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuurUrl);
     const keywords: string[] = mapKeywords(product.keywords);
     const productId: string | undefined = mapProductId(product.id, product.source);
 
@@ -59,7 +59,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         mapAmountToApplyToCost(product.amountToApply),
         undefined,
         undefined,
-        lokaalBestuur,
+        lokaalBestuurUrl,
         StatusPublicService.concept,
     )
 }
@@ -248,7 +248,7 @@ function mapDeliveringDepartmentsToExecutingAuthorityLevel(ceviDeliveringDepartm
         .map((ceviDeliveringDepartment: Department) => mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDeliveringDepartment));
 }
 
-function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthorityLevel: ExecutingAuthorityLevel[], lokaalBestuur: string): string[] {
+function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthorityLevel: ExecutingAuthorityLevel[], lokaalBestuurUrl: string): string[] {
     // const executingAuthorities: string[] = [];
     // abbExecutingAuthorityLevel.forEach((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
     //     if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
@@ -263,11 +263,11 @@ function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthori
     // return executingAuthorities;
     return abbExecutingAuthorityLevel.map((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
         if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
-            return 'Administratieve diensten van de Vlaamse overheid';
+            return 'https://data.vlaanderen.be/id/organisatie/OVO000001';
         } else if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Federaal) {
-            return 'Federale overheidsdiensten';
+            return 'https://data.vlaanderen.be/id/organisatie/OVO027227';
         } else {
-            return lokaalBestuur;
+            return lokaalBestuurUrl;
         }
     })
 }
@@ -294,14 +294,14 @@ function mapAuthorisedDepartmentsToCompetentAuthorityLevel(ceviAuthorisedDepartm
         .map((ceviAuthorisedDepartment: Department) => mapAuthorisedDepartmentToCompetentAuthorityLevel(ceviAuthorisedDepartment));
 }
 
-function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuur: string): string [] {
+function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuurUrl: string): string [] {
     return abbCompetentAuthorityLevel.map((abbCompetentAuthorityLevel: CompetentAuthorityLevel) => {
         if (abbCompetentAuthorityLevel === CompetentAuthorityLevel.Vlaams) {
-            return 'Administratieve diensten van de Vlaamse overheid';
+            return 'https://data.vlaanderen.be/id/organisatie/OVO000001';
         } else if (abbCompetentAuthorityLevel === CompetentAuthorityLevel.Federaal) {
-            return 'Federale overheidsdiensten';
+            return 'https://data.vlaanderen.be/id/organisatie/OVO027227';
         } else {
-            return lokaalBestuur;
+            return lokaalBestuurUrl;
         }
     })
 }

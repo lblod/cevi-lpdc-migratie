@@ -3,6 +3,8 @@ import {Procedure} from "./procedure";
 import {Website} from "./website";
 import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
+import {Literal, Predicates, Triple, TripleArray, Uri} from "./triple-array";
+import {Language} from "./language";
 
 export class AbbProduct {
 
@@ -20,7 +22,7 @@ export class AbbProduct {
         private exception: string | undefined,
         private regulation: undefined,
         private theme: Theme[],
-        private competentAuthorxityLevel: CompetentAuthorityLevel[],
+        private competentAuthorityLevel: CompetentAuthorityLevel[],
         private competentAuthority: string[],
         private executingAuthorityLevel: ExecutingAuthorityLevel[],
         private executingAuthority: string[],
@@ -39,6 +41,48 @@ export class AbbProduct {
         private spatial: undefined,
         private createdBy: string,
         private status: StatusPublicService) {
+    }
+
+    toTriples(): TripleArray {
+        const id = new Uri(this.id);
+        const triples: (Triple | TripleArray)[] = [
+            Triple.createIfDefined(id, Predicates.type, new Uri(PublicServiceType)),
+            Triple.createIfDefined(id, Predicates.uuid, new Literal(this.uuid)),
+            this.title ? Triple.createIfDefined(id, Predicates.title, new Literal(this.title, Language.NL)) : undefined,
+            this.description ? Triple.createIfDefined(id, Predicates.description, new Literal(this.description, Language.NL)) : undefined,
+            this.additionalDescription ? Triple.createIfDefined(id, Predicates.additionalDescription, new Literal(this.additionalDescription, Language.NL)) : undefined,
+            this.exception ? Triple.createIfDefined(id, Predicates.exception, new Literal(this.exception, Language.NL)) : undefined,
+            this.regulation ? Triple.createIfDefined(id, Predicates.regulation, new Literal(this.regulation, Language.NL)) : undefined,
+            this.theme ? this.theme.map(aTheme => Triple.createIfDefined(id, Predicates.thematicArea, new Uri(aTheme))) : undefined,
+            this.targetAudience ? this.targetAudience.map(aTargetAudience => Triple.createIfDefined(id, Predicates.targetAudience, new Uri(aTargetAudience))) : undefined,
+            this.competentAuthorityLevel?.map(aCompetentAuthorityLevel => Triple.createIfDefined(id, Predicates.competentAuthorityLevel, new Uri(`https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/${aCompetentAuthorityLevel}`))),
+            this.competentAuthority?.map(aCompetentAuthority => Triple.createIfDefined(id, Predicates.hasCompetentAuthority, new Uri(aCompetentAuthority))),
+            this.executingAuthorityLevel?.map(anExecutingAuthorityLevel => Triple.createIfDefined(id, Predicates.executingAuthorityLevel, new Uri(`https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/${anExecutingAuthorityLevel}`))),
+            this.executingAuthority?.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, new Uri(anExecutingAuthority))),
+            this.resourceLanguage ? this.resourceLanguage.map(aResourceLanguage => Triple.createIfDefined(id, Predicates.language, new Uri(aResourceLanguage))) : undefined, // TODO verify in Excel
+            this.keywords ? this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, new Literal(aKeyword, Language.NL))) : undefined,
+            this.productType ? Triple.createIfDefined(id, Predicates.productType, new Uri(this.productType)) : undefined,
+            this.created ? Triple.createIfDefined(id, Predicates.created, new Literal(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')) : undefined,
+            this.modified ? Triple.createIfDefined(id, Predicates.modified, new Literal(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')) : undefined,
+            this.startDate ? Triple.createIfDefined(id, Predicates.startDate, new Literal(this.startDate, undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')) : undefined,
+            this.endDate ? Triple.createIfDefined(id, Predicates.endDate, new Literal(this.endDate, undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')) : undefined,
+            this.productId ? Triple.createIfDefined(id, Predicates.productId, new Literal(this.productId)) : undefined,
+            this.yourEuropeCategory ? this.yourEuropeCategory.map(aYourEuropeCategory => Triple.createIfDefined(id, Predicates.yourEuropeCategory, new Uri(aYourEuropeCategory))) : undefined, // TODO verify in Excel
+            this.publicationMedium ? Triple.createIfDefined(id, Predicates.publicationMedium, new Uri(this.publicationMedium)) : undefined,
+            this.requirement?.toTriples(id),
+            // TODO add follows triple
+            this.procedure ? this.procedure.toTriples() : undefined,
+            this.moreInfo ? this.moreInfo.map(aMoreInfo => aMoreInfo.toTriples()) : undefined,
+            this.cost ? this.cost.map(aCost => aCost.toTriples()) : undefined,
+            this.financialAdvantage ? Triple.createIfDefined(id, Predicates.hasFinancialAdvantage, new Uri(this.financialAdvantage)) : undefined,
+            // TODO add hasContactPoint triple
+            this.contactPoints ? this.contactPoints.map(aContactPoint => aContactPoint.toTriples()) : undefined,
+            this.spatial ? Triple.createIfDefined(id, Predicates.spatial, new Uri(this.spatial)) : undefined,
+            // TODO add createdBy
+            // TODO add status
+        ];
+
+        return new TripleArray(triples);
     }
 }
 
