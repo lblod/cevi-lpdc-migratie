@@ -118,19 +118,14 @@ export enum Theme {
 
 export enum ExecutingAuthorityLevel {
     Lokaal = 'Lokaal',
-    Derden = 'Derden',
     Vlaams = 'Vlaams',
-    Provinciaal = 'Provinciaal',
     Federaal = 'Federaal',
-    Europees = 'Europees',
 }
 
 export enum CompetentAuthorityLevel {
     Vlaams = 'Vlaams',
     Federaal = 'Federaal',
     Lokaal = 'Lokaal',
-    Provinciaal = 'Provinciaal',
-    Europees = 'Europees',
 }
 
 export enum ResourceLanguage {

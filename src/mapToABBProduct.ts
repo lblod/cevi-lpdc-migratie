@@ -83,7 +83,7 @@ export function mapProcedureAndForms(procedure: string | undefined, forms: Form[
     return undefined;
 }
 
-function mapFormsToWebsite(forms: Form[] | undefined) : Website[] | undefined {
+function mapFormsToWebsite(forms: Form[] | undefined): Website[] | undefined {
     return forms?.map((form: Form) => new Website(
         uuid(),
         undefined,
@@ -222,41 +222,22 @@ export function mapCeviThemesToTheme(ceviThemes: CeviTheme[]): Theme[] {
         .filter((theme): theme is Theme => !!theme);
 }
 
-function mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDeliveringDepartment: Department): ExecutingAuthorityLevel {
-    const ExecutingAuthorityLevelMapping: Record<string, ExecutingAuthorityLevel> = {
-        'Vlaamse overheid': ExecutingAuthorityLevel.Vlaams,
-        'Federale overheid': ExecutingAuthorityLevel.Federaal
-    }
-    if (ceviDeliveringDepartment.name) {
-        const abbExecutingAuthorityLevel: ExecutingAuthorityLevel = ExecutingAuthorityLevelMapping[ceviDeliveringDepartment.name];
-        if (abbExecutingAuthorityLevel) {
-            return abbExecutingAuthorityLevel;
-        } else {
-            return ExecutingAuthorityLevel.Lokaal;
-        }
-    } else {
-        return ExecutingAuthorityLevel.Lokaal;
-    }
+export function mapDeliveringDepartmentsToExecutingAuthorityLevel(ceviDepartments: Department[]): ExecutingAuthorityLevel[] {
+    return [...new Set(ceviDepartments.map(mapDeliveringDepartmentToExecutingAuthorityLevel))].sort();
 }
 
-function mapDeliveringDepartmentsToExecutingAuthorityLevel(ceviDeliveringDepartments: Department[]): ExecutingAuthorityLevel[] {
-    return ceviDeliveringDepartments
-        .map((ceviDeliveringDepartment: Department) => mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDeliveringDepartment));
+function mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDepartment: Department): ExecutingAuthorityLevel {
+    switch (ceviDepartment.name) {
+        case 'Vlaamse overheid':
+            return ExecutingAuthorityLevel.Vlaams;
+        case  'Federale overheid':
+            return ExecutingAuthorityLevel.Federaal;
+        default:
+            return ExecutingAuthorityLevel.Lokaal;
+    }
 }
 
 function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthorityLevel: ExecutingAuthorityLevel[], lokaalBestuurUrl: string): string[] {
-    // const executingAuthorities: string[] = [];
-    // abbExecutingAuthorityLevel.forEach((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
-    //     if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
-    //         executingAuthorities.push('Administratieve diensten van de Vlaamse overheid');
-    //     }
-    //     else if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Federaal) {
-    //         executingAuthorities.push('Federale overheidsdiensten');
-    //     } else {
-    //         executingAuthorities.push(`${lokaalBestuur} (Gemeente)`);
-    //     }
-    // })
-    // return executingAuthorities;
     return abbExecutingAuthorityLevel.map((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
         if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
             return 'https://data.vlaanderen.be/id/organisatie/OVO000001';
@@ -290,7 +271,7 @@ function mapAuthorisedDepartmentsToCompetentAuthorityLevel(ceviAuthorisedDepartm
         .map((ceviAuthorisedDepartment: Department) => mapAuthorisedDepartmentToCompetentAuthorityLevel(ceviAuthorisedDepartment));
 }
 
-function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuurUrl: string): string [] {
+export function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthorityLevel: CompetentAuthorityLevel[], lokaalBestuurUrl: string): string [] {
     return abbCompetentAuthorityLevel.map((abbCompetentAuthorityLevel: CompetentAuthorityLevel) => {
         if (abbCompetentAuthorityLevel === CompetentAuthorityLevel.Vlaams) {
             return 'https://data.vlaanderen.be/id/organisatie/OVO000001';

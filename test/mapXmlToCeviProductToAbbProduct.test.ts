@@ -3,13 +3,19 @@ import {beforeAll} from "vitest";
 import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
-    mapAmountToApplyToCost, mapCeviThemesToTheme,
-    mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapKeywords, mapProcedureAndForms,
-    mapProductType, mapTargetGroupsToTargetAudience,
+    mapAmountToApplyToCost,
+    mapCeviThemesToTheme,
+    mapConditionsToRequirement,
+    mapDeliveringDepartmentsToExecutingAuthorityLevel,
+    mapInfoUrlsToMoreInfo,
+    mapKeywords,
+    mapProcedureAndForms,
+    mapProductType,
+    mapTargetGroupsToTargetAudience,
     mapToABBProduct
 } from "../src/mapToABBProduct";
-import {Form, Keyword, ProductType, Url} from "../src/types";
-import {TargetAudience, Theme} from "../src/abbProduct";
+import {Address, Form, Keyword, ProductType, Url} from "../src/types";
+import {ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -27,7 +33,7 @@ describe("map xml to ceviproduct", () => {
 
     test('map xml to ceviProduct', async () => {
         //TODO LPDC-718: sometimes, the &amp; from the xml are escaped, sometimes they are not ?
-        //TODO LPDC-718: no example for Attachments (which to take over if they are in the form of an URL), so skipping for now
+        //TODO LPDC-718: no example for Attachments (which to take over if they are in the form of an URL), so skipping for now; mapping code not done either ...
         //TODO LPDC-718: no example for UploadedAttachments (which to take over if they are in the form of an URL), so skipping for now
         //TODO LPDC-718: On one or more fields, in the mapping from xml to ceviproduct, we have a construct like if (Array.isArray( ... .else => only one branch so far is tested right now.
         expect(ceviProducts[0]).toEqual(new CeviProduct(
@@ -246,7 +252,10 @@ describe("map ceviProduct to abbProduct", () => {
             ],
             competentAuthorityLevel: ["Lokaal"],
             competentAuthority: [gemeente_URL],
-            executingAuthorityLevel: ["Lokaal"],
+            executingAuthorityLevel: [
+                ExecutingAuthorityLevel.Federaal,
+                ExecutingAuthorityLevel.Lokaal,
+                ExecutingAuthorityLevel.Vlaams],
             executingAuthority: [gemeente_URL],
             contactPoints: [
                 {
@@ -562,6 +571,79 @@ describe("map ceviProduct to abbProduct", () => {
         test('Filters undefined cevi theme values', () => {
             const result = mapCeviThemesToTheme([{id: 'ignored', value: undefined}]);
             expect(result).toEqual([]);
+        });
+
+    });
+
+    describe('mapDeliveringDepartmentsToExecutingAuthorityLevel', () => {
+
+        test('Empty delivering departments themes, results in empty executing authority levels', () => {
+            const result = mapDeliveringDepartmentsToExecutingAuthorityLevel([]);
+            expect(result).toEqual([]);
+        });
+
+        test('Translates delivering departments themes Vlaamse Overheid directly, Federale Overheid directly, all else becomes Lokale overheid', () => {
+            const result = mapDeliveringDepartmentsToExecutingAuthorityLevel([
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Departement Cultuur',
+                    address: {}
+                },
+            ]);
+            expect(result).toEqual([
+                ExecutingAuthorityLevel.Federaal,
+                ExecutingAuthorityLevel.Lokaal,
+                ExecutingAuthorityLevel.Vlaams])
+        });
+
+        test('Translates delivering departments themes ; and filters duplicates', () => {
+            const result = mapDeliveringDepartmentsToExecutingAuthorityLevel([
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Departement Cultuur',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Departement Groendienst',
+                    address: {}
+                },
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+            ]);
+            expect(result).toEqual([
+                ExecutingAuthorityLevel.Federaal,
+                ExecutingAuthorityLevel.Lokaal,
+                ExecutingAuthorityLevel.Vlaams,])
         });
 
     });
