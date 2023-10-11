@@ -18,7 +18,6 @@ import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
-    const targetAudience: TargetAudience[] = mapTargetGroupsToTargetAudience(product.targetGroups);
     const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments);
     const theme: Theme[] = mapCeviThemesToTheme(product.themes);
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
@@ -30,7 +29,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${uuid()}`,
-        targetAudience,
+        mapTargetGroupsToTargetAudience(product.targetGroups),
         uuid(),
         migrationDate,
         migrationDate,
@@ -166,9 +165,9 @@ function mapTargetGroupToTargetAudience(ceviTargetGroup: TargetGroup): TargetAud
     }
 }
 
-function mapTargetGroupsToTargetAudience(ceviTargetGroups: TargetGroup[]): TargetAudience[] {
-    return ceviTargetGroups
-        .map((ceviTargetGroup: TargetGroup) => mapTargetGroupToTargetAudience(ceviTargetGroup))
+export function mapTargetGroupsToTargetAudience(targetGroups: TargetGroup[]): TargetAudience[] {
+    return targetGroups
+        .map(mapTargetGroupToTargetAudience)
         .filter((targetAudience): targetAudience is TargetAudience => !!targetAudience);
 }
 
@@ -222,7 +221,7 @@ function mapCeviThemeToTheme(ceviTheme: CeviTheme): Theme | undefined {
 
 function mapCeviThemesToTheme(ceviThemes: CeviTheme[]): Theme[] {
     return ceviThemes
-        .map((ceviTheme: CeviTheme) => mapCeviThemeToTheme(ceviTheme))
+        .map(mapCeviThemeToTheme)
         .filter((theme): theme is Theme => !!theme);
 }
 

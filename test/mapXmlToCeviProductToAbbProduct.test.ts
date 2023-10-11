@@ -5,10 +5,11 @@ import {readCeviXml} from "../src/readCeviXml";
 import {
     mapAmountToApplyToCost,
     mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapKeywords, mapProcedureAndForms,
-    mapProductType,
+    mapProductType, mapTargetGroupsToTargetAudience,
     mapToABBProduct
 } from "../src/mapToABBProduct";
 import {Form, Keyword, ProductType, Url} from "../src/types";
+import {TargetAudience} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -229,9 +230,12 @@ describe("map ceviProduct to abbProduct", () => {
                 "luier",
                 "luiers",
                 "pamper",
-                "herbruikbaar"
+                "herbruikbaar",
             ],
-            targetAudience: [],
+            targetAudience: [
+                TargetAudience.Burger,
+                TargetAudience.Onderneming,
+            ],
             theme: [],
             competentAuthorityLevel: ["Lokaal"],
             competentAuthority: [gemeente_URL],
@@ -452,8 +456,8 @@ describe("map ceviProduct to abbProduct", () => {
     describe('mapKeywords', () => {
 
         test('Empty cevi keywords, results in empty keywords', () => {
-           const result = mapKeywords([]);
-           expect(result).toEqual([]);
+            const result = mapKeywords([]);
+            expect(result).toEqual([]);
         });
 
         test('Maps cevi keywords to keywords', () => {
@@ -469,6 +473,44 @@ describe("map ceviProduct to abbProduct", () => {
             const result = mapKeywords([keyword1, keyword2]);
             expect(result).toEqual(['keyword1']);
         });
+
+    });
+
+    describe('mapTargetGroupsToTargetAudience', () => {
+
+        test('Empty cevi targetGroup, results in empty targetAudience', () => {
+            const result = mapTargetGroupsToTargetAudience([]);
+            expect(result).toEqual([]);
+        });
+
+        test('Maps cevi targetgroups to targetAudience values', () => {
+            const result = mapTargetGroupsToTargetAudience([
+                {id: 'ignored', value: 'Andere organisatie'},
+                {id: 'ignored', value: 'Burger'},
+                {id: 'ignored', value: 'Lokaal bestuur'},
+                {id: 'ignored', value: 'Lokale besturen'},
+                {id: 'ignored', value: 'Nieuwe inwoner'},
+                {id: 'ignored', value: 'Onderneming'},
+                {id: 'ignored', value: 'Organisatie'},
+                {id: 'ignored', value: 'Vereniging'},
+                {id: 'ignored', value: 'Vlaamse overheid'}
+            ]);
+            expect(result).toEqual([
+                TargetAudience.Organisatie
+                , TargetAudience.Burger
+                , TargetAudience.LokaalBestuur
+                , TargetAudience.LokaalBestuur
+                , TargetAudience.Burger
+                , TargetAudience.Onderneming
+                , TargetAudience.Organisatie
+                , TargetAudience.Vereniging
+                , TargetAudience.VlaamseOverheid]);
+        });
+
+        test('Filters unknown cevi targetgroups', () => {
+            const result = mapTargetGroupsToTargetAudience([{id: 'ignored', value: 'Some unknown value'},]);
+            expect(result).toEqual([]);
+        })
 
     });
 
