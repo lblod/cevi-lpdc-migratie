@@ -306,18 +306,10 @@ function mapCompetentAuthorityBasedOnCompetentAuthorityLevel(abbCompetentAuthori
     })
 }
 
-function mapKeywords(ceviKeywords: Keyword[]): string[] {
+export function mapKeywords(ceviKeywords: Keyword[]): string[] {
     return ceviKeywords
-        .map((ceviKeyword) => mapKeyword(ceviKeyword))
+        .map((ceviKeyword) => ceviKeyword?.value)
         .filter((string): string is string => !!string);
-}
-
-function mapKeyword(ceviKeyword: Keyword): string | undefined {
-    if (ceviKeyword.value) {
-        return ceviKeyword.value;
-    } else {
-        return undefined;
-    }
 }
 
 function mapProductId(ceviProductId: string, ceviProductSource: Source): string | undefined {

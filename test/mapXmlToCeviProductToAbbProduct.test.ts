@@ -4,11 +4,11 @@ import {CeviProduct} from "../src/ceviProduct";
 import {readCeviXml} from "../src/readCeviXml";
 import {
     mapAmountToApplyToCost,
-    mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapProcedureAndForms,
+    mapConditionsToRequirement, mapInfoUrlsToMoreInfo, mapKeywords, mapProcedureAndForms,
     mapProductType,
     mapToABBProduct
 } from "../src/mapToABBProduct";
-import {Form, ProductType, Url} from "../src/types";
+import {Form, Keyword, ProductType, Url} from "../src/types";
 
 let ceviProducts: CeviProduct[] = [];
 
@@ -225,8 +225,13 @@ describe("map ceviProduct to abbProduct", () => {
                     location: "https://integratie-inburgering.be/contact",
                 }
             ],
+            keywords: [
+                "luier",
+                "luiers",
+                "pamper",
+                "herbruikbaar"
+            ],
             targetAudience: [],
-            keywords: [],
             theme: [],
             competentAuthorityLevel: ["Lokaal"],
             competentAuthority: [gemeente_URL],
@@ -442,6 +447,29 @@ describe("map ceviProduct to abbProduct", () => {
                 }]);
         });
 
-    })
+    });
+
+    describe('mapKeywords', () => {
+
+        test('Empty cevi keywords, results in empty keywords', () => {
+           const result = mapKeywords([]);
+           expect(result).toEqual([]);
+        });
+
+        test('Maps cevi keywords to keywords', () => {
+            const keyword1: Keyword = {id: 'ignored', value: 'keyword1'};
+            const keyword2: Keyword = {id: 'ignoredagain', value: 'keyword2'};
+            const result = mapKeywords([keyword1, keyword2]);
+            expect(result).toEqual(['keyword1', 'keyword2']);
+        });
+
+        test('Ignores cevi keywords with absent values', () => {
+            const keyword1: Keyword = {id: undefined, value: 'keyword1'};
+            const keyword2: Keyword = {id: 'ignoredagain', value: undefined};
+            const result = mapKeywords([keyword1, keyword2]);
+            expect(result).toEqual(['keyword1']);
+        });
+
+    });
 
 });

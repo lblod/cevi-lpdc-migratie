@@ -15,7 +15,7 @@ export class AbbProduct {
         private created: Date,
         private modified: Date,
         private contactPoints: ContactPoint[],
-        private keywords: string[],
+        private keywords: string[] | undefined,
         private title: string | undefined,
         private description: string | undefined,
         private additionalDescription: string | undefined,
