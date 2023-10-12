@@ -67,6 +67,7 @@ export class AbbProduct {
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';
 
         const triples: (Triple | undefined)[] = [
+            //TODO LPDC-718: ipdc concept id koppelen? => sparql query to find the concept given the product id and insert the correct triples for each of those that have a product id
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
             Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),

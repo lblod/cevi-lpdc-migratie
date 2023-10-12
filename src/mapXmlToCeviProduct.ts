@@ -1,5 +1,6 @@
 import {CeviProduct} from "./ceviProduct";
-import {Address, Department} from "./types";
+import {Address} from "./types";
+import { JSDOM } from 'jsdom';
 
 export function mapXmlToCeviProduct(product: any): CeviProduct {
 
@@ -20,7 +21,7 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
         verifyKeywordsValueInXml(product.Keywords?.Keyword),
         product.Name?._text,
         product.Title?._text,
-        product.Description?._text,
+        unescapeHtmlEntities(product.Description?._text),
         product.StartDate?._text,
         product.EndDate?._text,
         product.Conditions?._text,
@@ -153,3 +154,15 @@ function toArray(value: object | any[] | undefined) {
     }
     return [];
 }
+
+function unescapeHtmlEntities(input: string | undefined): string | undefined {
+    if(input) {
+        const dom = new JSDOM(`<!DOCTYPE html>`);
+        const domParser = new dom.window.DOMParser();
+        const doc = domParser.parseFromString(input, "text/html");
+        return doc.documentElement.textContent || "";
+    } else {
+        return undefined;
+    }
+}
+
