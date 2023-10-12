@@ -109,6 +109,7 @@ export class Literal {
         if (this.language) {
             return `"${this.value}"@${this.language}`
         } else if (this.dataType) {
+            //TODO LPDC-718: do not add ^^ when datatype = string
             return `"${this.value}"^^<${this.dataType}>`
         } else {
             return `"${this.value}"`

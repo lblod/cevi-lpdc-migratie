@@ -292,7 +292,7 @@ export function mapKeywords(ceviKeywords: Keyword[]): string[] {
         .filter((string): string is string => !!string);
 }
 
-function mapProductId(ceviProductId: string, ceviProductSource: Source): string | undefined {
+export function mapProductId(ceviProductId: string, ceviProductSource: Source): string | undefined {
     if (ceviProductSource?.value === 'IPDC') {
         return ceviProductId;
     } else {

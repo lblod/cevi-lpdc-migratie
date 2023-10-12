@@ -1,16 +1,7 @@
 import {CeviProduct} from "./ceviProduct";
-import {Form, Keyword, TargetGroup, CeviTheme, UploadedAttachment, Url, Department, Address} from "./types";
+import {Address, Department} from "./types";
 
 export function mapXmlToCeviProduct(product: any): CeviProduct {
-
-    const keyword: Keyword[] = verifyKeywordsValueInXml(product.Keywords?.Keyword);
-    const uploadedAttachment: UploadedAttachment[] = verifyUploadedAttachmentsValueInXml(product.UploadedAttachments?.UploadedAttachment);
-    const url: Url[] = verifyInfoUrlsValueInXml(product.InfoUrls?.Url);
-    const form: Form[] = verifyFormsValueInXml(product.Forms?.Form);
-    const targetGroup: TargetGroup[] = verifyTargetGroupsValueInXml(product.TargetGroups?.TargetGroup);
-    const theme: CeviTheme[] = verifyThemesValueInXml(product.Themes?.Theme);
-    const deliveringDepartments: Department[] = verifyDeliveringDepartmentsValueInXml(product.DeliveringDepartments?.Department);
-    const authorisedDepartments: Department[] = verifyAuthorisedDepartmentsValueInXml(product.AuthorisedDepartments?.Department);
 
     return new CeviProduct(
         product.Id?._text,
@@ -18,15 +9,15 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
             id: product.Source?.Id?._text,
             value: product.Source?.Value?._text
         },
-        targetGroup,
+        verifyTargetGroupsValueInXml(product.TargetGroups?.TargetGroup),
         {
             id: product.ProductType!.Id!._text,
             value: product.ProductType!.Value!._text
         },
-        theme,
-        deliveringDepartments,
-        authorisedDepartments,
-        keyword,
+        verifyThemesValueInXml(product.Themes?.Theme),
+        verifyDepartmentsValueInXml(product.DeliveringDepartments?.Department),
+        verifyDepartmentsValueInXml(product.AuthorisedDepartments?.Department),
+        verifyKeywordsValueInXml(product.Keywords?.Keyword),
         product.Name?._text,
         product.Title?._text,
         product.Description?._text,
@@ -39,20 +30,20 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
         product.Procedure?._text,
         product.Exceptions?._text,
         product.AdditionalInfo?._text,
-        url,
-        form,
+        verifyInfoUrlsValueInXml(product.InfoUrls?.Url),
+        verifyFormsValueInXml(product.Forms?.Form),
         product.EnrichedLinks?._text,
         {
             id: product.DefaultTheme?.Id?._text,
             value: product.DefaultTheme?.Value?._text,
         },
         {
-                id: product.RelatedProducts?.ProductReference?.Id?._text,
-                title: product.RelatedProducts?.ProductReference?.Title?._text,
-                source: {
-                    id: product.RelatedProducts?.ProductReference?.Source?.Id?._text,
-                    value: product.RelatedProducts?.ProductReference?.Source?.Value?._text,
-                }
+            id: product.RelatedProducts?.ProductReference?.Id?._text,
+            title: product.RelatedProducts?.ProductReference?.Title?._text,
+            source: {
+                id: product.RelatedProducts?.ProductReference?.Source?.Id?._text,
+                value: product.RelatedProducts?.ProductReference?.Source?.Value?._text,
+            }
         },
         product.Attachments?._text,
         {
@@ -61,166 +52,74 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
             provincialApplicationAreas: product.GeographicalApplicationAreas?.ProvincialApplicationAreas?._text,
             municipalApplicationAreas: product.GeographicalApplicationAreas?.MunicipalApplicationAreas?._text,
         },
-        product.Clusters._text,
-        uploadedAttachment,
+        product.Clusters?._text,
+        verifyUploadedAttachmentsValueInXml(product.UploadedAttachments?.UploadedAttachment),
         product.TimeStampLastUpdate?._text,
         product.IsInternal?._text
     )
 }
 
-//TODO: niet gebruiken, escape charachters nakijken in virtuoso
-function cleanXml(text: string): string | undefined {
-    if (text) {
-        return text.replace(/&lt;.+?&gt;/g, '');
-    }
-    return undefined;
-}
 
-function cleanEmail(emailAddress: string): string | undefined {
-    if (emailAddress) {
-        return emailAddress.replace(/&amp;BS/g, '');
-    }
-    return undefined;
-}
-
-function verifyKeywordsValueInXml(keywordsValue: any) {
-    if (Array.isArray(keywordsValue)) {
-        return keywordsValue.map(keywordValue => ({
+function verifyKeywordsValueInXml(keywordsValue: object | any[] | undefined) {
+    return toArray(keywordsValue)
+        .map(keywordValue => ({
             id: keywordValue.Id?._text,
             value: keywordValue.Value?._text
         }));
-    } else if (keywordsValue) {
-        return [{
-            id: keywordsValue.Id?._text,
-            value: keywordsValue.Value?._text
-        }]
-    } else {
-        return []
-    }
 }
 
-function verifyUploadedAttachmentsValueInXml(uploadedAttachmentsValue: any) {
-    if (Array.isArray(uploadedAttachmentsValue)) {
-        return uploadedAttachmentsValue.map((uploadedAttachmentValue) => ({
-                id: uploadedAttachmentValue.Id?._text,
-                title: uploadedAttachmentValue.Title?._text,
-                sequenceNumber: uploadedAttachmentValue.SequenceNumber?._text,
-                isInternal: uploadedAttachmentValue.IsInternal?._text,
+//TODO LPDC-718: not used for stekene, so not tested ...
+function verifyUploadedAttachmentsValueInXml(uploadedAttachmentsValue: object | any[] | undefined) {
+    return toArray(uploadedAttachmentsValue)
+        .map(uploadedAttachmentValue => ({
+            id: uploadedAttachmentValue.Id?._text,
+            title: uploadedAttachmentValue.Title?._text,
+            sequenceNumber: uploadedAttachmentValue.SequenceNumber?._text,
+            isInternal: uploadedAttachmentValue.IsInternal?._text,
         }));
-    } else if (uploadedAttachmentsValue) {
-        return [{
-            id: uploadedAttachmentsValue.Id?._text,
-            title: uploadedAttachmentsValue.Title?._text,
-            sequenceNumber: uploadedAttachmentsValue.SequenceNumber?._text,
-            isInternal: uploadedAttachmentsValue.IsInternal?._text,
-        }]
-    } else {
-        return []
-    }
 }
 
-function verifyInfoUrlsValueInXml(infoUrlsValue: any) {
-    if (Array.isArray(infoUrlsValue)) {
-        return infoUrlsValue.map((infoUrlValue) => ({
-                sequenceNumber: infoUrlValue.SequenceNumber?._text,
-                title: infoUrlValue.Title?._text,
-                location: infoUrlValue.Location?._text,
+function verifyInfoUrlsValueInXml(infoUrlsValue: object | any[] | undefined) {
+    return toArray(infoUrlsValue)
+        .map(infoUrlValue => ({
+            sequenceNumber: infoUrlValue.SequenceNumber?._text,
+            title: infoUrlValue.Title?._text,
+            location: infoUrlValue.Location?._text,
         }));
-    } else if (infoUrlsValue) {
-        return [{
-            sequenceNumber: infoUrlsValue.SequenceNumber?._text,
-            title: infoUrlsValue.Title?._text,
-            location: infoUrlsValue.Location?._text
-        }]
-    } else {
-        return []
-    }
 }
 
-function verifyFormsValueInXml(formsValue: any) {
-    if (Array.isArray(formsValue)) {
-        return formsValue.map((formValue) => ({
-                sequenceNumber: formValue.SequenceNumber?._text,
-                title: formValue.Title?._text,
-                location: formValue.Location?._text
+function verifyFormsValueInXml(formsValue: object | any[] | undefined) {
+    return toArray(formsValue)
+        .map(formValue => ({
+            sequenceNumber: formValue.SequenceNumber?._text,
+            title: formValue.Title?._text,
+            location: formValue.Location?._text
         }));
-    } else if (formsValue) {
-        return [{
-            sequenceNumber: formsValue.SequenceNumber?._text,
-            title: formsValue.Title?._text,
-            location: formsValue.Location?._text
-        }]
-    } else {
-        return []
-    }
 }
 
-function verifyTargetGroupsValueInXml(targetGroupsValue: any) {
-    if (Array.isArray(targetGroupsValue)) {
-        return targetGroupsValue.map((targetGroupValue) => ({
-                id: targetGroupValue.Id!._text,
-                value: targetGroupValue.Value!._text
+function verifyTargetGroupsValueInXml(targetGroupsValue: object | any[] | undefined) {
+    return toArray(targetGroupsValue)
+        .map(targetGroupValue => ({
+            id: targetGroupValue.Id!._text,
+            value: targetGroupValue.Value!._text
         }));
-    } else if (targetGroupsValue) {
-        return [{
-            id: targetGroupsValue.Id!._text,
-            value: targetGroupsValue.Value!._text
-        }]
-    } else {
-        return []
-    }
 }
 
-function verifyThemesValueInXml(themesValue: any) {
-    if (Array.isArray(themesValue)) {
-        return themesValue.map((themeValue) => ({
-                id: themeValue.Id?._text,
-                value: themeValue.Value?._text
+function verifyThemesValueInXml(themesValue: object | any[] | undefined) {
+    return toArray(themesValue)
+        .map(themeValue => ({
+            id: themeValue.Id?._text,
+            value: themeValue.Value?._text
         }));
-    } else if (themesValue) {
-        return [{
-            id: themesValue.Id?._text,
-            value: themesValue.Value?._text
-        }];
-    } else {
-        return []
-    }
 }
 
-function verifyDeliveringDepartmentsValueInXml(deliveringDepartmentsValue: any) {
-    if (Array.isArray(deliveringDepartmentsValue)) {
-        return deliveringDepartmentsValue.map((deliveringDepartmentValue) => ({
-            id: deliveringDepartmentValue.Id?._text,
-            name: deliveringDepartmentValue.Name?._text,
-            address: mapDepartmentAddress(deliveringDepartmentValue.Addresses?.Address)
+function verifyDepartmentsValueInXml(departmentsValue: object | any[] | undefined) {
+    return toArray(departmentsValue)
+        .map(departmentsValue => ({
+            id: departmentsValue.Id?._text,
+            name: departmentsValue.Name?._text,
+            address: mapDepartmentAddress(departmentsValue.Addresses?.Address)
         }));
-    } else if (deliveringDepartmentsValue) {
-        return [{
-            id: deliveringDepartmentsValue.Id?._text,
-            name: deliveringDepartmentsValue.Name?._text,
-            address: mapDepartmentAddress(deliveringDepartmentsValue.Addresses?.Address)
-        }];
-    } else {
-        return [];
-    }
-}
-
-function verifyAuthorisedDepartmentsValueInXml(authorisedDepartmentsValue: any) {
-    if (Array.isArray(authorisedDepartmentsValue)) {
-        return authorisedDepartmentsValue.map((authorisedDepartmentValue) => ({
-            id: authorisedDepartmentValue.Id?._text,
-            name: authorisedDepartmentValue.Name?._text,
-            address: mapDepartmentAddress(authorisedDepartmentValue.Addresses?.Address)
-        }));
-    } else if (authorisedDepartmentsValue) {
-        return [{
-            id: authorisedDepartmentsValue.Id?._text,
-            name: authorisedDepartmentsValue.Name?._text,
-            address: mapDepartmentAddress(authorisedDepartmentsValue.Addresses?.Address)
-        }];
-    } else {
-        return [];
-    }
 }
 
 function mapDepartmentAddress(addressValueInXml: any): Address {
@@ -244,4 +143,13 @@ function mapDepartmentAddress(addressValueInXml: any): Address {
     } else {
         return {};
     }
+}
+
+function toArray(value: object | any[] | undefined) {
+    if (Array.isArray(value)) {
+        return value;
+    } else if (value) {
+        return [value];
+    }
+    return [];
 }

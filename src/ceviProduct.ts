@@ -15,7 +15,7 @@ import {
 export class CeviProduct {
 
     constructor(public id: string,
-                public source: Source, //ignored
+                public source: Source,
                 public targetGroups: TargetGroup[],
                 public productType: ProductType,
                 public themes: CeviTheme[],
