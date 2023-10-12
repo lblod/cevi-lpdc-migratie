@@ -49,6 +49,19 @@ export class AbbProduct {
         return this._uuid;
     }
 
+    get created(): Date {
+        return this.created;
+    }
+
+    get modified(): Date {
+        return this.modified;
+    }
+
+
+    get requirement(): Requirement | undefined {
+        return this.requirement;
+    }
+
     toTriples(): Triple[] {
         const id = new Uri(this._id);
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';

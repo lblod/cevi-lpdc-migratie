@@ -9,7 +9,7 @@ export class Cost {
     }
 
     toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/id/cost/${uuid()}`);
+        const id: Uri = new Uri(`http://data.lblod.info/id/cost/${this.uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://data.europa.eu/m8g/Cost')),

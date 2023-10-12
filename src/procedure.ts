@@ -12,7 +12,7 @@ export class Procedure {
     }
 
     toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/id/rule/${uuid()}`);
+        const id: Uri = new Uri(`http://data.lblod.info/id/rule/${this.uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://purl.org/vocab/cpsv#Rule')),

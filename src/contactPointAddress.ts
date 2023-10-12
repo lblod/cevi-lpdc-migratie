@@ -15,7 +15,7 @@ export class ContactPointAddress {
     }
 
     toTriples(contactPointId: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${uuid()}`);
+        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this.uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://www.w3.org/ns/locn#Address')),

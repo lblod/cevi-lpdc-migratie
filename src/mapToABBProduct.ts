@@ -18,6 +18,7 @@ import {ContactPointAddress} from "./contactPointAddress";
 
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
 
+    const instanceUuid = uuid();
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuurUrl);
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
@@ -25,9 +26,9 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
     const productId: string | undefined = mapProductId(product.id, product.source);
 
     return new AbbProduct(
-        `http://data.lblod.info/id/public-service/${uuid()}`,
+        `http://data.lblod.info/id/public-service/${instanceUuid}`,
         mapTargetGroupsToTargetAudience(product.targetGroups),
-        uuid(),
+        instanceUuid,
         migrationDate,
         migrationDate,
         mapContactPoints(product.deliveringDepartments, product.authorisedDepartments),

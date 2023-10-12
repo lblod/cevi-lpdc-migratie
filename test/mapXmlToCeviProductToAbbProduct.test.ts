@@ -1073,35 +1073,74 @@ describe('map abbProduct to Triples', () => {
         testStringArray = testTriplesArray.map(aTriple => aTriple.toString());
     });
 
-    test('The array of strings should contain a string with the uuid of the abb instance', () => {
-        expect(testStringArray).toContainEqual(
-            `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`
-        )
-    });
+        test('The result of calling toString() on the array of triples of the test abbProduct instance should contain the following array of strings', () => {
+            expect(testStringArray).toMatchObject([
+                `<${testAbbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
+                `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/title> "Levenloos geboren kind/foetus"@nl .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/description> "&lt;p&gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&lt;/p&gt;
+&lt;p&gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&lt;/p&gt;"@nl .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#additionalDescription> "&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;
+&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;"@nl .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#exception> "&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;
+&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;
+&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;"@nl .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/CultuurSportVrijeTijd> .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/MobiliteitOpenbareWerken> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Burger> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Onderneming> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Federaal> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Lokaal> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Vlaams> .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <https://data.vlaanderen.be/id/organisatie/OVO027227> .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af> .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <https://data.vlaanderen.be/id/organisatie/OVO000001> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Federaal> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Lokaal> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Vlaams> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <https://data.vlaanderen.be/id/organisatie/OVO027227> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af> .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <https://data.vlaanderen.be/id/organisatie/OVO000001> .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> "luier"@nl .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> "luiers"@nl .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> "pamper"@nl .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> "herbruikbaar"@nl .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/type> <AdviesBegeleiding> .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/created> "${testAbbProduct.created.toISOString()}"^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/modified> "${testAbbProduct.modified.toISOString()}"^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${testAbbProduct.id}> <http://schema.org/startDate> "2023-09-10"^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${testAbbProduct.id}> <http://schema.org/endDate> "2023-10-12"^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${testAbbProduct.id}> <http://schema.org/productID> "10086" .`,
+                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Requirement> .`,
+                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.requirement?.uuid}" .`,
+                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> "&lt;ul&gt;
+&lt;li&gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&lt;/li&gt;
+&lt;li&gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&lt;/li&gt;
+&lt;li&gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&lt;/li&gt;
+&lt;/ul&gt;"@nl .`,
+                `<${testAbbProduct.id}> <http://vocab.belgif.be/ns/publicservice#hasRequirement> <http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Evidence> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.requirement?.evidence?.uuid}" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://purl.org/dc/terms/description> "&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;
+&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;
+&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;
+&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;
+&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;
+&lt;/ul&gt;"@nl .`,
+                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://data.europa.eu/m8g/hasSupportingEvidence> <http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> .`,
 
-    test('The array of strings should contain a string with PublicService as type', () => {
-        expect(testStringArray).toContainEqual(
-            `<${testAbbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`
-        )
-    });
+                ]
+            )});
 
-    test('The array of strings should contain a string with title value "Levenloos geboren kind/foetus"@nl', () => {
-        expect(testStringArray).toContainEqual(
-            `<${testAbbProduct.id}> <http://purl.org/dc/terms/title> "Levenloos geboren kind/foetus"@nl .`
-        )
-    });
 
-    test('The array of strings should contain a string with the correct description value', () => {
-        expect(testStringArray).toContainEqual(
-            `<${testAbbProduct.id}> <http://purl.org/dc/terms/description> "&lt;p&gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&lt;/p&gt;
-&lt;p&gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&lt;/p&gt;"@nl .`
-        )
-    });
 
-    test('This test fails', () => {
-        expect(testStringArray).toMatchObject(
-            `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`
-        )
-    });
+        test('This test fails', () => {
+            expect(testStringArray).toMatchObject(
+                `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`
+            )});
 
 });

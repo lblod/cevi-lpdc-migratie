@@ -12,7 +12,7 @@ export class Website {
     }
 
     toTriples(abbInstanceId?: Uri, procedureId?: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${uuid()}`);
+        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this.uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('https://schema.org/WebSite')),
