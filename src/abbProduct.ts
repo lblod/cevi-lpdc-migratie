@@ -39,8 +39,7 @@ export class AbbProduct {
         private cost: Cost | undefined,
         private financialAdvantage: undefined,
         private spatial: undefined,
-        private createdBy: string,
-        private status: StatusPublicService) {
+        private createdBy: string) {
     }
 
     toTriples(): TripleArray {
@@ -183,10 +182,4 @@ export enum YourEuropeCategory {
     ReizenDocumenten = 'https://productencatalogus.data.vlaanderen.be/id/concept/YourEuropeCategorie/ReizenDocumenten',
     ReizenGoederen = 'https://productencatalogus.data.vlaanderen.be/id/concept/YourEuropeCategorie/ReizenGoederen',
     ReizenRechtenVerplichtingen = 'https://productencatalogus.data.vlaanderen.be/id/concept/YourEuropeCategorie/ReizenRechtenVerplichtingen',
-}
-
-export enum StatusPublicService {
-    concept = 'CONCEPT',
-    sent = 'SENT',
-    archived = 'ARCHIVED'
 }

@@ -4,13 +4,12 @@ import {v4 as uuid} from "uuid";
 export class ContactPointAddress {
     constructor(
         public uuid: string,
-        public street?: string,
-        public houseNumber?: string,
-        public boxNumber?: string,
-        public zipCode?: string,
-        public municipality?: string,
-        public country?: string
-    ) {
+        public street: string | undefined,
+        public houseNumber: string | undefined,
+        public boxNumber: string | undefined,
+        public zipCode: string | undefined,
+        public municipality: string | undefined,
+        public country: string | undefined) {
     }
 
     toTriples(): TripleArray {

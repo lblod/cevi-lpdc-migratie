@@ -4,8 +4,8 @@ import {readCeviXml} from "../src/readCeviXml";
 import {
     mapAmountToApplyToCost, mapAuthorisedDepartmentsToCompetentAuthorityLevel,
     mapCeviThemesToTheme, mapCompetentAuthorityBasedOnCompetentAuthorityLevel,
-    mapConditionsToRequirement,
-    mapDeliveringDepartmentsToExecutingAuthorityLevel,
+    mapConditionsToRequirement, mapContactPoints,
+    mapDeliveringDepartmentsToExecutingAuthorityLevel, mapDepartmentAddressToContactPoint,
     mapExecutingAuthorityBasedOnExecutingAuthorityLevel,
     mapInfoUrlsToMoreInfo,
     mapKeywords,
@@ -210,7 +210,7 @@ describe("map ceviProduct to abbProduct", () => {
                 description: `&lt;ul&gt;\r\n&lt;li&gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&lt;/li&gt;\r\n&lt;li&gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&lt;/li&gt;\r\n&lt;li&gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&lt;/li&gt;\r\n&lt;/ul&gt;`,
                 evidence: {
                     description: `&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;\r\n&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;\r\n&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;\r\n&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;\r\n&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;\r\n&lt;/ul&gt;`,
-                }
+                },
             },
             cost: {
                 description: `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`
@@ -221,8 +221,8 @@ describe("map ceviProduct to abbProduct", () => {
                     {
                         description: "Geboortepremie - Aanvraagformulier",
                         location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684",
-                    }
-                ]
+                    },
+                ],
             },
             exception: `&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;\r\n&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;\r\n&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;\r\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
             additionalDescription: `&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;\r\n&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;`,
@@ -234,7 +234,7 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     title: "Contactgegevens voor een inburgeringstraject",
                     location: "https://integratie-inburgering.be/contact",
-                }
+                },
             ],
             keywords: [
                 "luier",
@@ -253,16 +253,23 @@ describe("map ceviProduct to abbProduct", () => {
             competentAuthorityLevel: [
                 CompetentAuthorityLevel.Federaal,
                 CompetentAuthorityLevel.Lokaal,
-                CompetentAuthorityLevel.Vlaams],
-            competentAuthority: [gemeente_URL],
+                CompetentAuthorityLevel.Vlaams,
+            ],
+            competentAuthority: [
+                'https://data.vlaanderen.be/id/organisatie/OVO027227',
+                gemeente_URL,
+                'https://data.vlaanderen.be/id/organisatie/OVO000001',
+            ],
             executingAuthorityLevel: [
                 ExecutingAuthorityLevel.Federaal,
                 ExecutingAuthorityLevel.Lokaal,
-                ExecutingAuthorityLevel.Vlaams],
+                ExecutingAuthorityLevel.Vlaams,
+            ],
             executingAuthority: [
                 'https://data.vlaanderen.be/id/organisatie/OVO027227',
                 gemeente_URL,
-                'https://data.vlaanderen.be/id/organisatie/OVO000001'],
+                'https://data.vlaanderen.be/id/organisatie/OVO000001'
+            ],
             contactPoints: [
                 {
                     url: "www.stekene.be",
@@ -272,15 +279,14 @@ describe("map ceviProduct to abbProduct", () => {
                     address: {
                         street: "Stadionstraat",
                         houseNumber: "2",
-                        boxNumber: undefined,
+                        boxNumber: "B",
                         zipCode: "9190",
                         municipality: "Stekene",
                         country: "België"
                     }
                 }
             ],
-            createdBy: gemeente_URL,
-            status: "CONCEPT"
+            createdBy: gemeente_URL
         })
     })
 
@@ -663,9 +669,9 @@ describe("map ceviProduct to abbProduct", () => {
 
         test('Translates to Vlaamse Overheid url, to Federale Overheid url, all else to lokaalBestuurUrl', () => {
             const result = mapExecutingAuthorityBasedOnExecutingAuthorityLevel([
-                ExecutingAuthorityLevel.Vlaams,
-                ExecutingAuthorityLevel.Federaal,
-                ExecutingAuthorityLevel.Lokaal],
+                    ExecutingAuthorityLevel.Vlaams,
+                    ExecutingAuthorityLevel.Federaal,
+                    ExecutingAuthorityLevel.Lokaal],
                 'lokaalBestuurUrl');
 
             expect(result).toEqual([
@@ -768,5 +774,207 @@ describe("map ceviProduct to abbProduct", () => {
                 'lokaalBestuurUrl'])
         });
     });
+
+    describe('mapContactPoints', () => {
+
+        test('empty deliveringDepartments and authorisedDepartments returns empty ContactPoints array', () => {
+            const result = mapContactPoints([], []);
+            expect(result).toEqual([]);
+        });
+
+        test('empty deliveringDepartment > address is not retained', () => {
+            const result = mapContactPoints([{}], []);
+            expect(result).toEqual([]);
+        });
+
+        test('empty authorisedDepartment > address is not retained', () => {
+            const result = mapContactPoints([], [{}]);
+            expect(result).toEqual([]);
+        });
+
+        test('empty deliveringDepartment and authorisedDepartment > address are not retained', () => {
+            const result = mapContactPoints([{}], [{}]);
+            expect(result).toEqual([]);
+        });
+
+        test('maps an authorisedDepartments address to a ContactPoint', () => {
+            const result = mapContactPoints([
+                {
+                    address: {
+                        website: 'website',
+                        email: 'email',
+                        phone: 'phone',
+                        openingHours: 'openingHours',
+                        street: 'street',
+                        houseNumber: 'houseNumber',
+                        boxNumber: 'boxNumber',
+                        zipCode: 'zipCode',
+                        municipality: 'municipality'
+                    }
+                },
+                {
+                    address: undefined
+                }
+            ], [{}]);
+            expect(result).toMatchObject([{
+                url: 'website',
+                email: 'email',
+                telephone: 'phone',
+                openingHours: 'openingHours',
+                address:
+                    {
+                        street: 'street',
+                        houseNumber: 'houseNumber',
+                        boxNumber: 'boxNumber',
+                        zipCode: 'zipCode',
+                        municipality: 'municipality',
+                        country: 'België',
+                    },
+            }]);
+        });
+
+        test('maps an deliveringDepartment address to a ContactPoint', () => {
+            const result = mapContactPoints([],
+                [
+                    {
+                        address: {
+                            website: 'website',
+                            email: 'email',
+                            phone: 'phone',
+                            openingHours: 'openingHours',
+                            street: 'street',
+                            houseNumber: 'houseNumber',
+                            boxNumber: 'boxNumber',
+                            zipCode: 'zipCode',
+                            municipality: 'municipality'
+                        }
+                    },
+                    {
+                        address: undefined
+                    }
+
+                ]);
+            expect(result).toMatchObject([{
+                url: 'website',
+                email: 'email',
+                telephone: 'phone',
+                openingHours: 'openingHours',
+                address:
+                    {
+                        street: 'street',
+                        houseNumber: 'houseNumber',
+                        boxNumber: 'boxNumber',
+                        zipCode: 'zipCode',
+                        municipality: 'municipality',
+                        country: 'België',
+                    },
+            }]);
+        });
+
+        test('an deliveringDepartment address takes precedence over authorised department address', () => {
+            const result = mapContactPoints([
+                    {
+                        address: {
+                            website: 'website delivering',
+                            email: 'email delivering',
+                            phone: 'phone delivering',
+                            openingHours: 'openingHours delivering',
+                            street: 'street delivering',
+                            houseNumber: 'houseNumber delivering',
+                            boxNumber: 'boxNumber delivering',
+                            zipCode: 'zipCode delivering',
+                            municipality: 'municipality delivering'
+                        }
+                    },
+                    {
+                        address: undefined
+                    }
+                ],
+                [
+                    {
+                        address: {
+                            website: 'website authorised',
+                            email: 'email authorised',
+                            phone: 'phone authorised',
+                            openingHours: 'openingHours authorised',
+                            street: 'street authorised',
+                            houseNumber: 'houseNumber authorised',
+                            boxNumber: 'boxNumber authorised',
+                            zipCode: 'zipCode authorised',
+                            municipality: 'municipality authorised'
+                        }
+                    },
+                    {
+                        address: undefined
+                    }
+                ]);
+            expect(result).toMatchObject([{
+                url: 'website delivering',
+                email: 'email delivering',
+                telephone: 'phone delivering',
+                openingHours: 'openingHours delivering',
+                address:
+                    {
+                        street: 'street delivering',
+                        houseNumber: 'houseNumber delivering',
+                        boxNumber: 'boxNumber delivering',
+                        zipCode: 'zipCode delivering',
+                        municipality: 'municipality delivering',
+                        country: 'België',
+                    },
+            }]);
+        });
+
+        describe('partially filled in department address creates a ContactPoint', () => {
+
+            test('website', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {website: 'website'}});
+                expect(result).toMatchObject({url: 'website'});
+            });
+
+            test('email', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {email: 'email'}});
+                expect(result).toMatchObject({email: 'email'});
+            });
+
+            test('phone', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {phone: 'phone'}});
+                expect(result).toMatchObject({telephone: 'phone'});
+            });
+
+            test('openingHours', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {openingHours: 'openingHours'}});
+                expect(result).toMatchObject({openingHours: 'openingHours'});
+            });
+
+            test('street', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {street: 'street'}});
+                expect(result).toMatchObject({address: {street: 'street'}});
+            });
+
+            test('houseNumber', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {houseNumber: 'houseNumber'}});
+                expect(result).toMatchObject({address: {houseNumber: 'houseNumber'}});
+            });
+
+            test('boxNumber', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {boxNumber: 'boxNumber'}});
+                expect(result).toMatchObject({address: {boxNumber: 'boxNumber'}});
+            });
+
+            test('boxNumber', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {zipCode: 'zipCode'}});
+                expect(result).toMatchObject({address: {zipCode: 'zipCode'}});
+            });
+
+            test('municipality', () => {
+                const result = mapDepartmentAddressToContactPoint({address: {municipality: 'municipality'}});
+                expect(result).toMatchObject({address: {municipality: 'municipality'}});
+            });
+
+        });
+
+
+    })
 
 });

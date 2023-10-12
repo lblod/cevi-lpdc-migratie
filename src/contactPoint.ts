@@ -5,11 +5,11 @@ import {v4 as uuid} from "uuid";
 export class ContactPoint {
     constructor(
         public uuid: string,
-        public url?: string,
-        public email?: string,
-        public telephone?: string,
-        public openingHours?: string,
-        public address?: ContactPointAddress) {
+        public url: string | undefined,
+        public email: string | undefined,
+        public telephone: string | undefined,
+        public openingHours: string | undefined,
+        public address: ContactPointAddress | undefined) {
     }
 
     toTriples(): TripleArray {

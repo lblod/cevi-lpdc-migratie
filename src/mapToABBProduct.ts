@@ -5,7 +5,6 @@ import {
     CompetentAuthorityLevel,
     ExecutingAuthorityLevel,
     PublicServiceType,
-    StatusPublicService,
     TargetAudience,
     Theme
 } from "./abbProduct";
@@ -18,12 +17,12 @@ import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
 export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
-    const contactPoints: ContactPoint[] = mapContactPoints(product.deliveringDepartments, product.authorisedDepartments); //TODO LPDC-718: migration correct? what if both are present ? how to migrate?
+
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuurUrl);
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
     const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuurUrl);
-    const productId: string | undefined = mapProductId(product.id, product.source); //
+    const productId: string | undefined = mapProductId(product.id, product.source);
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${uuid()}`,
@@ -31,7 +30,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         uuid(),
         migrationDate,
         migrationDate,
-        contactPoints,
+        mapContactPoints(product.deliveringDepartments, product.authorisedDepartments),
         mapKeywords(product.keywords),
         product.title,
         product.description,
@@ -57,7 +56,6 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         undefined,
         undefined,
         lokaalBestuurUrl,
-        StatusPublicService.concept,
     )
 }
 
@@ -102,44 +100,50 @@ export function mapAmountToApplyToCost(amountToApply?: string): Cost | undefined
     return amountToApply ? new Cost(uuid(), amountToApply) : undefined;
 }
 
-function mapContactPoints(deliveringDepartments: Department[], authorisedDepartments: Department[]): ContactPoint[] {
+export function mapContactPoints(deliveringDepartments: Department[], authorisedDepartments: Department[]): ContactPoint[] {
     if (deliveringDepartments.length > 0) {
-        return deliveringDepartments.map((deliveringDepartment: Department) => new ContactPoint(
-            uuid(),
-            deliveringDepartment.address?.website,
-            deliveringDepartment.address?.email,
-            deliveringDepartment.address?.phone,
-            deliveringDepartment.address?.openingHours,
-            new ContactPointAddress(
-                uuid(),
-                deliveringDepartment.address?.street,
-                deliveringDepartment.address?.houseNumber,
-                deliveringDepartment.address?.boxNumber,
-                deliveringDepartment.address?.zipCode,
-                deliveringDepartment.address?.municipality,
-                'België'
-            )
-        ))
+        //TODO LPDC-718: if the delivering departments mapping returns an empty array of contact points ? not worth a look at the authorised departments contact points then ? e.g. delivering departments is only vlaamse overheid, and the authorised department is the municipality
+        return mapDepartmentAddressesToContactPoints(deliveringDepartments);
     }
     if (authorisedDepartments.length > 0) {
-        return authorisedDepartments.map((authorisedDepartment: Department) => new ContactPoint(
-            uuid(),
-            authorisedDepartment.address?.website,
-            authorisedDepartment.address?.email,
-            authorisedDepartment.address?.phone,
-            authorisedDepartment.address?.openingHours,
-            new ContactPointAddress(
-                uuid(),
-                authorisedDepartment.address?.street,
-                authorisedDepartment.address?.houseNumber,
-                authorisedDepartment.address?.boxNumber,
-                authorisedDepartment.address?.zipCode,
-                authorisedDepartment.address?.municipality,
-                'België'
-            )
-        ))
+        return mapDepartmentAddressesToContactPoints(authorisedDepartments);
     }
     return [];
+}
+
+function mapDepartmentAddressesToContactPoints(departments: Department[]): ContactPoint[] {
+    return departments.map(mapDepartmentAddressToContactPoint)
+        .filter((contactPoint): contactPoint is ContactPoint => !!contactPoint);
+}
+
+export function mapDepartmentAddressToContactPoint(department: Department): ContactPoint | undefined {
+    if (!department.address?.website
+        && !department.address?.email
+        && !department.address?.phone
+        && !department.address?.openingHours
+        && !department.address?.street
+        && !department.address?.houseNumber
+        && !department.address?.boxNumber
+        && !department.address?.zipCode
+        && !department.address?.municipality) {
+        return undefined;
+    }
+    return new ContactPoint(
+        uuid(),
+        department.address?.website,
+        department.address?.email,
+        department.address?.phone,
+        department.address?.openingHours,
+        new ContactPointAddress(
+            uuid(),
+            department.address?.street,
+            department.address?.houseNumber,
+            department.address?.boxNumber,
+            department.address?.zipCode,
+            department.address?.municipality,
+            'België'
+        )
+    );
 }
 
 function mapTargetGroupToTargetAudience(ceviTargetGroup: TargetGroup): TargetAudience | undefined {
@@ -239,14 +243,14 @@ function mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDepartment: Depart
 export function mapExecutingAuthorityBasedOnExecutingAuthorityLevel(abbExecutingAuthorityLevel: ExecutingAuthorityLevel[], lokaalBestuurUrl: string): string[] {
     return abbExecutingAuthorityLevel
         .map((abbExecutingAuthorityLevel: ExecutingAuthorityLevel) => {
-        if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
-            return 'https://data.vlaanderen.be/id/organisatie/OVO000001';
-        } else if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Federaal) {
-            return 'https://data.vlaanderen.be/id/organisatie/OVO027227';
-        } else {
-            return lokaalBestuurUrl;
-        }
-    })
+            if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Vlaams) {
+                return 'https://data.vlaanderen.be/id/organisatie/OVO000001';
+            } else if (abbExecutingAuthorityLevel === ExecutingAuthorityLevel.Federaal) {
+                return 'https://data.vlaanderen.be/id/organisatie/OVO027227';
+            } else {
+                return lokaalBestuurUrl;
+            }
+        })
 }
 
 export function mapAuthorisedDepartmentsToCompetentAuthorityLevel(ceviDepartments: Department[]): CompetentAuthorityLevel[] {
@@ -283,7 +287,7 @@ export function mapKeywords(ceviKeywords: Keyword[]): string[] {
 }
 
 function mapProductId(ceviProductId: string, ceviProductSource: Source): string | undefined {
-    if (ceviProductSource.value === 'IPDC') {
+    if (ceviProductSource?.value === 'IPDC') {
         return ceviProductId;
     } else {
         return undefined;
