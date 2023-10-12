@@ -3,7 +3,7 @@ import {Language} from "./language";
 
 export class ContactPointAddress {
     constructor(
-        public uuid: string,
+        public _uuid: string,
         public street: string | undefined,
         public houseNumber: string | undefined,
         public boxNumber: string | undefined,
@@ -13,12 +13,16 @@ export class ContactPointAddress {
     ) {
     }
 
+    get uuid(): string {
+        return this._uuid;
+    }
+
     toTriples(contactPointId: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this.uuid}`);
+        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://www.w3.org/ns/locn#Address')),
-            Triple.create(id, Predicates.uuid, Literal.create(this.uuid)),
+            Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
             Triple.createIfDefined(id, Predicates.straatnaam, Literal.createIfDefined(this.street, Language.NL)),
             Triple.createIfDefined(id, Predicates.huisnummer, Literal.createIfDefined(this.houseNumber)),
             Triple.createIfDefined(id, Predicates.busnummer, Literal.createIfDefined(this.boxNumber)),

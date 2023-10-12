@@ -3,16 +3,20 @@ import {Language} from "./language";
 
 export class Cost {
     constructor(
-        private uuid: string,
+        private _uuid: string,
         private description: string) {
     }
 
+    get uuid(): string {
+        return this._uuid;
+    }
+
     toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/id/cost/${this.uuid}`);
+        const id: Uri = new Uri(`http://data.lblod.info/id/cost/${this._uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://data.europa.eu/m8g/Cost')),
-            Triple.create(id, Predicates.uuid, Literal.create(this.uuid)),
+            Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
             Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
             Triple.create(abbInstanceId, Predicates.hasCost, id)
         ];

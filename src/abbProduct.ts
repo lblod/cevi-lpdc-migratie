@@ -13,7 +13,7 @@ export class AbbProduct {
         private _uuid: string,
         private _created: Date,
         private _modified: Date,
-        private contactPoints: ContactPoint[],
+        private _contactPoints: ContactPoint[],
         private keywords: string[],
         private title: string | undefined,
         private description: string | undefined,
@@ -33,9 +33,9 @@ export class AbbProduct {
         private yourEuropeCategory: undefined,
         private publicationMedium: undefined,
         private _requirement: Requirement | undefined,
-        private procedure: Procedure | undefined,
-        private moreInfo: Website[],
-        private cost: Cost | undefined,
+        private _procedure: Procedure | undefined,
+        private _moreInfo: Website[],
+        private _cost: Cost | undefined,
         private financialAdvantage: undefined,
         private spatial: undefined,
         private createdBy: string) {
@@ -60,6 +60,23 @@ export class AbbProduct {
 
     get requirement(): Requirement | undefined {
         return this._requirement;
+    }
+
+
+    get procedure(): Procedure | undefined {
+        return this._procedure;
+    }
+
+    get moreInfo(): Website[] {
+        return this._moreInfo;
+    }
+
+    get cost(): Cost | undefined {
+        return this._cost;
+    }
+
+    get contactPoints(): ContactPoint[] {
+        return this._contactPoints;
     }
 
     toTriples(): Triple[] {
@@ -92,11 +109,11 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.yourEuropeCategory, Uri.createIfDefined(this.yourEuropeCategory)), // TODO verify in Excel
             Triple.createIfDefined(id, Predicates.publicationMedium, Uri.createIfDefined(this.publicationMedium)),
             ...(this.requirement ? this.requirement.toTriples(id) : []),
-            ...(this.procedure ? this.procedure.toTriples(id) : []),
-                ...this.moreInfo?.map(aMoreInfo => aMoreInfo.toTriples(id)).flat(), // TODO verify if this is correct
-            ...(this.cost ? this.cost.toTriples(id) : []),
+            ...(this._procedure ? this._procedure.toTriples(id) : []),
+                ...this._moreInfo?.map(aMoreInfo => aMoreInfo.toTriples(id)).flat(), // TODO verify if this is correct
+            ...(this._cost ? this._cost.toTriples(id) : []),
             Triple.createIfDefined(id, Predicates.hasFinancialAdvantage, Uri.createIfDefined(this.financialAdvantage)),
-                ...this.contactPoints?.map(aContactPoint => aContactPoint.toTriples(id)).flat(), // TODO verify if this is correct
+                ...this._contactPoints?.map(aContactPoint => aContactPoint.toTriples(id)).flat(), // TODO verify if this is correct
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
             Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd')) //concept

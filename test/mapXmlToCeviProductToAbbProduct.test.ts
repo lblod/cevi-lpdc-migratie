@@ -1132,11 +1132,61 @@ describe('map abbProduct to Triples', () => {
 &lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;
 &lt;/ul&gt;"""@nl .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://data.europa.eu/m8g/hasSupportingEvidence> <http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> .`,
-
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#Rule> .`,
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.uuid}""" .`,
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://purl.org/dc/terms/description> """&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;"""@nl .`,
+                `<${testAbbProduct.id}> <http://purl.org/vocab/cpsv#follows> <http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.websites[0].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://purl.org/dc/terms/description> """Geboortepremie - Aanvraagformulier"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684> .`,
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.websites[1].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://purl.org/dc/terms/description> """Verbruik nutsvoorziening - Aanvraagformulier premie"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=688849> .`,
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.moreInfo[0].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://purl.org/dc/terms/title> """Inburgering.be"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://schema.org/url> <http://www.inburgering.be> .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.moreInfo[1].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://purl.org/dc/terms/title> """Contactgegevens voor een inburgeringstraject"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://schema.org/url> <https://integratie-inburgering.be/contact> .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> .`,
+                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Cost> .`,
+                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.cost?.uuid}""" .`,
+                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://purl.org/dc/terms/description> """&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;"""@nl .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCost> <http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/ContactPoint> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/url> """www.stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&amp;BS@stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;
+&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;
+&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;
+&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;
+&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;
+&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;""" .`,
+                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasContactPoint> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/locn#Address> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].address?.uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Straatnaam> """Stadionstraat"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.huisnummer> """2""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.busnummer> """B""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#postcode> """9190""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#gemeentenaam> """Stekene"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> .`,
+                `<${testAbbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
+                `<${testAbbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
                 ]
             )});
-
-
 
         test('This test fails', () => {
             expect(testStringArray).toMatchObject(

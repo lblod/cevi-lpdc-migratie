@@ -4,18 +4,22 @@ import {Language} from "./language";
 export class Website {
 
     constructor(
-        private uuid: string,
+        private _uuid: string,
         private title: string | undefined,
         private description: string | undefined,
         private location: string) {
     }
 
+    get uuid(): string {
+        return this._uuid;
+    }
+
     toTriples(abbInstanceId?: Uri, procedureId?: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this.uuid}`);
+        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
             Triple.createIfDefined(id, Predicates.type, new Uri('https://schema.org/WebSite')),
-            Triple.create(id, Predicates.uuid, Literal.create(this.uuid)),
+            Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
             Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
             Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
             Triple.createIfDefined(id, Predicates.url, Uri.createIfDefined(this.location)),
