@@ -1,6 +1,5 @@
 import {ContactPointAddress} from "./contactPointAddress";
 import {Literal, Predicates, Triple, Uri} from "./triple";
-import {v4 as uuid} from "uuid";
 
 export class ContactPoint {
     constructor(

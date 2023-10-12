@@ -1,5 +1,4 @@
 import {Literal, Predicates, Triple, Uri} from "./triple";
-import {v4 as uuid} from 'uuid';
 import {Language} from "./language";
 
 export class Requirement {
