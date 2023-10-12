@@ -3,7 +3,7 @@ import {Procedure} from "./procedure";
 import {Website} from "./website";
 import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
-import {Literal, Predicates, Triple, Uri} from "./triple-array";
+import {Literal, Predicates, Triple, Uri} from "./triple";
 import {Language} from "./language";
 export class AbbProduct {
 

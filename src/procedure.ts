@@ -1,5 +1,5 @@
 import {Website} from "./website";
-import {Literal, Predicates, Triple, Uri} from "./triple-array";
+import {Literal, Predicates, Triple, Uri} from "./triple";
 import {v4 as uuid} from 'uuid';
 import {Language} from "./language";
 

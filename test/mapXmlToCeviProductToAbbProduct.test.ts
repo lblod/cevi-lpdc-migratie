@@ -15,7 +15,7 @@ import {
     mapToABBProduct
 } from "../src/mapToABBProduct";
 import {Form, Keyword, ProductType, Url} from "../src/types";
-import {Triple} from "../src/triple-array";
+import {Triple} from "../src/triple";
 import {AbbProduct} from "../src/abbProduct";
 import {CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 

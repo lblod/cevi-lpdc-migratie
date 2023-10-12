@@ -19,14 +19,6 @@ export class Triple {
         return new Triple(subject, predicate, object);
     }
 
-    getSubjectValue() {
-        return this.subject.getValue();
-    }
-
-    getObjectValue() {
-        return this.object.getValue();
-    }
-
     toString() {
         return `${this.subject.toString()} ${this.predicate.toString()} ${this.object.toString()} .`
     }
@@ -40,14 +32,6 @@ export class Uri {
 
     static createIfDefined(value?: string): Uri | undefined {
         return value ? new Uri(value) : undefined;
-    }
-
-    getValue(): string {
-        return this.value;
-    }
-
-    isEqualTo(value: string): Boolean {
-        return this.value === value;
     }
 
     toString(): string {
@@ -75,24 +59,17 @@ export class Literal {
         return new Literal(value);
     }
 
-    getValue(): string {
-        return this.value;
-    }
-
-    getLanguage(): Language | undefined {
-        return this.language;
-    }
-
     toString(): string {
+        const escapedValue = `"""${this.value.replace(/"/g, '\\"')}"""`;
         if (this.language) {
-            return `"${this.value}"@${this.language}`
+            return `${escapedValue}@${this.language}`
         } else if (this.dataType) {
-            //TODO LPDC-718: do not add ^^ when datatype = string
-            return `"${this.value}"^^<${this.dataType}>`
+            return `${escapedValue}^^<${this.dataType}>`
         } else {
-            return `"${this.value}"`
+            return escapedValue;
         }
     }
+
 }
 
 export const Predicates = {
