@@ -68,7 +68,7 @@ export class AbbProduct {
                 ...this.executingAuthorityLevel.map(anExecutingAuthorityLevel => Triple.createIfDefined(id, Predicates.executingAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/${anExecutingAuthorityLevel}`))),
                 ...this.executingAuthority.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, Uri.createIfDefined(anExecutingAuthority))),
             Triple.createIfDefined(id, Predicates.language, Uri.createIfDefined(this.resourceLanguage)), // TODO verify in Excel
-                ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))),
+                ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))), //TODO LPDC-718: keywords might be undefined
             Triple.createIfDefined(id, Predicates.productType, Uri.createIfDefined(this.productType)),
             Triple.createIfDefined(id, Predicates.created, Literal.createIfDefined(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.modified, Literal.createIfDefined(this.modified.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
@@ -122,14 +122,12 @@ export enum Theme {
     MobiliteitOpenbareWerken = 'MobiliteitOpenbareWerken'
 }
 
-//TODO LPDC-718: same as CompetentAuthorityLevel ? meaning: same data used in different context ? why a new type? so Create only one?
 export enum ExecutingAuthorityLevel {
     Lokaal = 'Lokaal',
     Vlaams = 'Vlaams',
     Federaal = 'Federaal',
 }
 
-//TODO LPDC-718: same as ExecutingAuthorityLevel ? meaning: same data used in different context ? why a new type? so Create only one?
 export enum CompetentAuthorityLevel {
     Vlaams = 'Vlaams',
     Federaal = 'Federaal',
