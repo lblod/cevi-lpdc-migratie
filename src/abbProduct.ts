@@ -11,8 +11,8 @@ export class AbbProduct {
         private _id: string,
         private targetAudience: TargetAudience[],
         private _uuid: string,
-        private created: Date,
-        private modified: Date,
+        private _created: Date,
+        private _modified: Date,
         private contactPoints: ContactPoint[],
         private keywords: string[],
         private title: string | undefined,
@@ -32,7 +32,7 @@ export class AbbProduct {
         private productId: string | undefined,
         private yourEuropeCategory: undefined,
         private publicationMedium: undefined,
-        private requirement: Requirement | undefined,
+        private _requirement: Requirement | undefined,
         private procedure: Procedure | undefined,
         private moreInfo: Website[],
         private cost: Cost | undefined,
@@ -50,16 +50,16 @@ export class AbbProduct {
     }
 
     get created(): Date {
-        return this.created;
+        return this._created;
     }
 
     get modified(): Date {
-        return this.modified;
+        return this._modified;
     }
 
 
     get requirement(): Requirement | undefined {
-        return this.requirement;
+        return this._requirement;
     }
 
     toTriples(): Triple[] {
