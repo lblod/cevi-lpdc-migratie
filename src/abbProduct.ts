@@ -27,8 +27,8 @@ export class AbbProduct {
         private executingAuthority: string[],
         private resourceLanguage: undefined,
         private productType: PublicServiceType | undefined,
-        private startDate: string | undefined,
-        private endDate: string | undefined,
+        private startDate: Date | undefined,
+        private endDate: Date | undefined,
         private productId: string | undefined,
         private yourEuropeCategory: undefined,
         private publicationMedium: undefined,
@@ -69,11 +69,11 @@ export class AbbProduct {
                 ...this.executingAuthority.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, Uri.createIfDefined(anExecutingAuthority))),
             Triple.createIfDefined(id, Predicates.language, Uri.createIfDefined(this.resourceLanguage)), // TODO verify in Excel
                 ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))), //TODO LPDC-718: keywords might be undefined
-            Triple.createIfDefined(id, Predicates.productType, Uri.createIfDefined(this.productType)),
+            Triple.createIfDefined(id, Predicates.productType, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Type/${this.productType}`)),
             Triple.createIfDefined(id, Predicates.created, Literal.createIfDefined(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.modified, Literal.createIfDefined(this.modified.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
-            Triple.createIfDefined(id, Predicates.startDate, Literal.createIfDefined(this.startDate, undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
-            Triple.createIfDefined(id, Predicates.endDate, Literal.createIfDefined(this.endDate, undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
+            Triple.createIfDefined(id, Predicates.startDate, Literal.createIfDefined(this.startDate?.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
+            Triple.createIfDefined(id, Predicates.endDate, Literal.createIfDefined(this.endDate?.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.productId, Literal.createIfDefined(this.productId)),
             Triple.createIfDefined(id, Predicates.yourEuropeCategory, Uri.createIfDefined(this.yourEuropeCategory)), // TODO verify in Excel
             Triple.createIfDefined(id, Predicates.publicationMedium, Uri.createIfDefined(this.publicationMedium)),
