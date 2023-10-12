@@ -80,20 +80,26 @@ export function mapProcedureAndForms(procedure: string | undefined, forms: Form[
     return undefined;
 }
 
-function mapFormsToWebsite(forms: Form[] | undefined): Website[] | undefined {
-    return forms?.map((form: Form) => new Website(
-        uuid(),
-        undefined,
-        form.title,
-        form.location));
+function mapFormsToWebsite(forms: Form[] | undefined) : Website[] {
+    if (forms) {
+        return forms?.map((form: Form) => new Website(
+            uuid(),
+            undefined,
+            form.title,
+            form.location));
+    }
+    return [];
 }
 
-export function mapInfoUrlsToMoreInfo(infoUrls: Url[] | undefined): Website[] | undefined {
-    return infoUrls?.map((infoUrl: Url) => new Website(
-        uuid(),
-        infoUrl.title,
-        undefined,
-        infoUrl.location));
+export function mapInfoUrlsToMoreInfo(infoUrls: Url[] | undefined): Website[] {
+    if (infoUrls) {
+        return infoUrls?.map((infoUrl: Url) => new Website(
+            uuid(),
+            infoUrl.title,
+            undefined,
+            infoUrl.location));
+    }
+    return [];
 }
 
 export function mapAmountToApplyToCost(amountToApply?: string): Cost | undefined {

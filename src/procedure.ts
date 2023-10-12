@@ -1,23 +1,26 @@
 import {Website} from "./website";
-import {Literal, Predicates, Triple, TripleArray, Uri} from "./triple-array";
+import {Literal, Predicates, Triple, Uri} from "./triple-array";
 import {v4 as uuid} from 'uuid';
+import {Language} from "./language";
 
 
 export class Procedure {
     constructor(
         private uuid: string,
         private description: string | undefined,
-        private websites: Website[] | undefined) {
+        private websites: Website[]) {
     }
 
-    toTriples(): TripleArray {
+    toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/id/rule/${uuid()}`);
 
-        return new TripleArray([
+        return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://purl.org/vocab/cpsv#Rule')),
             Triple.create(id, Predicates.uuid, Literal.create(this.uuid)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description)),
-            //TODO add website
-        ]);
+            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
+            Triple.create(abbInstanceId, Predicates.follows, id)
+        ].concat(...this.websites.map(
+            (aWebsite => aWebsite.toTriples(id))
+        ));
     }
 }

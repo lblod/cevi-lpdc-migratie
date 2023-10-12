@@ -1,5 +1,6 @@
-import {Literal, Predicates, Triple, TripleArray, Uri} from "./triple-array";
+import {Literal, Predicates, Triple, Uri} from "./triple-array";
 import {v4 as uuid} from 'uuid';
+import {Language} from "./language";
 
 export class Requirement {
     constructor(
@@ -8,15 +9,16 @@ export class Requirement {
         private evidence?: Evidence) {
     }
 
-    toTriples(abbInstanceId: Uri): TripleArray {
+    toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/id/requirement/${uuid()}`);
 
-        return new TripleArray([
+       return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://data.europa.eu/m8g/Requirement')),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this.uuid)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description)),
+            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
             Triple.create(abbInstanceId, Predicates.hasRequirement, id),
-        ]).join(this.evidence?.toTriples(id));
+        ].concat(this.evidence?.toTriples(id));
+
     }
 }
 
@@ -27,14 +29,14 @@ export class Evidence {
         private description: string) {
     }
 
-    toTriples(requirementId: Uri): TripleArray {
+    toTriples(requirementId: Uri): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${uuid()}`);
 
-        return new TripleArray([
+        return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://data.europa.eu/m8g/Evidence')),
             Triple.create(id, Predicates.uuid, Literal.create(this.uuid)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description)),
+            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
             Triple.create(requirementId, Predicates.hasSupportingEvidence, id),
-        ]);
+        ];
     }
 }

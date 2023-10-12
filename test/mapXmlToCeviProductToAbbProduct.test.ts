@@ -15,6 +15,8 @@ import {
     mapToABBProduct
 } from "../src/mapToABBProduct";
 import {Form, Keyword, ProductType, Url} from "../src/types";
+import {Predicates, Triple, Uri} from "../src/triple-array";
+import {AbbProduct} from "../src/abbProduct";
 import {CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 
 let ceviProducts: CeviProduct[] = [];
@@ -977,4 +979,44 @@ describe("map ceviProduct to abbProduct", () => {
 
     })
 
+    describe('map abbProduct to Triples', () => {
+
+        let testAbbProduct: AbbProduct;
+        let testTriplesArray: Triple[];
+        let testStringArray: string[];
+
+        beforeAll(() => {
+            const migrationDate = new Date();
+            testAbbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL);
+            testTriplesArray = testAbbProduct.toTriples();
+            testStringArray = testTriplesArray.map(aTriple => aTriple.toString());
+        });
+
+        test('The array of strings should contain a string with the uuid of the abb instance', () => {
+            expect(testStringArray).toContainEqual(
+                `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`
+            )});
+
+        test('The array of strings should contain a string with PublicService as type', () => {
+            expect(testStringArray).toContainEqual(
+                `<${testAbbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`
+            )});
+
+        test('The array of strings should contain a string with title value "Levenloos geboren kind/foetus"@nl', () => {
+            expect(testStringArray).toContainEqual(
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/title> "Levenloos geboren kind/foetus"@nl .`
+            )});
+
+        test('The array of strings should contain a string with the correct description value', () => {
+            expect(testStringArray).toContainEqual(
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/description> "&lt;p&gt;Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.&lt;/p&gt;
+&lt;p&gt;De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.&lt;/p&gt;"@nl .`
+            )});
+
+        test('This test fails', () => {
+            expect(testStringArray).toMatchObject(
+                `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`
+            )});
+
+        })
 });
