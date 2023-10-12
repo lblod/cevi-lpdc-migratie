@@ -1,28 +1,5 @@
 import {Language} from "./language";
 
-export class TripleArray {
-    private triples: Triple[] = [];
-
-    constructor(triples: (Triple | undefined)[]) {
-        this.triples = triples.filter((triple): triple is Triple => triple !== undefined);
-    }
-
-    asStringArray(): string[] {
-        return this.triples.map(triple => triple.toString())
-    }
-
-    join(other: TripleArray | undefined): TripleArray {
-        if (other) {
-            return new TripleArray([
-                ...this.triples,
-                ...other.triples
-            ])
-        }
-        return new TripleArray([...this.triples]);
-    }
-
-}
-
 export class Triple {
 
     private constructor(
@@ -30,6 +7,7 @@ export class Triple {
         public predicate: Uri,
         public object: Literal | Uri) {
     }
+
     static createIfDefined(subject: Uri, predicate: Uri, object: Literal | Uri | undefined): Triple | undefined {
         return object ? new Triple(subject, predicate, object) : undefined;
     }
@@ -90,7 +68,7 @@ export class Literal {
         return value ? new Literal(value, language, dataType) : undefined;
     }
 
-    static create(value: string, language?: Language, dataType?: string): Literal {
+    static create(value: string): Literal {
         if (!value) {
             throw new Error('Literal cannot be created!');
         }

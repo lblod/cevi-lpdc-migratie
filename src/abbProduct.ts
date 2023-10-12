@@ -14,7 +14,7 @@ export class AbbProduct {
         private created: Date,
         private modified: Date,
         private contactPoints: ContactPoint[],
-        private keywords: string[] | undefined,
+        private keywords: string[],
         private title: string | undefined,
         private description: string | undefined,
         private additionalDescription: string | undefined,
@@ -85,7 +85,7 @@ export class AbbProduct {
                 ...this.contactPoints?.map(aContactPoint => aContactPoint.toTriples(id)).flat(), // TODO verify if this is correct
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
-            // TODO add status
+            Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd')) //concept
         ];
 
         return triples.filter((triple): triple is Triple => triple !== undefined);
