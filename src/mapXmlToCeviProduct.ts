@@ -69,7 +69,7 @@ function verifyKeywordsValueInXml(keywordsValue: object | any[] | undefined) {
         }));
 }
 
-//TODO LPDC-718: not used for stekene, so not tested ...
+//TODO LPDC-718: no example for UploadedAttachments (which to take over if they are in the form of an URL), so skipping for now
 function verifyUploadedAttachmentsValueInXml(uploadedAttachmentsValue: object | any[] | undefined) {
     return toArray(uploadedAttachmentsValue)
         .map(uploadedAttachmentValue => ({
