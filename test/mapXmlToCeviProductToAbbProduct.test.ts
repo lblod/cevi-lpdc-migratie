@@ -949,7 +949,7 @@ describe("map ceviProduct to abbProduct", () => {
             }]);
         });
 
-        test('an deliveringDepartment address takes precedence over authorised department address', () => {
+        test('a deliveringDepartment address takes precedence over authorised department address', () => {
             const result = mapContactPoints([
                     {
                         address: {
@@ -1002,6 +1002,50 @@ describe("map ceviProduct to abbProduct", () => {
                     },
             }]);
         });
+
+        test('authorised department address is taken if there are no addresses in delivering departments', () => {
+            const result = mapContactPoints([
+                    {
+                        address: undefined
+                    },
+                    {
+                        address: undefined
+                    }
+                ],
+                [
+                    {
+                        address: {
+                            website: 'website authorised',
+                            email: 'email authorised',
+                            phone: 'phone authorised',
+                            openingHours: 'openingHours authorised',
+                            street: 'street authorised',
+                            houseNumber: 'houseNumber authorised',
+                            boxNumber: 'boxNumber authorised',
+                            zipCode: 'zipCode authorised',
+                            municipality: 'municipality authorised'
+                        }
+                    },
+                    {
+                        address: undefined
+                    }
+                ]);
+            expect(result).toMatchObject([{
+                url: 'website authorised',
+                email: 'email authorised',
+                telephone: 'phone authorised',
+                openingHours: 'openingHours authorised',
+                address:
+                    {
+                        street: 'street authorised',
+                        houseNumber: 'houseNumber authorised',
+                        boxNumber: 'boxNumber authorised',
+                        zipCode: 'zipCode authorised',
+                        municipality: 'municipality authorised',
+                        country: 'België',
+                    },
+            }]);
+        })
 
         describe('partially filled in department address creates a ContactPoint', () => {
 

@@ -119,14 +119,12 @@ export function mapAmountToApplyToCost(amountToApply: string | undefined): Cost 
 }
 
 export function mapContactPoints(deliveringDepartments: Department[], authorisedDepartments: Department[]): ContactPoint[] {
-    if (deliveringDepartments.length > 0) { //TODO LPDC-718: whether to take the addresses of delivering departments or authorised departemnts -> we should check on the addresses, not on the departments itself
-        //TODO LPDC-718: if the delivering departments mapping returns an empty array of contact points ? maybe worth a look at the authorised departments contact points then ? e.g. delivering departments is only vlaamse overheid, and the authorised department is the municipality
-        return mapDepartmentAddressesToContactPoints(deliveringDepartments);
-    }
-    if (authorisedDepartments.length > 0) {
+    const contactPointsForDeliveringDepartments = mapDepartmentAddressesToContactPoints(deliveringDepartments);
+    if (contactPointsForDeliveringDepartments.length > 0) {
+        return contactPointsForDeliveringDepartments;
+    } else {
         return mapDepartmentAddressesToContactPoints(authorisedDepartments);
     }
-    return [];
 }
 
 function mapDepartmentAddressesToContactPoints(departments: Department[]): ContactPoint[] {
