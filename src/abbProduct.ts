@@ -96,7 +96,7 @@ export class AbbProduct {
                 ...this.targetAudience.map(aTargetAudience => Triple.createIfDefined(id, Predicates.targetAudience, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/${aTargetAudience}`))),
                 ...this.competentAuthorityLevel.map(aCompetentAuthorityLevel => Triple.createIfDefined(id, Predicates.competentAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/${aCompetentAuthorityLevel}`))),
                 ...this.competentAuthority.map(aCompetentAuthority => Triple.createIfDefined(id, Predicates.hasCompetentAuthority, Uri.createIfDefined(aCompetentAuthority))),
-                ...this.executingAuthorityLevel.map(anExecutingAuthorityLevel => Triple.createIfDefined(id, Predicates.executingAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/${anExecutingAuthorityLevel}`))),
+                ...this.executingAuthorityLevel.map(anExecutingAuthorityLevel => Triple.createIfDefined(id, Predicates.executingAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/${anExecutingAuthorityLevel}`))),
                 ...this.executingAuthority.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, Uri.createIfDefined(anExecutingAuthority))),
             Triple.createIfDefined(id, Predicates.language, Uri.createIfDefined(this.resourceLanguage)), // TODO verify in Excel
                 ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))), //TODO LPDC-718: keywords might be undefined
