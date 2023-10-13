@@ -27,7 +27,7 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
         unescapeHtmlEntities(product.Conditions?._text),
         unescapeHtmlEntities(product.BringToApply?._text),
         product.LegalText?._text,
-        product.AmountToApply?._text,
+        unescapeHtmlEntities(product.AmountToApply?._text),
         unescapeHtmlEntities(product.Procedure?._text),
         unescapeHtmlEntities(product.Exceptions?._text),
         unescapeHtmlEntities(product.AdditionalInfo?._text),

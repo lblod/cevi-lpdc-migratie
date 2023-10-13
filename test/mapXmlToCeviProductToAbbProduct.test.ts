@@ -148,7 +148,7 @@ describe("map xml to ceviproduct", () => {
             `<ul>\n<li>De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente</li>\n<li>Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken</li>\n<li>De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)</li>\n</ul>`,
             `<p>Wat meebrengen indien je geen begrafenisonderneming zou hebben</p>\n<ul>\n<li>Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.</li>\n<li>De identiteitskaart en eventueel het rijbewijs van de overledene.</li>\n<li>Eventueel het huwelijksboekje van de overledene.</li>\n<li>Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.</li>\n<li>voor begravingen buiten het grondgebied van Stekene: &lsquo;toelating tot begraven&rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.</li>\n</ul>`,
             `Some Legal Text`,
-            `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
+            `<p>Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.</p>\n<p>&nbsp;</p>`,
             "<p>Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.</p>",
             `<p><b>Vellen van bomen wegens acuut gevaar</b></p>\n<p>Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.</p>\n<p>Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.</p>\n<p>De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.</p>\n<p>&nbsp;</p>`,
             `<p>Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&nbsp;9 tot 16 uur in sportcentrum De Sportstek.&nbsp;Voorzie sportieve kledij en een lunchpakket.</p>\n<p>De folder met inschrijvingsformulier wordt&nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (<a href="https://www.stekene.be/thema/6504/thwebwinkel">activiteitenloket</a>).</p>`,
@@ -274,7 +274,7 @@ describe("map ceviProduct to abbProduct", () => {
                 },
             },
             cost: {
-                description: `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`
+                description: `<p>Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.</p>\n<p>&nbsp;</p>`
             },
             procedure: {
                 description: "<p>Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.</p>",
@@ -1158,8 +1158,8 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> .`,
                 `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Cost> .`,
                 `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.cost?.uuid}""" .`,
-                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://purl.org/dc/terms/description> """&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;"""@nl .`,
+                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://purl.org/dc/terms/description> """<p>Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.</p>
+<p>&nbsp;</p>"""@nl .`,
                 `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCost> <http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/ContactPoint> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].uuid}""" .`,

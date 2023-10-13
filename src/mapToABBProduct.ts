@@ -103,7 +103,7 @@ export function mapInfoUrlsToMoreInfo(infoUrls: Url[] | undefined): Website[] {
     return [];
 }
 
-export function mapAmountToApplyToCost(amountToApply?: string): Cost | undefined {
+export function mapAmountToApplyToCost(amountToApply: string | undefined): Cost | undefined {
     return amountToApply ? new Cost(uuid(), amountToApply) : undefined;
 }
 
