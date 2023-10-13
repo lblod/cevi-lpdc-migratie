@@ -18,7 +18,7 @@ export class Website {
         const websiteId: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
-            Triple.create(websiteId, Predicates.type, new Uri('https://schema.org/WebSite')),
+            Triple.create(websiteId, Predicates.type, new Uri('http://schema.org/WebSite')),
             Triple.create(websiteId, Predicates.uuid, Literal.create(this._uuid)),
             Triple.createIfDefined(websiteId, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
             Triple.createIfDefined(websiteId, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
