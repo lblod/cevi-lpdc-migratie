@@ -30,7 +30,7 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
         product.AmountToApply?._text,
         product.Procedure?._text,
         product.Exceptions?._text,
-        product.AdditionalInfo?._text,
+        unescapeHtmlEntities(product.AdditionalInfo?._text),
         verifyInfoUrlsValueInXml(product.InfoUrls?.Url),
         verifyFormsValueInXml(product.Forms?.Form),
         product.EnrichedLinks?._text,

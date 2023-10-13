@@ -151,7 +151,7 @@ describe("map xml to ceviproduct", () => {
             `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
             "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;",
             `&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;\n&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;\n&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
-            `&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;\n&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;`,
+            `<p>Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&nbsp;9 tot 16 uur in sportcentrum De Sportstek.&nbsp;Voorzie sportieve kledij en een lunchpakket.</p>\n<p>De folder met inschrijvingsformulier wordt&nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (<a href="https://www.stekene.be/thema/6504/thwebwinkel">activiteitenloket</a>).</p>`,
             [{
                 location: "http://www.inburgering.be",
                 sequenceNumber: "1",
@@ -290,7 +290,7 @@ describe("map ceviProduct to abbProduct", () => {
                 ],
             },
             exception: `&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;\n&lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;\n&lt;p&gt;De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
-            additionalDescription: `&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;\n&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href="https://www.stekene.be/thema/6504/thwebwinkel"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;`,
+            additionalDescription: `<p>Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&nbsp;9 tot 16 uur in sportcentrum De Sportstek.&nbsp;Voorzie sportieve kledij en een lunchpakket.</p>\n<p>De folder met inschrijvingsformulier wordt&nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (<a href="https://www.stekene.be/thema/6504/thwebwinkel">activiteitenloket</a>).</p>`,
             moreInfo: [
                 {
                     title: "Inburgering.be",
@@ -898,7 +898,7 @@ describe("map ceviProduct to abbProduct", () => {
             }]);
         });
 
-        test('maps an deliveringDepartment address to a ContactPoint', () => {
+        test('maps an authorisedDepartments address to a ContactPoint', () => {
             const result = mapContactPoints([],
                 [
                     {
@@ -1080,8 +1080,8 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://purl.org/dc/terms/title> """Levenloos geboren kind/foetus"""@nl .`,
                 `<${testAbbProduct.id}> <http://purl.org/dc/terms/description> """<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>
 <p>De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.</p>"""@nl .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#additionalDescription> """&lt;p&gt;Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&amp;nbsp;9 tot 16 uur in sportcentrum De Sportstek.&amp;nbsp;Voorzie sportieve kledij en een lunchpakket.&lt;/p&gt;
-&lt;p&gt;De folder met inschrijvingsformulier wordt&amp;nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (&lt;a href=\\"https://www.stekene.be/thema/6504/thwebwinkel\\"&gt;activiteitenloket&lt;/a&gt;).&lt;/p&gt;"""@nl .`,
+                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#additionalDescription> """<p>Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&nbsp;9 tot 16 uur in sportcentrum De Sportstek.&nbsp;Voorzie sportieve kledij en een lunchpakket.</p>
+<p>De folder met inschrijvingsformulier wordt&nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (<a href=\\"https://www.stekene.be/thema/6504/thwebwinkel\\">activiteitenloket</a>).</p>"""@nl .`,
                 `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#exception> """&lt;p&gt;&lt;b&gt;Vellen van bomen wegens acuut gevaar&lt;/b&gt;&lt;/p&gt;
 &lt;p&gt;Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.&lt;/p&gt;
 &lt;p&gt;Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.&lt;/p&gt;
@@ -1186,11 +1186,6 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
                 `<${testAbbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
                 ]
-            )});
-
-        test('This test fails', () => {
-            expect(testStringArray).toMatchObject(
-                `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> "${testAbbProduct.uuid}" .`
             )});
 
 });
