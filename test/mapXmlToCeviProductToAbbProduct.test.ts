@@ -84,10 +84,10 @@ describe("map xml to ceviproduct", () => {
                         phone: "03 790 02 12",
                         fax: "03 790 02 10",
                         website: "www.stekene.be",
-                        email: "Bevolking&amp;BS@stekene.be",
+                        email: "Bevolking&BS@stekene.be",
                         facebook: undefined,
                         twitter: undefined,
-                        openingHours: "&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;\n&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;"
+                        openingHours: "<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag&nbsp;&nbsp;08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n<p>&nbsp;</p>"
                     }
                 },
                 {
@@ -117,10 +117,10 @@ describe("map xml to ceviproduct", () => {
                     phone: "03 790 02 12",
                     fax: "03 790 02 10",
                     website: "www.stekene.be",
-                    email: "Bevolking&amp;BS@stekene.be",
+                    email: "Bevolking&BS@stekene.be",
                     facebook: undefined,
                     twitter: undefined,
-                    openingHours: `&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;\n&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`
+                    openingHours: `<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag&nbsp;&nbsp;08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n<p>&nbsp;</p>`
                 }
             }, {
                 address: {},
@@ -338,9 +338,9 @@ describe("map ceviProduct to abbProduct", () => {
             contactPoints: [
                 {
                     url: "www.stekene.be",
-                    email: "Bevolking&amp;BS@stekene.be",
+                    email: "Bevolking&BS@stekene.be",
                     telephone: "03 790 02 12",
-                    openingHours: "&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;\n&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;\n&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;",
+                    openingHours: "<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag&nbsp;&nbsp;08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n<p>&nbsp;</p>",
                     address: {
                         street: "Stadionstraat",
                         houseNumber: "2",
@@ -1222,15 +1222,15 @@ describe('map abbProduct to Triples', () => {
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ContactPoint> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].uuid}""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/url> """www.stekene.be""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&amp;BS@stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&BS@stekene.be""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """&lt;p&gt;Maandag 08:30-12:00;&lt;/p&gt;
-&lt;p&gt;Dinsdag&amp;nbsp;&amp;nbsp;08:30-12:00;&lt;/p&gt;
-&lt;p&gt;Woensdag 08:30-12;00; 13:30-16:30;&lt;/p&gt;
-&lt;p&gt;Donderdag 08:30-12:00;&lt;/p&gt;
-&lt;p&gt;Vrijdag 08:30-12:00;&lt;/p&gt;
-&lt;p&gt;Zaterdag 09:00-12:00&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """<p>Maandag 08:30-12:00;</p>
+<p>Dinsdag&nbsp;&nbsp;08:30-12:00;</p>
+<p>Woensdag 08:30-12;00; 13:30-16:30;</p>
+<p>Donderdag 08:30-12:00;</p>
+<p>Vrijdag 08:30-12:00;</p>
+<p>Zaterdag 09:00-12:00</p>
+<p>&nbsp;</p>""" .`,
                 `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasContactPoint> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/locn#Address> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].address?.uuid}""" .`,
