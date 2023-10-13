@@ -111,7 +111,7 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.publicationMedium, Uri.createIfDefined(this.publicationMedium)),
             ...(this.requirement ? this.requirement.toTriples(id) : []),
             ...(this._procedure ? this._procedure.toTriples(id) : []),
-                ...this._moreInfo?.map(aMoreInfo => aMoreInfo.toTriples(id, Predicates.hasMoreInfo)).flat(),  // TODO verify if this is correct
+                ...this._moreInfo?.map(aMoreInfo => aMoreInfo.toTriples(id, Predicates.hasMoreInfo)).flat(),  // TODO LPDC-718: fix ... more info, gegevens website does not work, a list appears, but it seems not to have any data
             ...(this._cost ? this._cost.toTriples(id) : []),
             Triple.createIfDefined(id, Predicates.hasFinancialAdvantage, Uri.createIfDefined(this.financialAdvantage)),
                 ...this._contactPoints?.map(aContactPoint => aContactPoint.toTriples(id)).flat(), // TODO verify if this is correct

@@ -486,11 +486,11 @@ describe("map ceviProduct to abbProduct", () => {
                 websites: [
                     {
                         description: "title1",
-                        location: "location1"
+                        location: "https://location1"
                     },
                     {
                         description: "title2",
-                        location: "location2"
+                        location: "https://location2"
                     }
                 ]
             });
@@ -505,11 +505,11 @@ describe("map ceviProduct to abbProduct", () => {
                 websites: [
                     {
                         description: "title1",
-                        location: "location1"
+                        location: "https://location1"
                     },
                     {
                         description: "title2",
-                        location: "location2"
+                        location: "https://location2"
                     }
                 ]
             });
@@ -532,17 +532,30 @@ describe("map ceviProduct to abbProduct", () => {
         test('Maps InfoUrls to URLs', () => {
             const infoUrl1: Url = {sequenceNumber: "ignored", title: "title1", location: "location1"};
             const infoUrl2: Url = {sequenceNumber: "ignoredagain", title: "title2", location: "location2"};
-            const result = mapInfoUrlsToMoreInfo([infoUrl1, infoUrl2]);
+            const infoUrl3: Url = {sequenceNumber: "ignoredagain", title: "title3", location: "http://location3"};
+            const infoUrl4: Url = {sequenceNumber: "ignoredagain", title: "title4", location: "https://location4"};
+            const result = mapInfoUrlsToMoreInfo([infoUrl1, infoUrl2, infoUrl3, infoUrl4]);
             expect(result).toMatchObject([
                 {
                     title: "title1",
-                    location: "location1"
+                    location: "https://location1"
                 },
                 {
                     title: "title2",
-                    location: "location2"
-                }]);
+                    location: "https://location2"
+                },
+                {
+                    title: "title3",
+                    location: "http://location3"
+                },
+                {
+                    title: "title4",
+                    location: "https://location4"
+                },
+            ]);
         });
+
+
 
     });
 
@@ -1072,6 +1085,7 @@ describe('map abbProduct to Triples', () => {
         testTriplesArray = testAbbProduct.toTriples();
         testStringArray = testTriplesArray.map(aTriple => aTriple.toString());
     });
+
 
         test('The result of calling toString() on the array of triples of the test abbProduct instance should contain the following array of strings', () => {
             expect(testStringArray).toMatchObject([

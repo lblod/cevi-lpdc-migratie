@@ -87,7 +87,7 @@ function mapFormsToWebsite(forms: Form[] | undefined) : Website[] {
             uuid(),
             undefined,
             form.title,
-            form.location));
+            prependHttpsIfNeeded(form.location)));
     }
     return [];
 }
@@ -98,9 +98,20 @@ export function mapInfoUrlsToMoreInfo(infoUrls: Url[] | undefined): Website[] {
             uuid(),
             infoUrl.title,
             undefined,
-            infoUrl.location));
+            prependHttpsIfNeeded(infoUrl.location)));
     }
     return [];
+}
+
+function prependHttpsIfNeeded(url: string): string {
+    if(url.startsWith("http://")
+        || url.startsWith("https://")) {
+        return url;
+    } else
+    {
+        console.error(`prepending 'https//' in from of url ${url}`);
+        return 'https://' + url;
+    }
 }
 
 export function mapAmountToApplyToCost(amountToApply: string | undefined): Cost | undefined {
