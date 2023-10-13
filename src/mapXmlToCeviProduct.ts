@@ -136,10 +136,10 @@ function mapDepartmentAddress(addressValueInXml: any): Address {
             phone: addressValueInXml.Phone?._text,
             fax: addressValueInXml.Fax?._text,
             website: addressValueInXml.Website?._text,
-            email: addressValueInXml.Email?._text,
+            email: unescapeHtmlEntities(addressValueInXml.Email?._text),
             facebook: addressValueInXml.Facebook?._text,
             twitter: addressValueInXml.Twitter?._text,
-            openingHours: addressValueInXml.OpeningHours?._text,
+            openingHours: unescapeHtmlEntities(addressValueInXml.OpeningHours?._text),
         }
     } else {
         return {};
