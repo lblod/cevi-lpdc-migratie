@@ -1,6 +1,6 @@
 import {CeviProduct} from "./ceviProduct";
 import {Address} from "./types";
-import { JSDOM } from 'jsdom';
+import {JSDOM} from 'jsdom';
 
 export function mapXmlToCeviProduct(product: any): CeviProduct {
 
@@ -21,16 +21,16 @@ export function mapXmlToCeviProduct(product: any): CeviProduct {
         verifyKeywordsValueInXml(product.Keywords?.Keyword),
         product.Name?._text,
         product.Title?._text,
-        unescapeHtmlEntities(product.Description?._text),
+        unescapeOptionalHtmlEntities(product.Description?._text),
         product.StartDate?._text,
         product.EndDate?._text,
-        unescapeHtmlEntities(product.Conditions?._text),
-        unescapeHtmlEntities(product.BringToApply?._text),
+        unescapeOptionalHtmlEntities(product.Conditions?._text),
+        unescapeOptionalHtmlEntities(product.BringToApply?._text),
         product.LegalText?._text,
-        unescapeHtmlEntities(product.AmountToApply?._text),
-        unescapeHtmlEntities(product.Procedure?._text),
-        unescapeHtmlEntities(product.Exceptions?._text),
-        unescapeHtmlEntities(product.AdditionalInfo?._text),
+        unescapeOptionalHtmlEntities(product.AmountToApply?._text),
+        unescapeOptionalHtmlEntities(product.Procedure?._text),
+        unescapeOptionalHtmlEntities(product.Exceptions?._text),
+        unescapeOptionalHtmlEntities(product.AdditionalInfo?._text),
         verifyInfoUrlsValueInXml(product.InfoUrls?.Url),
         verifyFormsValueInXml(product.Forms?.Form),
         product.EnrichedLinks?._text,
@@ -93,8 +93,8 @@ function verifyFormsValueInXml(formsValue: object | any[] | undefined) {
     return toArray(formsValue)
         .map(formValue => ({
             sequenceNumber: formValue.SequenceNumber?._text,
-            title: formValue.Title?._text,
-            location: formValue.Location?._text
+            title: unescapeHtmlEntities(formValue.Title?._text),
+            location: unescapeHtmlEntities(formValue.Location?._text)
         }));
 }
 
@@ -155,14 +155,15 @@ function toArray(value: object | any[] | undefined) {
     return [];
 }
 
-function unescapeHtmlEntities(input: string | undefined): string | undefined {
-    if(input) {
-        const dom = new JSDOM(`<!DOCTYPE html>`);
-        const domParser = new dom.window.DOMParser();
-        const doc = domParser.parseFromString(input, "text/html");
-        return doc.documentElement.textContent || "";
-    } else {
-        return undefined;
-    }
+function unescapeOptionalHtmlEntities(input: string | undefined): string | undefined {
+    return input ? unescapeHtmlEntities(input) : undefined;
 }
+
+function unescapeHtmlEntities(input: string): string {
+    const dom = new JSDOM(`<!DOCTYPE html>`);
+    const domParser = new dom.window.DOMParser();
+    const doc = domParser.parseFromString(input, "text/html");
+    return doc.documentElement.textContent || "";
+}
+
 

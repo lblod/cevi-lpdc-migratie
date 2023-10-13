@@ -14,17 +14,16 @@ export class Website {
         return this._uuid;
     }
 
-    toTriples(abbInstanceId?: Uri, procedureId?: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
+    toTriples(owningId: Uri, owningLinkPredicate: Uri): (Triple | undefined)[] {
+        const websiteId: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
-            Triple.createIfDefined(id, Predicates.type, new Uri('https://schema.org/WebSite')),
-            Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
-            Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
-            Triple.createIfDefined(id, Predicates.url, Uri.createIfDefined(this.location)),
-            abbInstanceId ? Triple.create(abbInstanceId, Predicates.hasMoreInfo, id) : undefined,
-            procedureId ? Triple.create(procedureId, Predicates.hasWebsite, id) : undefined
+            Triple.create(websiteId, Predicates.type, new Uri('https://schema.org/WebSite')),
+            Triple.create(websiteId, Predicates.uuid, Literal.create(this._uuid)),
+            Triple.createIfDefined(websiteId, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
+            Triple.createIfDefined(websiteId, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
+            Triple.create(websiteId, Predicates.url, Uri.create(this.location)),
+            Triple.create(owningId, owningLinkPredicate, websiteId),
         ];
     }
 }

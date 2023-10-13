@@ -34,6 +34,10 @@ export class Uri {
         return value ? new Uri(value) : undefined;
     }
 
+    static create(value: string): Uri {
+        return new Uri(value);
+    }
+
     toString(): string {
         return `<${this.value}>`
     }

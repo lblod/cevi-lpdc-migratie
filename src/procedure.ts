@@ -19,15 +19,15 @@ export class Procedure {
     }
 
     toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
-        const id: Uri = new Uri(`http://data.lblod.info/id/rule/${this._uuid}`);
+        const procedureId: Uri = new Uri(`http://data.lblod.info/id/rule/${this._uuid}`);
 
         return [
-            Triple.createIfDefined(id, Predicates.type, new Uri('http://purl.org/vocab/cpsv#Rule')),
-            Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
-            Triple.create(abbInstanceId, Predicates.follows, id)
+            Triple.create(procedureId, Predicates.type, new Uri('http://purl.org/vocab/cpsv#Rule')),
+            Triple.create(procedureId, Predicates.uuid, Literal.create(this._uuid)),
+            Triple.createIfDefined(procedureId, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
+            Triple.create(abbInstanceId, Predicates.follows, procedureId)
         ].concat(...this._websites.map(
-            (aWebsite => aWebsite.toTriples(id))
+            (aWebsite => aWebsite.toTriples(procedureId, Predicates.hasWebsite))
         ));
     }
 }

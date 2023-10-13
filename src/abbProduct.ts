@@ -85,6 +85,7 @@ export class AbbProduct {
 
         const triples: (Triple | undefined)[] = [
             //TODO LPDC-718: ipdc concept id koppelen? => sparql query to find the concept given the product id and insert the correct triples for each of those that have a product id
+            //TODO LDPC-718: add shacl - order ids
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
             Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
@@ -110,7 +111,7 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.publicationMedium, Uri.createIfDefined(this.publicationMedium)),
             ...(this.requirement ? this.requirement.toTriples(id) : []),
             ...(this._procedure ? this._procedure.toTriples(id) : []),
-                ...this._moreInfo?.map(aMoreInfo => aMoreInfo.toTriples(id)).flat(), // TODO verify if this is correct
+                ...this._moreInfo?.map(aMoreInfo => aMoreInfo.toTriples(id, Predicates.hasMoreInfo)).flat(),  // TODO verify if this is correct
             ...(this._cost ? this._cost.toTriples(id) : []),
             Triple.createIfDefined(id, Predicates.hasFinancialAdvantage, Uri.createIfDefined(this.financialAdvantage)),
                 ...this._contactPoints?.map(aContactPoint => aContactPoint.toTriples(id)).flat(), // TODO verify if this is correct

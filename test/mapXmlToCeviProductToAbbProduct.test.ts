@@ -164,13 +164,13 @@ describe("map xml to ceviproduct", () => {
             [
                 {
                     sequenceNumber: "1",
-                    title: "Geboortepremie - Aanvraagformulier",
-                    location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684"
+                    title: "<strong>Geboortepremie - Aanvraagformulier</strong>",
+                    location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=874684"
                 },
                 {
                     sequenceNumber: "2",
-                    title: "Verbruik nutsvoorziening - Aanvraagformulier premie",
-                    location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=688849"
+                    title: "<strong>Verbruik nutsvoorziening - Aanvraagformulier premie</strong>",
+                    location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=688849"
                 }
             ],
             `Enriched links`,
@@ -230,7 +230,7 @@ describe("map ceviProduct to abbProduct", () => {
                 websites: [
                     {
                         description: "Verbruik nutsvoorziening - Aanvraagformulier premie",
-                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=688849",
+                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=688849",
                     }
                 ],
             },
@@ -280,12 +280,12 @@ describe("map ceviProduct to abbProduct", () => {
                 description: "<p>Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.</p>",
                 websites: [
                     {
-                        description: "Geboortepremie - Aanvraagformulier",
-                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684",
+                        description: "<strong>Geboortepremie - Aanvraagformulier</strong>",
+                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=874684",
                     },
                     {
-                        description: "Verbruik nutsvoorziening - Aanvraagformulier premie",
-                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=688849",
+                        description: "<strong>Verbruik nutsvoorziening - Aanvraagformulier premie</strong>",
+                        location: "http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=688849",
                     }
                 ],
             },
@@ -1138,14 +1138,14 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://purl.org/vocab/cpsv#follows> <http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.websites[0].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://purl.org/dc/terms/description> """Geboortepremie - Aanvraagformulier"""@nl .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=874684> .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://purl.org/dc/terms/description> """<strong>Geboortepremie - Aanvraagformulier</strong>"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=874684> .`,
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.websites[1].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://purl.org/dc/terms/description> """Verbruik nutsvoorziening - Aanvraagformulier premie"""@nl .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;FormId=688849> .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://purl.org/dc/terms/description> """<strong>Verbruik nutsvoorziening - Aanvraagformulier premie</strong>"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=688849> .`,
+                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/WebSite> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.moreInfo[0].uuid}""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://purl.org/dc/terms/title> """Inburgering.be"""@nl .`,

@@ -57,12 +57,12 @@
         <Forms>
             <Form>
                 <SequenceNumber>1</SequenceNumber>
-                <Title>Geboortepremie - Aanvraagformulier</Title>
+                <Title>&amp;lt;strong&amp;gt;Geboortepremie - Aanvraagformulier&amp;lt;/strong&amp;gt;</Title>
                 <Location>http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;amp;FormId=874684</Location>
             </Form>
             <Form>
                 <SequenceNumber>2</SequenceNumber>
-                <Title>Verbruik nutsvoorziening - Aanvraagformulier premie</Title>
+                <Title>&amp;lt;strong&amp;gt;Verbruik nutsvoorziening - Aanvraagformulier premie&amp;lt;/strong&amp;gt;</Title>
                 <Location>http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;amp;FormId=688849</Location>
             </Form>
         </Forms>
