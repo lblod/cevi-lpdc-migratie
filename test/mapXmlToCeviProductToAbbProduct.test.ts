@@ -1175,7 +1175,7 @@ describe('map abbProduct to Triples', () => {
                 `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://purl.org/dc/terms/description> """<p>Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.</p>
 <p>&nbsp;</p>"""@nl .`,
                 `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCost> <http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://schema.org/ContactPoint> .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ContactPoint> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].uuid}""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/url> """www.stekene.be""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&amp;BS@stekene.be""" .`,

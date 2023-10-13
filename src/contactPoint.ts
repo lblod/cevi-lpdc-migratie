@@ -23,7 +23,7 @@ export class ContactPoint {
         const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
-            Triple.createIfDefined(id, Predicates.type, new Uri('https://schema.org/ContactPoint')),
+            Triple.createIfDefined(id, Predicates.type, new Uri('http://schema.org/ContactPoint')),
             Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
             Triple.createIfDefined(id, Predicates.url, Literal.createIfDefined(this.url)),
             Triple.createIfDefined(id, Predicates.email, Literal.createIfDefined(this.email)),
