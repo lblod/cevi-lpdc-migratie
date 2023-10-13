@@ -30,7 +30,7 @@ describe("map xml to ceviproduct", () => {
 
     test('The mapXmlToCeviProduct function should generate as 2nd instance an object with id 210001', () => {
         expect(ceviProducts[1].id).toEqual('210001');
-        expect(ceviProducts[1].bringToApply).toEqual("&lt;ul&gt;\n&lt;li&gt;Het document waarop de handtekening staat en gewettigd moet worden&lt;/li&gt;\n&lt;li&gt;De identiteitskaart van diegene wiens handtekening gewettigd moet worden&lt;/li&gt;\n&lt;/ul&gt;");
+        expect(ceviProducts[1].bringToApply).toEqual("<ul>\n<li>Het document waarop de handtekening staat en gewettigd moet worden</li>\n<li>De identiteitskaart van diegene wiens handtekening gewettigd moet worden</li>\n</ul>");
     })
 
     test('map xml to ceviProduct', async () => {
@@ -145,8 +145,8 @@ describe("map xml to ceviproduct", () => {
             "<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>\n<p>De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.</p>",
             "2023-09-10",
             "2023-10-12",
-            `&lt;ul&gt;\n&lt;li&gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&lt;/li&gt;\n&lt;li&gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&lt;/li&gt;\n&lt;li&gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&lt;/li&gt;\n&lt;/ul&gt;`,
-            `&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;\n&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;\n&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;\n&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;\n&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;\n&lt;/ul&gt;`,
+            `<ul>\n<li>De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente</li>\n<li>Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken</li>\n<li>De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)</li>\n</ul>`,
+            `<p>Wat meebrengen indien je geen begrafenisonderneming zou hebben</p>\n<ul>\n<li>Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.</li>\n<li>De identiteitskaart en eventueel het rijbewijs van de overledene.</li>\n<li>Eventueel het huwelijksboekje van de overledene.</li>\n<li>Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.</li>\n<li>voor begravingen buiten het grondgebied van Stekene: &lsquo;toelating tot begraven&rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.</li>\n</ul>`,
             `Some Legal Text`,
             `&lt;p&gt;Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;`,
             "&lt;p&gt;Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.&lt;/p&gt;",
@@ -268,9 +268,9 @@ describe("map ceviProduct to abbProduct", () => {
             endDate: new Date("2023-10-12"),
             productType: "AdviesBegeleiding",
             requirement: {
-                description: `&lt;ul&gt;\n&lt;li&gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&lt;/li&gt;\n&lt;li&gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&lt;/li&gt;\n&lt;li&gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&lt;/li&gt;\n&lt;/ul&gt;`,
+                description: `<ul>\n<li>De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente</li>\n<li>Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken</li>\n<li>De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)</li>\n</ul>`,
                 evidence: {
-                    description: `&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;\n&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;\n&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;\n&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;\n&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;\n&lt;/ul&gt;`,
+                    description: `<p>Wat meebrengen indien je geen begrafenisonderneming zou hebben</p>\n<ul>\n<li>Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.</li>\n<li>De identiteitskaart en eventueel het rijbewijs van de overledene.</li>\n<li>Eventueel het huwelijksboekje van de overledene.</li>\n<li>Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.</li>\n<li>voor begravingen buiten het grondgebied van Stekene: &lsquo;toelating tot begraven&rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.</li>\n</ul>`,
                 },
             },
             cost: {
@@ -1115,22 +1115,22 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://schema.org/productID> """10086""" .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Requirement> .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.requirement?.uuid}""" .`,
-                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> """&lt;ul&gt;
-&lt;li&gt;De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente&lt;/li&gt;
-&lt;li&gt;Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken&lt;/li&gt;
-&lt;li&gt;De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)&lt;/li&gt;
-&lt;/ul&gt;"""@nl .`,
+                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> """<ul>
+<li>De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente</li>
+<li>Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken</li>
+<li>De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)</li>
+</ul>"""@nl .`,
                 `<${testAbbProduct.id}> <http://vocab.belgif.be/ns/publicservice#hasRequirement> <http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Evidence> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.requirement?.evidence?.uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://purl.org/dc/terms/description> """&lt;p&gt;Wat meebrengen indien je geen begrafenisonderneming zou hebben&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.&lt;/li&gt;
-&lt;li&gt;De identiteitskaart en eventueel het rijbewijs van de overledene.&lt;/li&gt;
-&lt;li&gt;Eventueel het huwelijksboekje van de overledene.&lt;/li&gt;
-&lt;li&gt;Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.&lt;/li&gt;
-&lt;li&gt;voor begravingen buiten het grondgebied van Stekene: &amp;lsquo;toelating tot begraven&amp;rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.&lt;/li&gt;
-&lt;/ul&gt;"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://purl.org/dc/terms/description> """<p>Wat meebrengen indien je geen begrafenisonderneming zou hebben</p>
+<ul>
+<li>Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.</li>
+<li>De identiteitskaart en eventueel het rijbewijs van de overledene.</li>
+<li>Eventueel het huwelijksboekje van de overledene.</li>
+<li>Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.</li>
+<li>voor begravingen buiten het grondgebied van Stekene: &lsquo;toelating tot begraven&rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.</li>
+</ul>"""@nl .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://data.europa.eu/m8g/hasSupportingEvidence> <http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> .`,
                 `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#Rule> .`,
                 `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.uuid}""" .`,
