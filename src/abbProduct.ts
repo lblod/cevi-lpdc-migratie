@@ -89,7 +89,7 @@ export class AbbProduct {
             //TODO LPDC-718: language: some strings are language less, other need to be the chosen language of het bestuur
             //TODO LPDC-718: remove unused code ...
             //TODO LPDC-718: reports ...
-            Triple.create(id, Predicates.order, Literal.create(1)), //TODO LPDC-762: it might be that it needs to be otherwise, this still leads to a change in the form when loading.
+            Triple.createIfDefined(id, Predicates.order, Literal.create(1)),
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
             Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
