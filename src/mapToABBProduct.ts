@@ -68,6 +68,7 @@ export function mapConditionsToRequirement(conditions: string | undefined, bring
             conditions || 'Bewijsstukken mee te brengen',
             bringToApply ? new Evidence(uuid(), bringToApply) : undefined);
     }
+    console.error(`No requirement nor evidence information`);
     return undefined;
 }
 
@@ -78,6 +79,7 @@ export function mapProcedureAndForms(procedure: string | undefined, forms: Form[
             procedure,
             mapFormsToWebsite(forms));
     }
+    console.error(`No Procedure nor Forms information"`);
     return undefined;
 }
 
@@ -108,7 +110,7 @@ function prependHttpsIfNeeded(url: string): string {
         || url.startsWith("https://")) {
         return url;
     } else {
-        console.error(`prepending 'https//' in from of url ${url}`);
+        console.error(`prepending 'https//' in front of url ${url}`);
         return 'https://' + url;
     }
 }
@@ -141,6 +143,7 @@ export function mapDepartmentAddressToContactPoint(department: Department): Cont
         && !department.address?.boxNumber
         && !department.address?.zipCode
         && !department.address?.municipality) {
+        console.error(`No ContactPoint information for Department "${department.name}"`);
         return undefined;
     }
     return new ContactPoint(
@@ -177,7 +180,7 @@ function mapTargetGroupToTargetAudience(ceviTargetGroup: TargetGroup): TargetAud
     if (abbTargetAudience) {
         return abbTargetAudience;
     } else {
-        console.error(`Cevi TargetGroup value ${ceviTargetGroup.value} cannot be mapped`);
+        console.error(`Cevi TargetGroup value "${ceviTargetGroup.value}" cannot be mapped`);
         return undefined;
     }
 }
@@ -203,7 +206,7 @@ export function mapProductType(ceviProductType: ProductType): PublicServiceType 
     if (abbProductType) {
         return abbProductType;
     } else {
-        console.error(`Cevi ProductType value ${ceviProductType.value} cannot be mapped`);
+        console.error(`Cevi ProductType value "${ceviProductType.value}" cannot be mapped`);
         return undefined;
     }
 }
@@ -226,10 +229,11 @@ function mapCeviThemeToTheme(ceviTheme: CeviTheme): Theme | undefined {
         if (abbTheme) {
             return abbTheme;
         } else {
-            console.error(`Cevi Theme value ${ceviTheme.value} cannot be mapped`);
+            console.error(`Cevi Theme value "${ceviTheme.value}" cannot be mapped`);
             return undefined;
         }
     } else {
+        console.error(`No ceviTheme value`);
         return undefined;
     }
 }
