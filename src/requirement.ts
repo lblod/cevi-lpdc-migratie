@@ -16,13 +16,14 @@ export class Requirement {
         return this._evidence;
     }
 
-    toTriples(abbInstanceId: Uri): (Triple | undefined)[] {
+    toTriples(abbInstanceId: Uri, index: number): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/id/requirement/${this._uuid}`);
 
        return [
             Triple.createIfDefined(id, Predicates.type, new Uri('http://data.europa.eu/m8g/Requirement')),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
             Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
+            Triple.create(id, Predicates.order, Literal.create(index + 1)),
             Triple.create(abbInstanceId, Predicates.hasRequirement, id),
         ].concat(this._evidence?.toTriples(id));
 

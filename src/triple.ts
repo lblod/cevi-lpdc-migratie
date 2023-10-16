@@ -46,17 +46,17 @@ export class Uri {
 export class Literal {
 
     constructor(
-        private value: string,
+        private value: string | number,
         private language?: Language,
         private dataType?: string,
     ) {
     }
 
-    static createIfDefined(value?: string, language?: Language, dataType?: string): Literal | undefined {
+    static createIfDefined(value: string | undefined, language?: Language, dataType?: string): Literal | undefined {
         return value ? new Literal(value, language, dataType) : undefined;
     }
 
-    static create(value: string): Literal {
+    static create(value: string | number): Literal {
         if (!value) {
             throw new Error('Literal cannot be created!');
         }
@@ -64,13 +64,17 @@ export class Literal {
     }
 
     toString(): string {
-        const escapedValue = `"""${this.value.replace(/"/g, '\\"')}"""`;
-        if (this.language) {
-            return `${escapedValue}@${this.language}`
-        } else if (this.dataType) {
-            return `${escapedValue}^^<${this.dataType}>`
+        if (typeof this.value === 'number') {
+            return this.value.toString();
         } else {
-            return escapedValue;
+            const escapedValue = `"""${this.value.replace(/"/g, '\\"')}"""`;
+            if (this.language) {
+                return `${escapedValue}@${this.language}`
+            } else if (this.dataType) {
+                return `${escapedValue}^^<${this.dataType}>`
+            } else {
+                return escapedValue;
+            }
         }
     }
 

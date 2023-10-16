@@ -14,7 +14,7 @@ export class Website {
         return this._uuid;
     }
 
-    toTriples(owningId: Uri, owningLinkPredicate: Uri): (Triple | undefined)[] {
+    toTriples(owningId: Uri, owningLinkPredicate: Uri, index: number): (Triple | undefined)[] {
         const websiteId: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
@@ -23,6 +23,7 @@ export class Website {
             Triple.createIfDefined(websiteId, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
             Triple.createIfDefined(websiteId, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
             Triple.create(websiteId, Predicates.url, Uri.create(this.location)),
+            Triple.create(websiteId, Predicates.order, Literal.create(index + 1)),
             Triple.create(owningId, owningLinkPredicate, websiteId),
         ];
     }

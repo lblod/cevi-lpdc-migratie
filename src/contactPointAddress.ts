@@ -17,7 +17,7 @@ export class ContactPointAddress {
         return this._uuid;
     }
 
-    toTriples(contactPointId: Uri): (Triple | undefined)[] {
+    toTriples(contactPointId: Uri, index: number): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
@@ -29,6 +29,7 @@ export class ContactPointAddress {
             Triple.createIfDefined(id, Predicates.postcode, Literal.createIfDefined(this.zipCode)),
             Triple.createIfDefined(id, Predicates.gemeentenaam, Literal.createIfDefined(this.municipality, Language.NL)),
             Triple.createIfDefined(id, Predicates.land, Literal.createIfDefined(this.country, Language.NL)),
+            Triple.create(id, Predicates.order, Literal.create(index + 1)),
             Triple.create(contactPointId, Predicates.address, id)
         ];
     }
