@@ -1,5 +1,6 @@
 import {ContactPointAddress} from "./contactPointAddress";
 import {Literal, Predicates, Triple, Uri} from "./triple";
+import {Language} from "./language";
 
 export class ContactPoint {
     constructor(
@@ -19,7 +20,7 @@ export class ContactPoint {
         return this._address;
     }
 
-    toTriples(abbInstanceId: Uri, index: number): (Triple | undefined)[] {
+    toTriples(abbInstanceId: Uri, index: number, languageVersion: Language): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/form-data/nodes/${this._uuid}`);
 
         return [
@@ -31,6 +32,6 @@ export class ContactPoint {
             Triple.createIfDefined(id, Predicates.openingHours, Literal.createIfDefined(this.openingHours)),
             Triple.create(id, Predicates.order, Literal.create(index + 1)),
             Triple.create(abbInstanceId, Predicates.hasContactPoint, id),
-        ].concat(this._address?.toTriples(id, 0));
+        ].concat(this._address?.toTriples(id, 0, languageVersion));
     }
 }

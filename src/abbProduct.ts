@@ -80,7 +80,7 @@ export class AbbProduct {
         return this._contactPoints;
     }
 
-    toTriples(): Triple[] {
+    toTriples(languageVersion: Language): Triple[] {
         const id = new Uri(this._id);
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';
 
@@ -92,11 +92,11 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.order, Literal.create(1)),
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
-            Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, Language.NL)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, Language.NL)),
-            Triple.createIfDefined(id, Predicates.additionalDescription, Literal.createIfDefined(this.additionalDescription, Language.NL)),
-            Triple.createIfDefined(id, Predicates.exception, Literal.createIfDefined(this.exception, Language.NL)),
-            Triple.createIfDefined(id, Predicates.regulation, Literal.createIfDefined(this.regulation, Language.NL)),
+            Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, languageVersion)),
+            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, languageVersion)),
+            Triple.createIfDefined(id, Predicates.additionalDescription, Literal.createIfDefined(this.additionalDescription, languageVersion)),
+            Triple.createIfDefined(id, Predicates.exception, Literal.createIfDefined(this.exception, languageVersion)),
+            Triple.createIfDefined(id, Predicates.regulation, Literal.createIfDefined(this.regulation, languageVersion)),
             ...this.theme.map(aTheme => Triple.createIfDefined(id, Predicates.thematicArea, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Thema/${aTheme}`))),
             ...this.targetAudience.map(aTargetAudience => Triple.createIfDefined(id, Predicates.targetAudience, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/${aTargetAudience}`))),
             ...this.competentAuthorityLevel.map(aCompetentAuthorityLevel => Triple.createIfDefined(id, Predicates.competentAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/${aCompetentAuthorityLevel}`))),
@@ -104,7 +104,7 @@ export class AbbProduct {
             ...this.executingAuthorityLevel.map(anExecutingAuthorityLevel => Triple.createIfDefined(id, Predicates.executingAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/${anExecutingAuthorityLevel}`))),
             ...this.executingAuthority.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, Uri.createIfDefined(anExecutingAuthority))),
             Triple.createIfDefined(id, Predicates.language, Uri.createIfDefined(this.resourceLanguage)), // TODO verify in Excel
-            ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))),
+            ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, languageVersion))),
             Triple.createIfDefined(id, Predicates.productType, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Type/${this.productType}`)),
             Triple.createIfDefined(id, Predicates.created, Literal.createIfDefined(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.modified, Literal.createIfDefined(this.modified.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
@@ -113,12 +113,12 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.productId, Literal.createIfDefined(this.productId)),
             Triple.createIfDefined(id, Predicates.yourEuropeCategory, Uri.createIfDefined(this.yourEuropeCategory)), // TODO verify in Excel
             Triple.createIfDefined(id, Predicates.publicationMedium, Uri.createIfDefined(this.publicationMedium)),
-            ...(this.requirement ? this.requirement.toTriples(id, 0) : []),
-            ...(this._procedure ? this._procedure.toTriples(id, 0) : []),
-            ...this._moreInfo?.map((aMoreInfo, index) => aMoreInfo.toTriples(id, Predicates.hasMoreInfo, index)).flat(),
-            ...(this._cost ? this._cost.toTriples(id, 0) : []),
+            ...(this.requirement ? this.requirement.toTriples(id, 0, languageVersion) : []),
+            ...(this._procedure ? this._procedure.toTriples(id, 0, languageVersion) : []),
+            ...this._moreInfo?.map((aMoreInfo, index) => aMoreInfo.toTriples(id, Predicates.hasMoreInfo, index, languageVersion)).flat(),
+            ...(this._cost ? this._cost.toTriples(id, 0, languageVersion) : []),
             Triple.createIfDefined(id, Predicates.hasFinancialAdvantage, Uri.createIfDefined(this.financialAdvantage)),
-            ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index)).flat(),
+            ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index, languageVersion)).flat(),
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
             Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd')) //concept
