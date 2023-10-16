@@ -81,7 +81,7 @@ export function mapProcedureAndForms(procedure: string | undefined, forms: Form[
     return undefined;
 }
 
-function mapFormsToWebsite(forms: Form[] | undefined) : Website[] {
+function mapFormsToWebsite(forms: Form[] | undefined): Website[] {
     if (forms) {
         return forms?.map((form: Form) => new Website(
             uuid(),
@@ -104,11 +104,10 @@ export function mapInfoUrlsToMoreInfo(infoUrls: Url[] | undefined): Website[] {
 }
 
 function prependHttpsIfNeeded(url: string): string {
-    if(url.startsWith("http://")
+    if (url.startsWith("http://")
         || url.startsWith("https://")) {
         return url;
-    } else
-    {
+    } else {
         console.error(`prepending 'https//' in from of url ${url}`);
         return 'https://' + url;
     }
@@ -242,7 +241,8 @@ export function mapCeviThemesToTheme(ceviThemes: CeviTheme[]): Theme[] {
 }
 
 export function mapDeliveringDepartmentsToExecutingAuthorityLevel(ceviDepartments: Department[]): ExecutingAuthorityLevel[] {
-    return [...new Set(ceviDepartments.map(mapDeliveringDepartmentToExecutingAuthorityLevel))].sort();
+    let executingAuthorityLevelsWithAtLeastLokaal: ExecutingAuthorityLevel[] = [...ceviDepartments.map(mapDeliveringDepartmentToExecutingAuthorityLevel), ExecutingAuthorityLevel.Lokaal];
+    return [...new Set(executingAuthorityLevelsWithAtLeastLokaal)].sort();
 }
 
 function mapDeliveringDepartmentToExecutingAuthorityLevel(ceviDepartment: Department): ExecutingAuthorityLevel {

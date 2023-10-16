@@ -247,9 +247,11 @@ describe("map ceviProduct to abbProduct", () => {
                 'https://data.vlaanderen.be/id/organisatie/OVO027227',
             ],
             executingAuthorityLevel: [
+                ExecutingAuthorityLevel.Lokaal,
                 ExecutingAuthorityLevel.Vlaams,
             ],
             executingAuthority: [
+                gemeente_URL,
                 'https://data.vlaanderen.be/id/organisatie/OVO000001'
             ],
         });
@@ -556,7 +558,6 @@ describe("map ceviProduct to abbProduct", () => {
         });
 
 
-
     });
 
     describe('mapKeywords', () => {
@@ -667,9 +668,41 @@ describe("map ceviProduct to abbProduct", () => {
 
     describe('mapDeliveringDepartmentsToExecutingAuthorityLevel', () => {
 
-        test('Empty delivering departments themes, results in empty executing authority levels', () => {
+        test('Empty delivering departments themes, results in Executing Authority Level Lokaal', () => {
             const result = mapDeliveringDepartmentsToExecutingAuthorityLevel([]);
-            expect(result).toEqual([]);
+            expect(result).toEqual([
+                ExecutingAuthorityLevel.Lokaal,
+            ]);
+        });
+
+        test('Delivering departments themes Only Vlaams, results in Executing Authority Level Vlaams and Lokaal', () => {
+            const result = mapDeliveringDepartmentsToExecutingAuthorityLevel([
+                {
+                    id: 'ignored',
+                    name: 'Vlaamse overheid',
+                    address: {}
+                },
+
+            ]);
+            expect(result).toEqual([
+                ExecutingAuthorityLevel.Lokaal,
+                ExecutingAuthorityLevel.Vlaams,
+            ]);
+        });
+
+        test('Delivering departments themes Only Federaal, results in Executing Authority Level Federaal and Lokaal', () => {
+            const result = mapDeliveringDepartmentsToExecutingAuthorityLevel([
+                {
+                    id: 'ignored',
+                    name: 'Federale overheid',
+                    address: {}
+                },
+
+            ]);
+            expect(result).toEqual([
+                ExecutingAuthorityLevel.Federaal,
+                ExecutingAuthorityLevel.Lokaal,
+            ]);
         });
 
         test('Translates delivering departments themes Vlaamse Overheid directly, Federale Overheid directly, all else becomes Lokale overheid', () => {
@@ -693,7 +726,8 @@ describe("map ceviProduct to abbProduct", () => {
             expect(result).toEqual([
                 ExecutingAuthorityLevel.Federaal,
                 ExecutingAuthorityLevel.Lokaal,
-                ExecutingAuthorityLevel.Vlaams])
+                ExecutingAuthorityLevel.Vlaams,
+            ])
         });
 
         test('Translates delivering departments themes ; and filters duplicates', () => {
@@ -1131,8 +1165,8 @@ describe('map abbProduct to Triples', () => {
     });
 
 
-        test('The result of calling toString() on the array of triples of the test abbProduct instance should contain the following array of strings', () => {
-            expect(testStringArray).toMatchObject([
+    test('The result of calling toString() on the array of triples of the test abbProduct instance should contain the following array of strings', () => {
+        expect(testStringArray).toMatchObject([
                 `<${testAbbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
                 `<${testAbbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
                 `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.uuid}""" .`,
@@ -1253,7 +1287,8 @@ describe('map abbProduct to Triples', () => {
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> .`,
                 `<${testAbbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
                 `<${testAbbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
-                ]
-            )});
+            ]
+        )
+    });
 
 });
