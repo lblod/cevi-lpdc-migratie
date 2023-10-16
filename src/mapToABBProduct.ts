@@ -16,7 +16,7 @@ import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 
-export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string): AbbProduct {
+export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string): AbbProduct {
 
     const instanceUuid = uuid();
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
@@ -55,7 +55,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         mapInfoUrlsToMoreInfo(product.infoUrls),
         mapAmountToApplyToCost(product.amountToApply),
         undefined,
-        undefined,
+        lokaalBestuurNis2019Url,
         lokaalBestuurUrl,
     )
 }

@@ -38,7 +38,7 @@ export class AbbProduct {
         private _moreInfo: Website[],
         private _cost: Cost | undefined,
         private financialAdvantage: undefined,
-        private spatial: undefined,
+        private spatial: string,
         private createdBy: string) {
     }
 

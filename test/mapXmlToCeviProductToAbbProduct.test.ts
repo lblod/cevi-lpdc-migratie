@@ -20,6 +20,7 @@ import {AbbProduct} from "../src/abbProduct";
 import {CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 
 const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af";
+const gemeente_nis2019_URL = "http://vocab.belgif.be/auth/refnis2019/46024";
 
 describe("map xml to ceviproduct", () => {
     let ceviProducts: CeviProduct[] = [];
@@ -202,7 +203,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map minimal required items from xml to ceviProduct and to abbProduct', () => {
         const migrationDate = new Date();
-        const abbProduct = mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL);
+        const abbProduct = mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -212,7 +213,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map with arrays of one element xml to ceviProduct and to abbProduct', () => {
         const migrationDate = new Date();
-        const abbProduct = mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL);
+        const abbProduct = mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -259,7 +260,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map full item from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL);
+        const abbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL);
 
         expect(abbProduct).toMatchObject({
             productId: '10086',
@@ -1159,7 +1160,7 @@ describe('map abbProduct to Triples', () => {
         ceviProducts = await readCeviXml('src/resources/LPDC_CEVI.xml');
 
         const migrationDate = new Date();
-        testAbbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL);
+        testAbbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL);
         testTriplesArray = testAbbProduct.toTriples();
         testStringArray = testTriplesArray.map(aTriple => aTriple.toString());
     });
@@ -1285,6 +1286,7 @@ describe('map abbProduct to Triples', () => {
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
                 `<${testAbbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
                 `<${testAbbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
             ]
