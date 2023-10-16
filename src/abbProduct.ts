@@ -88,16 +88,7 @@ export class AbbProduct {
             //TODO LPDC-718: ipdc concept id koppelen? => sparql query to find the concept given the product id and insert the correct triples for each of those that have a product id
             //TODO LPDC-718: language: some strings are language less, other need to be the chosen language of het bestuur
             //TODO LPDC-718: remove unused code ...
-            //TODO LPDC-718: on first edit of a form: following triples get removed ?
-            /*
-            @prefix : <#>.
-@prefix adres: <https://data.vlaanderen.be/ns/adres#>.
-@prefix nodes: <http://data.lblod.info/form-data/nodes/>.
-
-nodes:80386dd6-3ba7-4562-8132-641d43d5f6b0
-adres:land "Belgi\u00eb"@nl; adres:postcode "9190".
-             */
-
+            //TODO LPDC-718: reports ...
             Triple.create(id, Predicates.order, Literal.create(1)), //TODO LPDC-762: it might be that it needs to be otherwise, this still leads to a change in the form when loading.
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
@@ -127,7 +118,7 @@ adres:land "Belgi\u00eb"@nl; adres:postcode "9190".
             ...this._moreInfo?.map((aMoreInfo, index) => aMoreInfo.toTriples(id, Predicates.hasMoreInfo, index)).flat(),
             ...(this._cost ? this._cost.toTriples(id, 0) : []),
             Triple.createIfDefined(id, Predicates.hasFinancialAdvantage, Uri.createIfDefined(this.financialAdvantage)),
-            ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index)).flat(), // TODO verify if this is correct
+            ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index)).flat(),
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
             Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd')) //concept
