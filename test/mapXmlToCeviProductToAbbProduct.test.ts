@@ -26,6 +26,7 @@ import {Language} from "../src/language";
 
 const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af";
 const gemeente_nis2019_URL = "http://vocab.belgif.be/auth/refnis2019/46024";
+const sparqlClientUrL = `http://localhost:8896/sparql`;
 
 describe("map xml to ceviproduct", () => {
     let ceviProducts: CeviProduct[] = [];
@@ -206,9 +207,9 @@ describe("map ceviProduct to abbProduct", () => {
         ceviProducts = await readCeviXml('src/resources/LPDC_CEVI.xml');
     })
 
-    test('map minimal required items from xml to ceviProduct and to abbProduct', () => {
+    test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL);
+        const abbProduct = await mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -216,9 +217,9 @@ describe("map ceviProduct to abbProduct", () => {
         });
     });
 
-    test('map with arrays of one element xml to ceviProduct and to abbProduct', () => {
+    test('map with arrays of one element xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL);
+        const abbProduct = await mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -265,11 +266,10 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map full item from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL);
+        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
 
         expect(abbProduct).toMatchObject({
             productId: '1502',
-            //TODO LPDC-718: hoe de link naar het ipdc concept te koppelen? En is dat wel nodig ? Want soms worden nogal diepe links gemaakt van instantie naar concept ...
             title: "Levenloos geboren kind/foetus",
             description: "<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>\n<p>De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.</p>",
             startDate: new Date("2023-09-10"),
@@ -1165,7 +1165,7 @@ describe('map abbProduct to Triples', () => {
         ceviProducts = await readCeviXml('src/resources/LPDC_CEVI.xml');
 
         const migrationDate = new Date();
-        testAbbProduct = mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL);
+        testAbbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
         testTriplesArray = testAbbProduct.toTriples(Language.INFORMAL);
         testStringArray = testTriplesArray.map(aTriple => aTriple.toString());
     });
@@ -1212,6 +1212,7 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://schema.org/startDate> """2023-09-10T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
                 `<${testAbbProduct.id}> <http://schema.org/endDate> """2023-10-12T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
                 `<${testAbbProduct.id}> <http://schema.org/productID> """1502""" .`,
+                `<${testAbbProduct.id}> <http://purl.org/dc/terms/source> <https://ipdc.tni-vlaanderen.be/id/concept/705d401c-1a41-4802-a863-b22499f71b84> .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Requirement> .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.requirement?.uuid}""" .`,
                 `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> """<ul>

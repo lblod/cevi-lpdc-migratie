@@ -31,6 +31,7 @@ export class AbbProduct {
         private startDate: Date | undefined,
         private endDate: Date | undefined,
         private productId: string | undefined,
+        private conceptUrl: string | undefined,
         private yourEuropeCategory: undefined,
         private publicationMedium: undefined,
         private _requirement: Requirement | undefined,
@@ -85,10 +86,10 @@ export class AbbProduct {
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';
 
         const triples: (Triple | undefined)[] = [
-            //TODO LPDC-718: ipdc concept id koppelen? => sparql query to find the concept given the product id and insert the correct triples for each of those that have a product id
             //TODO LPDC-718: language: some strings are language less, other need to be the chosen language of het bestuur
             //TODO LPDC-718: remove unused code ...
-            //TODO LPDC-718: reports ...
+            //TODO LPDC-718: also add concept is instantiated, and conceptisnew , but in a differnt graph -> so encode the graph here as well as a quad? ;so to have exactly one ttl file ?
+
             Triple.createIfDefined(id, Predicates.order, Literal.create(1)),
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
@@ -111,6 +112,7 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.startDate, Literal.createIfDefined(this.startDate?.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.endDate, Literal.createIfDefined(this.endDate?.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.productId, Literal.createIfDefined(this.productId)),
+            Triple.createIfDefined(id, Predicates.source, Uri.createIfDefined(this.conceptUrl)),
             Triple.createIfDefined(id, Predicates.yourEuropeCategory, Uri.createIfDefined(this.yourEuropeCategory)), // TODO verify in Excel
             Triple.createIfDefined(id, Predicates.publicationMedium, Uri.createIfDefined(this.publicationMedium)),
             ...(this.requirement ? this.requirement.toTriples(id, 0, languageVersion) : []),

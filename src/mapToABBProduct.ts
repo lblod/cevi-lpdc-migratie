@@ -15,8 +15,9 @@ import {Website} from "./website";
 import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
+import {findUniqueConceptIdForProductId} from "./query-concept-for-product-id";
 
-export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string): AbbProduct {
+export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, sparqlClientUrl: string): Promise<AbbProduct> {
 
     const instanceUuid = uuid();
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
@@ -48,6 +49,7 @@ export function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaa
         product.startDate ? new Date(product.startDate) : undefined,
         product.endDate ? new Date(product.endDate) : undefined,
         productId,
+        await mapConceptUrl(productId, sparqlClientUrl),
         undefined,
         undefined,
         mapConditionsToRequirement(product.conditions, product.bringToApply),
@@ -309,6 +311,14 @@ export function mapKeywords(ceviKeywords: Keyword[]): string[] {
 export function mapProductId(ceviProductId: string, ceviProductSource: Source): string | undefined {
     if (ceviProductSource?.value === 'IPDC') {
         return ceviProductId;
+    } else {
+        return undefined;
+    }
+}
+
+export async function mapConceptUrl(productId: string | undefined, sparqlClientUrl: string): Promise<string | undefined> {
+    if (productId) {
+        return await findUniqueConceptIdForProductId(productId, sparqlClientUrl);
     } else {
         return undefined;
     }
