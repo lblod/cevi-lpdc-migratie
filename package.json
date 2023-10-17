@@ -2,9 +2,9 @@
   "name": "cevi-lpdc-migratie",
   "version": "1.0.0",
   "description": "Repository for the migration of CEVI LPDC instances to ABB LPDC",
-  "main": "src/index-stekene.ts",
   "scripts": {
-    "start": "ts-node src/index-cevi.ts",
+    "migrate-cevi": "ts-node src/migrate-cevi.ts",
+    "migrate-stekene": "ts-node src/migrate-stekene.ts",
     "test": "vitest run"
   },
   "author": "",
