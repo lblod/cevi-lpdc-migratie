@@ -17,7 +17,7 @@ export async function findUniqueConceptIdForProductId(productId: string, sparqlC
                 GRAPH <http://mu.semte.ch/graphs/public> {
                     ?conceptId <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#ConceptualPublicService> .
                     ?conceptId <http://schema.org/productID> ?o . 
-                    FILTER(?o = "${productId}")
+                    FILTER(?o = "${productId}" || ?o = "${productId}"^^<http://www.w3.org/2001/XMLSchema#string>)
                 }
             } 
         `);
