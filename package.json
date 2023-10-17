@@ -4,7 +4,7 @@
   "description": "Repository for the migration of CEVI LPDC instances to ABB LPDC",
   "main": "src/index-stekene.ts",
   "scripts": {
-    "start": "ts-node . > index-cevi.log 2>&1",
+    "start": "ts-node src/index-cevi.ts",
     "test": "vitest run"
   },
   "author": "",
@@ -18,6 +18,7 @@
     "typescript": "^5.2.2",
     "uuid": "^9.0.1",
     "vitest": "^0.34.5",
-    "xml-js": "^1.6.11"
+    "xml-js": "^1.6.11",
+    "sparql-client-2": "https://github.com/erikap/node-sparql-client.git"
   }
 }
