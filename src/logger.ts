@@ -8,6 +8,7 @@ export class Logger {
 
     static setCeviId(id: string) {
         this.id = id;
+        console.log(`\n--- Mapping cevi Product '${id || '(none specified)'}' ---`);
     }
 
     static log(message: string) {
