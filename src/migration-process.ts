@@ -1,7 +1,6 @@
 import fs from "fs";
 import {CeviProduct} from "./ceviProduct";
 import {readCeviXml} from "./readCeviXml";
-import {AbbProduct} from "./abbProduct";
 import {mapToABBProduct} from "./mapToABBProduct";
 import {Language} from "./language";
 import fsp from "fs/promises";
