@@ -1,5 +1,4 @@
 import Papa from 'papaparse';
-import fs from "fs/promises";
 export class Logger {
 
     static id: string;
@@ -25,22 +24,20 @@ export class Logger {
         })
     }
 
-    static toCsv() {
-        const csv = Papa.unparse(this.logList, {
+    static mappedFieldsToCsv() {
+        return Papa.unparse(this.logList, {
             quotes: false,
             delimiter: ",",
             header: true
         })
-        fs.writeFile('src/migration-results/mapped-fields-log.csv', csv);
     }
 
     static importedToCsv() {
-        const importedCsv = Papa.unparse(this.importedLogList, {
+        return Papa.unparse(this.importedLogList, {
             quotes: false,
             delimiter: ",",
             header: true
         })
-        fs.writeFile('src/migration-results/imported-cevi-instances.csv', importedCsv);
     }
 
 }

@@ -54,13 +54,12 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
         }
     }
 
-    Logger.toCsv();
-    Logger.importedToCsv();
-
     const triples = abbProducts.flatMap(abbProduct => abbProduct?.toTriples(language)).map(trip => trip?.toString()).join('\n');
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.ttl`, triples);
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.graph`, bestuurseenheidGraph);
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.log`, `${logs.join('\n')}`);
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-update-concept-display-configuration.sparql`, queryToUpdateConceptDisplayConfigurations(bestuurseenheidGraph));
+    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-mapped-fields-log.csv`, Logger.mappedFieldsToCsv());
+    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-imported-cevi-instances.csv`, Logger.importedToCsv());
 
 }
