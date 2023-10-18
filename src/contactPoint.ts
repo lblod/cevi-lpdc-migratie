@@ -12,10 +12,12 @@ export class ContactPoint {
         public _address: ContactPointAddress | undefined) {
     }
 
+    // TODO: CodeReview getter en public field?
     get uuid(): string {
         return this._uuid;
     }
 
+    // TODO: CodeReview getter en public field?
     get address(): ContactPointAddress | undefined {
         return this._address;
     }
