@@ -3,13 +3,13 @@ import {Language} from "./language";
 
 export class ContactPointAddress {
     constructor(
-        public _uuid: string,
-        public street: string | undefined,
-        public houseNumber: string | undefined,
-        public boxNumber: string | undefined,
-        public zipCode: string | undefined,
-        public municipality: string | undefined,
-        public country: string | undefined
+        private _uuid: string,
+        private street: string | undefined,
+        private houseNumber: string | undefined,
+        private boxNumber: string | undefined,
+        private zipCode: string | undefined,
+        private municipality: string | undefined,
+        private country: string | undefined
     ) {
     }
 

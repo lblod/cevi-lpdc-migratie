@@ -4,20 +4,18 @@ import {Language} from "./language";
 
 export class ContactPoint {
     constructor(
-        public _uuid: string,
-        public url: string | undefined,
-        public email: string | undefined,
-        public telephone: string | undefined,
-        public openingHours: string | undefined,
-        public _address: ContactPointAddress | undefined) {
+        private _uuid: string,
+        private url: string | undefined,
+        private email: string | undefined,
+        private telephone: string | undefined,
+        private openingHours: string | undefined,
+        private _address: ContactPointAddress | undefined) {
     }
 
-    // TODO: CodeReview getter en public field?
     get uuid(): string {
         return this._uuid;
     }
 
-    // TODO: CodeReview getter en public field?
     get address(): ContactPointAddress | undefined {
         return this._address;
     }
