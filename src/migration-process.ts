@@ -46,7 +46,6 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
         try {
             Logger.setCeviId(ceviProduct.id);
             ceviProduct.title ? Logger.logImported(ceviProduct.title) : Logger.logImported('No title provided');
-            console.log(`\n--- Mapping cevi Product '${ceviProduct.id || '(none specified)'}' ---`);
             abbProducts.push(await mapToABBProduct(ceviProduct, timestamp, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl));
         } catch (error) {
             console.error(`Cevi product ${ceviProduct.id} with name ${ceviProduct.name} could not be mapped to an ABB Product.`, error);
@@ -58,7 +57,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.graph`, bestuurseenheidGraph);
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.log`, `${logs.join('\n')}`);
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-update-concept-display-configuration.sparql`, queryToUpdateConceptDisplayConfigurations(bestuurseenheidGraph));
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-mapped-fields-log.csv`, Logger.mappedFieldsToCsv());
+    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-mapping-failed-fields-log.csv`, Logger.mappedFieldsToCsv());
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-imported-cevi-instances.csv`, Logger.importedToCsv());
 
 }
