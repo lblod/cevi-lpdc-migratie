@@ -86,7 +86,6 @@ export class AbbProduct {
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';
 
         const triples: (Triple | undefined)[] = [
-            //TODO LPDC-718: language: some strings are language less, other need to be the chosen language of het bestuur
             //TODO LPDC-718: remove unused code ...
             //TODO LPDC-718: implement if 'Te verwijderen' in title, don't generate anything.
 
@@ -105,7 +104,7 @@ export class AbbProduct {
             ...this.executingAuthorityLevel.map(anExecutingAuthorityLevel => Triple.createIfDefined(id, Predicates.executingAuthorityLevel, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/${anExecutingAuthorityLevel}`))),
             ...this.executingAuthority.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, Uri.createIfDefined(anExecutingAuthority))),
             Triple.createIfDefined(id, Predicates.language, Uri.createIfDefined(this.resourceLanguage)), // TODO verify in Excel
-            ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, languageVersion))),
+            ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))),
             Triple.createIfDefined(id, Predicates.productType, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Type/${this.productType}`)),
             Triple.createIfDefined(id, Predicates.created, Literal.createIfDefined(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.modified, Literal.createIfDefined(this.modified.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
