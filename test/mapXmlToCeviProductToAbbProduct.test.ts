@@ -20,8 +20,7 @@ import {
     mapToABBProduct
 } from "../src/mapToABBProduct";
 import {Form, Keyword, ProductType, Url} from "../src/types";
-import {Triple} from "../src/triple";
-import {AbbProduct, CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
+import {CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme} from "../src/abbProduct";
 import {Language} from "../src/language";
 
 const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af";
@@ -1163,76 +1162,94 @@ describe("map ceviProduct to abbProduct", () => {
 });
 
 describe('map abbProduct to Triples', () => {
-    let testAbbProduct: AbbProduct;
-    let testTriplesArray: Triple[];
-    let testStringArray: string[];
 
     let ceviProducts: CeviProduct[] = [];
 
     beforeAll(async () => {
         ceviProducts = await readCeviXml('src/resources/LPDC_CEVI.xml');
+    });
 
+    test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        testAbbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
-        testTriplesArray = testAbbProduct.toTriples(Language.INFORMAL);
-        testStringArray = testTriplesArray.map(aTriple => aTriple.toString());
+        const abbProduct = await mapToABBProduct(ceviProducts[5], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+
+        const triplesArrayForAbbProduct = abbProduct.toTriples(Language.INFORMAL);
+        const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
+
+        expect(triplesAsStringForAbbProduct).toMatchObject([
+            `<${abbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
+            `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
+            `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
+            `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Lokaal> .`,
+            `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <${gemeente_URL}> .`,
+            `<${abbProduct.id}> <http://purl.org/dc/terms/created> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+            `<${abbProduct.id}> <http://purl.org/dc/terms/modified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+            `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
+            `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
+            `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
+        ]);
     });
 
 
-    test('The result of calling toString() on the array of triples of the test abbProduct instance should contain the following array of strings', () => {
-        expect(testStringArray).toMatchObject([
-                `<${testAbbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
-                `<${testAbbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.uuid}""" .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/title> """Levenloos geboren kind/foetus"""@nl-be-x-informal .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/description> """<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>
+    test('map full item from xml to ceviProduct to abbProduct and to a list of triples', async () => {
+        const migrationDate = new Date();
+        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const triplesArrayForAbbProduct = abbProduct.toTriples(Language.INFORMAL);
+        const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
+
+        expect(triplesAsStringForAbbProduct).toMatchObject([
+                `<${abbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
+                `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/title> """Levenloos geboren kind/foetus"""@nl-be-x-informal .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/description> """<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>
 <p>De registratie van kindjes kan vrijblijvend vanaf 140 dagen zwangerschap met toekenning van een voornaam of voornamen. Vanaf 180 dagen zwangerschap is registratie verplicht. Vanaf dat moment kunnen ouders ook een familienaam toekennen als ze dit wensen.</p>"""@nl-be-x-informal .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#additionalDescription> """<p>Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&nbsp;9 tot 16 uur in sportcentrum De Sportstek.&nbsp;Voorzie sportieve kledij en een lunchpakket.</p>
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#additionalDescription> """<p>Er wordt een herfstsportkamp georganiseerd tijdens de herfstvakantie voor kinderen van het eerste tot en met het zesde leerjaar en dit telkens van&nbsp;9 tot 16 uur in sportcentrum De Sportstek.&nbsp;Voorzie sportieve kledij en een lunchpakket.</p>
 <p>De folder met inschrijvingsformulier wordt&nbsp;tijdig ter beschikking gesteld via de Stekense scholen en de gemeentelijke website (<a href=\\"https://www.stekene.be/thema/6504/thwebwinkel\\">activiteitenloket</a>).</p>"""@nl-be-x-informal .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#exception> """<p><b>Vellen van bomen wegens acuut gevaar</b></p>
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#exception> """<p><b>Vellen van bomen wegens acuut gevaar</b></p>
 <p>Vormt er een boom een acuut gevaar? Dan kan deze gekapt worden met een machtiging van de burgemeester.</p>
 <p>Hiervoor vul je het formulier in bijlage in en bezorg je dit ingevuld aan de dienst Natuur en Milieu. Deze machtiging, eens goedgekeurd, geldt als kapmachtiging.</p>
 <p>De te vellen boom (bomen) moeten wel volgens het Natuurdecreet gecompenseerd worden door nieuwe aanplantingen van streekeigen loofbomen op het eigen perceel.</p>
 <p>&nbsp;</p>"""@nl-be-x-informal .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/CultuurSportVrijeTijd> .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/MobiliteitOpenbareWerken> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Burger> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Onderneming> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Federaal> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Lokaal> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Vlaams> .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <https://data.vlaanderen.be/id/organisatie/OVO027227> .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <${gemeente_URL}> .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <https://data.vlaanderen.be/id/organisatie/OVO000001> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Federaal> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Lokaal> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Vlaams> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <https://data.vlaanderen.be/id/organisatie/OVO027227> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <${gemeente_URL}> .`,
-                `<${testAbbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <https://data.vlaanderen.be/id/organisatie/OVO000001> .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """luier"""@nl .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """luiers"""@nl .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """pamper"""@nl .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """herbruikbaar"""@nl .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/type> <https://productencatalogus.data.vlaanderen.be/id/concept/Type/AdviesBegeleiding> .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/created> """${testAbbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/modified> """${testAbbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
-                `<${testAbbProduct.id}> <http://schema.org/startDate> """2023-09-10T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
-                `<${testAbbProduct.id}> <http://schema.org/endDate> """2023-10-12T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
-                `<${testAbbProduct.id}> <http://schema.org/productID> """1502""" .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/source> <https://ipdc.tni-vlaanderen.be/id/concept/705d401c-1a41-4802-a863-b22499f71b84> .`,
-                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Requirement> .`,
-                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.requirement?.uuid}""" .`,
-                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> """<ul>
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/CultuurSportVrijeTijd> .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/thematicArea> <https://productencatalogus.data.vlaanderen.be/id/concept/Thema/MobiliteitOpenbareWerken> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Burger> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#targetAudience> <https://productencatalogus.data.vlaanderen.be/id/concept/Doelgroep/Onderneming> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Federaal> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Lokaal> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#competentAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/BevoegdBestuursniveau/Vlaams> .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <https://data.vlaanderen.be/id/organisatie/OVO027227> .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <${gemeente_URL}> .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/hasCompetentAuthority> <https://data.vlaanderen.be/id/organisatie/OVO000001> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Federaal> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Lokaal> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Vlaams> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <https://data.vlaanderen.be/id/organisatie/OVO027227> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <${gemeente_URL}> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <https://data.vlaanderen.be/id/organisatie/OVO000001> .`,
+                `<${abbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """luier"""@nl .`,
+                `<${abbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """luiers"""@nl .`,
+                `<${abbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """pamper"""@nl .`,
+                `<${abbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """herbruikbaar"""@nl .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/type> <https://productencatalogus.data.vlaanderen.be/id/concept/Type/AdviesBegeleiding> .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/created> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/modified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${abbProduct.id}> <http://schema.org/startDate> """2023-09-10T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${abbProduct.id}> <http://schema.org/endDate> """2023-10-12T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${abbProduct.id}> <http://schema.org/productID> """1502""" .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/source> <https://ipdc.tni-vlaanderen.be/id/concept/705d401c-1a41-4802-a863-b22499f71b84> .`,
+                `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Requirement> .`,
+                `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.requirement?.uuid}""" .`,
+                `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> """<ul>
 <li>De persoon van wie de handtekening moet gewettigd worden, moet zijn woonplaats hebben in de gemeente</li>
 <li>Het document mag niet bestemd zijn voor immorele, bedrieglijke of strafbare oogmerken</li>
 <li>De formaliteit moet nuttig of nodig zijn. Het mag bijgevolg niet gaan om een louter private akte (een eigenhandig geschreven testament bijvoorbeeld)</li>
 </ul>"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${testAbbProduct.id}> <http://vocab.belgif.be/ns/publicservice#hasRequirement> <http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Evidence> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.requirement?.evidence?.uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://purl.org/dc/terms/description> """<p>Wat meebrengen indien je geen begrafenisonderneming zou hebben</p>
+                `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<${abbProduct.id}> <http://vocab.belgif.be/ns/publicservice#hasRequirement> <http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.requirement?.evidence?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Evidence> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.requirement?.evidence?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.requirement?.evidence?.uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.requirement?.evidence?.uuid}> <http://purl.org/dc/terms/description> """<p>Wat meebrengen indien je geen begrafenisonderneming zou hebben</p>
 <ul>
 <li>Overlijdensattest en medische attesten afgeleverd door de geneesheer die het overlijden vaststelde.</li>
 <li>De identiteitskaart en eventueel het rijbewijs van de overledene.</li>
@@ -1240,70 +1257,70 @@ describe('map abbProduct to Triples', () => {
 <li>Van niet-inwoners die overleden zijn te Stekene: attest inzake de laatste wilsbeschikking, afgeleverd door het gemeentebestuur van de laatste woonplaats.</li>
 <li>voor begravingen buiten het grondgebied van Stekene: &lsquo;toelating tot begraven&rsquo; afgeleverd door het gemeentebestuur op wiens grondgebied de begraafplaats gelegen is.</li>
 </ul>"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<http://data.lblod.info/id/requirement/${testAbbProduct.requirement?.uuid}> <http://data.europa.eu/m8g/hasSupportingEvidence> <http://data.lblod.info/form-data/nodes/${testAbbProduct.requirement?.evidence?.uuid}> .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#Rule> .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.uuid}""" .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://purl.org/dc/terms/description> """<p>Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.</p>"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${testAbbProduct.id}> <http://purl.org/vocab/cpsv#follows> <http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.websites[0].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://purl.org/dc/terms/description> """<strong>Geboortepremie - Aanvraagformulier</strong>"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=874684> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[0].uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.procedure?.websites[1].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://purl.org/dc/terms/description> """<strong>Verbruik nutsvoorziening - Aanvraagformulier premie</strong>"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=688849> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> <http://www.w3.org/ns/shacl#order> 2 .`,
-                `<http://data.lblod.info/id/rule/${testAbbProduct.procedure?.uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite> <http://data.lblod.info/form-data/nodes/${testAbbProduct.procedure?.websites[1].uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.moreInfo[0].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://purl.org/dc/terms/title> """Inburgering.be"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://schema.org/url> <http://www.inburgering.be> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[0].uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.moreInfo[1].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://purl.org/dc/terms/title> """Contactgegevens voor een inburgeringstraject"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://schema.org/url> <https://integratie-inburgering.be/contact> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> <http://www.w3.org/ns/shacl#order> 2 .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${testAbbProduct.moreInfo[1].uuid}> .`,
-                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Cost> .`,
-                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.cost?.uuid}""" .`,
-                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://purl.org/dc/terms/description> """<p>Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.</p>
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.requirement?.evidence?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://data.europa.eu/m8g/hasSupportingEvidence> <http://data.lblod.info/form-data/nodes/${abbProduct.requirement?.evidence?.uuid}> .`,
+                `<http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#Rule> .`,
+                `<http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.procedure?.uuid}""" .`,
+                `<http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> <http://purl.org/dc/terms/description> """<p>Jij of de begrafenisondernemer doet aangifte bij de ambtenaar van de burgerlijke stand van de gemeente waar het overlijden plaatsvond. Hiervoor heb je een medisch attest met vermelding van de zwangerschapsduur nodig.</p>"""@nl-be-x-informal .`,
+                `<http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<${abbProduct.id}> <http://purl.org/vocab/cpsv#follows> <http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.procedure?.websites[0].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[0].uuid}> <http://purl.org/dc/terms/description> """<strong>Geboortepremie - Aanvraagformulier</strong>"""@nl-be-x-informal .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[0].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=874684> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite> <http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.procedure?.websites[1].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[1].uuid}> <http://purl.org/dc/terms/description> """<strong>Verbruik nutsvoorziening - Aanvraagformulier premie</strong>"""@nl-be-x-informal .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[1].uuid}> <http://schema.org/url> <http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&FormId=688849> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[1].uuid}> <http://www.w3.org/ns/shacl#order> 2 .`,
+                `<http://data.lblod.info/id/rule/${abbProduct.procedure?.uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasWebsite> <http://data.lblod.info/form-data/nodes/${abbProduct.procedure?.websites[1].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.moreInfo[0].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[0].uuid}> <http://purl.org/dc/terms/title> """Inburgering.be"""@nl-be-x-informal .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[0].uuid}> <http://schema.org/url> <http://www.inburgering.be> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<${abbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/WebSite> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.moreInfo[1].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[1].uuid}> <http://purl.org/dc/terms/title> """Contactgegevens voor een inburgeringstraject"""@nl-be-x-informal .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[1].uuid}> <http://schema.org/url> <https://integratie-inburgering.be/contact> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[1].uuid}> <http://www.w3.org/ns/shacl#order> 2 .`,
+                `<${abbProduct.id}> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://data.lblod.info/form-data/nodes/${abbProduct.moreInfo[1].uuid}> .`,
+                `<http://data.lblod.info/id/cost/${abbProduct.cost?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Cost> .`,
+                `<http://data.lblod.info/id/cost/${abbProduct.cost?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.cost?.uuid}""" .`,
+                `<http://data.lblod.info/id/cost/${abbProduct.cost?.uuid}> <http://purl.org/dc/terms/description> """<p>Zowel een voorlopig rijbewijs (18 maanden), een voorlopig rijbewijs (36 maanden) als een voorlopig rijbewijs model 3 kost 24 euro.</p>
 <p>&nbsp;</p>"""@nl-be-x-informal .`,
-                `<http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCost> <http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ContactPoint> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/url> """https://www.stekene.be""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&BS@stekene.be""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """<p>Maandag 08:30-12:00;</p>
+                `<http://data.lblod.info/id/cost/${abbProduct.cost?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/hasCost> <http://data.lblod.info/id/cost/${abbProduct.cost?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ContactPoint> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.contactPoints[0].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/url> """https://www.stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&BS@stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """<p>Maandag 08:30-12:00;</p>
 <p>Dinsdag&nbsp;&nbsp;08:30-12:00;</p>
 <p>Woensdag 08:30-12;00; 13:30-16:30;</p>
 <p>Donderdag 08:30-12:00;</p>
 <p>Vrijdag 08:30-12:00;</p>
 <p>Zaterdag 09:00-12:00</p>
 <p>&nbsp;</p>""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasContactPoint> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/locn#Address> .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].address?.uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Straatnaam> """Stadionstraat"""@nl .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.huisnummer> """2""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.busnummer> """B""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#postcode> """9190""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#gemeentenaam> """Stekene"""@nl .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].address?.uuid}> .`,
-                `<${testAbbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
-                `<${testAbbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
-                `<${testAbbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/hasContactPoint> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/locn#Address> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.contactPoints[0].address?.uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Straatnaam> """Stadionstraat"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.huisnummer> """2""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.busnummer> """B""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#postcode> """9190""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#gemeentenaam> """Stekene"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> .`,
+                `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
+                `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
+                `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
             ]
         )
     });

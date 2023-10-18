@@ -442,5 +442,12 @@
               </Department>
           </AuthorisedDepartments>
       </Product>
+      <Product>
+          <ProductType>
+              <Id>39376414-2a3a-4c64-8e26-93b3048c41ef</Id>
+              <Value>unknown</Value>
+          </ProductType>
+      </Product>
+
   </Products>
 </ProductCatalog></string>

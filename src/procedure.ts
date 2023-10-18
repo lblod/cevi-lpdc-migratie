@@ -18,6 +18,10 @@ export class Procedure {
     }
 
     toTriples(abbInstanceId: Uri, index: number, languageVersion: Language): (Triple | undefined)[] {
+        if(!this.description && this._websites.length == 0) {
+            return [];
+        }
+
         const procedureId: Uri = new Uri(`http://data.lblod.info/id/rule/${this._uuid}`);
 
         return [
