@@ -5,6 +5,7 @@ import {AbbProduct} from "./abbProduct";
 import {mapToABBProduct} from "./mapToABBProduct";
 import {Language} from "./language";
 import fsp from "fs/promises";
+import {Logger} from "./logger";
 import {queryToUpdateConceptDisplayConfigurations} from "./concept-display-configuration-new-instantiated";
 
 export async function runProcess(xmlFileName: string, bestuurseenheidUuid: string, lokaalBestuurNis2019Url: string, language: Language, sparqlClientUrl: string) {
@@ -44,12 +45,17 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
     for(let index = 0; index < ceviProducts.length; index ++) {
         const ceviProduct = ceviProducts[index];
         try {
+            Logger.setCeviId(ceviProduct.id);
+            ceviProduct.title ? Logger.logImported(ceviProduct.title) : Logger.logImported('No title provided');
             console.log(`\n--- Mapping cevi Product '${ceviProduct.id || '(none specified)'}' ---`);
             abbProducts.push(await mapToABBProduct(ceviProduct, timestamp, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl));
         } catch (error) {
             console.error(`Cevi product ${ceviProduct.id} with name ${ceviProduct.name} could not be mapped to an ABB Product.`, error);
         }
     }
+
+    Logger.toCsv();
+    Logger.importedToCsv();
 
     const triples = abbProducts.flatMap(abbProduct => abbProduct?.toTriples(language)).map(trip => trip?.toString()).join('\n');
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.ttl`, triples);
