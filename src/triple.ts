@@ -23,6 +23,10 @@ export class Triple {
         return `${this.subject.toString()} ${this.predicate.toString()} ${this.object.toString()} .`
     }
 
+    toQuadString(graph: Uri): string {
+        return `${this.subject.toString()} ${this.predicate.toString()} ${this.object.toString()} ${graph.toString()} .`
+    }
+
 }
 
 export class Uri {

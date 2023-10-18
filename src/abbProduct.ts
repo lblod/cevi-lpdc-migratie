@@ -76,7 +76,6 @@ export class AbbProduct {
         return this._contactPoints;
     }
 
-    //TODO LPDC-718: convert triples to quads (at the output), and don't write out a graph file.
     toTriples(languageVersion: Language): Triple[] {
         const id = new Uri(this._id);
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';

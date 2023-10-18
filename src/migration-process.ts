@@ -6,6 +6,7 @@ import {Language} from "./language";
 import fsp from "fs/promises";
 import {Logger} from "./logger";
 import {queryToUpdateConceptDisplayConfigurations} from "./concept-display-configuration-new-instantiated";
+import {Uri} from "./triple";
 
 export async function runProcess(xmlFileName: string, bestuurseenheidUuid: string, lokaalBestuurNis2019Url: string, language: Language, sparqlClientUrl: string) {
 
@@ -52,9 +53,11 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
         }
     }
 
-    const triples = abbProducts.flatMap(abbProduct => abbProduct?.toTriples(language)).map(trip => trip?.toString()).join('\n');
+    const triples = abbProducts
+        .flatMap(abbProduct => abbProduct?.toTriples(language))
+        .map(triple => triple?.toQuadString(Uri.create(bestuurseenheidGraph)))
+        .join('\n');
     await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-migration.ttl`, triples);
-    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-migration.graph`, bestuurseenheidGraph);
     await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-migration.log`, `${logs.join('\n')}`);
     await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-update-concept-display-configuration.sparql`, queryToUpdateConceptDisplayConfigurations(bestuurseenheidGraph));
     await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-mapping-failed-fields-log.csv`, Logger.mappedFieldsToCsv());
