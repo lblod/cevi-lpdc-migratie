@@ -5,8 +5,11 @@ import {AbbProduct} from "./abbProduct";
 import {mapToABBProduct} from "./mapToABBProduct";
 import {Language} from "./language";
 import fsp from "fs/promises";
+import {queryToUpdateConceptDisplayConfigurations} from "./concept-display-configuration-new-instantiated";
 
 export async function runProcess(xmlFileName: string, bestuurseenheidUuid: string, lokaalBestuurNis2019Url: string, language: Language, sparqlClientUrl: string) {
+
+    const bestuurseenheidGraph = `http://mu.semte.ch/graphs/organizations/${bestuurseenheidUuid}/LoketLB-LPDCGebruiker`;
 
     if (!fs.existsSync(xmlFileName)) {
         console.error(`"${xmlFileName}" not found ... stopping`);
@@ -50,7 +53,8 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
 
     const triples = abbProducts.flatMap(abbProduct => abbProduct?.toTriples(language)).map(trip => trip?.toString()).join('\n');
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.ttl`, triples);
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.graph`, `http://mu.semte.ch/graphs/organizations/${bestuurseenheidUuid}/LoketLB-LPDCGebruiker`);
+    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.graph`, bestuurseenheidGraph);
     await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.log`, `${logs.join('\n')}`);
+    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-update-concept-display-configuration.sparql`, queryToUpdateConceptDisplayConfigurations(bestuurseenheidGraph));
 
 }

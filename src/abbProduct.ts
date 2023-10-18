@@ -89,7 +89,6 @@ export class AbbProduct {
             //TODO LPDC-718: language: some strings are language less, other need to be the chosen language of het bestuur
             //TODO LPDC-718: remove unused code ...
             //TODO LPDC-718: implement if 'Te verwijderen' in title, don't generate anything.
-            //TODO LPDC-718: also add concept is instantiated, and conceptisnew , but in a differnt graph -> so encode the graph here as well as a quad? ;so to have exactly one ttl file ?
 
             Triple.createIfDefined(id, Predicates.order, Literal.create(1)),
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
