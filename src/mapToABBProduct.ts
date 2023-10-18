@@ -151,7 +151,7 @@ export function mapDepartmentAddressToContactPoint(department: Department): Cont
     }
     return new ContactPoint(
         uuid(),
-        department.address?.website,
+        department.address?.website ? prependHttpsIfNeeded(department.address?.website) : undefined,
         department.address?.email,
         department.address?.phone,
         department.address?.openingHours,

@@ -81,6 +81,7 @@ export class AbbProduct {
         return this._contactPoints;
     }
 
+    //TODO LPDC-718: convert triples to quads (at the output), and don't write out a graph file.
     toTriples(languageVersion: Language): Triple[] {
         const id = new Uri(this._id);
         const publicServiceType = 'http://purl.org/vocab/cpsv#PublicService';
@@ -88,6 +89,7 @@ export class AbbProduct {
         const triples: (Triple | undefined)[] = [
             //TODO LPDC-718: remove unused code ...
             //TODO LPDC-718: implement if 'Te verwijderen' in title, don't generate anything.
+            //TODO LPDC-718: instructions for use in README.md
 
             Triple.createIfDefined(id, Predicates.order, Literal.create(1)),
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
@@ -105,6 +107,7 @@ export class AbbProduct {
             ...this.executingAuthority.map(anExecutingAuthority => Triple.createIfDefined(id, Predicates.hasExecutingAuthority, Uri.createIfDefined(anExecutingAuthority))),
             Triple.createIfDefined(id, Predicates.language, Uri.createIfDefined(this.resourceLanguage)), // TODO verify in Excel
             ...this.keywords.map(aKeyword => Triple.createIfDefined(id, Predicates.keyword, Literal.createIfDefined(aKeyword, Language.NL))),
+            //TODO LPDC-718: Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Type/${this.productType}`)), constructs don't work ... when this.productType is undefined ....
             Triple.createIfDefined(id, Predicates.productType, Uri.createIfDefined(`https://productencatalogus.data.vlaanderen.be/id/concept/Type/${this.productType}`)),
             Triple.createIfDefined(id, Predicates.created, Literal.createIfDefined(this.created.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.modified, Literal.createIfDefined(this.modified.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),

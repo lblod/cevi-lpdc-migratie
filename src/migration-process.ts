@@ -18,7 +18,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
 
     // @ts-ignore
     const baseName = xmlFileName.match(/([^/]+)\.xml$/)[1];
-    const timestamp = new Date();
+    const migrationDate = new Date();
     const logs:string[] = [];
 
     console.log = function (message?: any, exception?: Error) {
@@ -38,7 +38,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
     };
 
     const ceviProducts: CeviProduct[] = await readCeviXml(xmlFileName);
-    fs.copyFileSync(xmlFileName, `src/migration-results/${baseName}-${timestamp.toISOString()}.xml`)
+    fs.copyFileSync(xmlFileName, `src/migration-results/${baseName}-${migrationDate.toISOString()}.xml`)
 
     let abbProducts = [];
     for(let index = 0; index < ceviProducts.length; index ++) {
@@ -46,18 +46,18 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
         try {
             Logger.setCeviId(ceviProduct.id);
             ceviProduct.title ? Logger.logImported(ceviProduct.title) : Logger.logImported('No title provided');
-            abbProducts.push(await mapToABBProduct(ceviProduct, timestamp, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl));
+            abbProducts.push(await mapToABBProduct(ceviProduct, migrationDate, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl));
         } catch (error) {
             console.error(`Cevi product ${ceviProduct.id} with name ${ceviProduct.name} could not be mapped to an ABB Product.`, error);
         }
     }
 
     const triples = abbProducts.flatMap(abbProduct => abbProduct?.toTriples(language)).map(trip => trip?.toString()).join('\n');
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.ttl`, triples);
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.graph`, bestuurseenheidGraph);
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-migration.log`, `${logs.join('\n')}`);
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-update-concept-display-configuration.sparql`, queryToUpdateConceptDisplayConfigurations(bestuurseenheidGraph));
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-mapping-failed-fields-log.csv`, Logger.mappedFieldsToCsv());
-    await fsp.writeFile(`src/migration-results/${baseName}-${timestamp.toISOString()}-imported-cevi-instances.csv`, Logger.importedToCsv());
+    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-migration.ttl`, triples);
+    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-migration.graph`, bestuurseenheidGraph);
+    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-migration.log`, `${logs.join('\n')}`);
+    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-update-concept-display-configuration.sparql`, queryToUpdateConceptDisplayConfigurations(bestuurseenheidGraph));
+    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-mapping-failed-fields-log.csv`, Logger.mappedFieldsToCsv());
+    await fsp.writeFile(`src/migration-results/${baseName}-${migrationDate.toISOString()}-imported-cevi-instances.csv`, Logger.importedToCsv());
 
 }

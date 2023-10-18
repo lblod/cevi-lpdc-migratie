@@ -345,7 +345,7 @@ describe("map ceviProduct to abbProduct", () => {
             ],
             contactPoints: [
                 {
-                    url: "www.stekene.be",
+                    url: "https://www.stekene.be",
                     email: "Bevolking&BS@stekene.be",
                     telephone: "03 790 02 12",
                     openingHours: "<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag&nbsp;&nbsp;08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n<p>&nbsp;</p>",
@@ -915,7 +915,7 @@ describe("map ceviProduct to abbProduct", () => {
             expect(result).toEqual([]);
         });
 
-        test('maps an authorisedDepartments address to a ContactPoint', () => {
+        test('maps an deliveringDepartments address to a ContactPoint', () => {
             const result = mapContactPoints([
                 {
                     address: {
@@ -935,7 +935,7 @@ describe("map ceviProduct to abbProduct", () => {
                 }
             ], [{}]);
             expect(result).toMatchObject([{
-                url: 'website',
+                url: 'https://website',
                 email: 'email',
                 telephone: 'phone',
                 openingHours: 'openingHours',
@@ -973,7 +973,7 @@ describe("map ceviProduct to abbProduct", () => {
 
                 ]);
             expect(result).toMatchObject([{
-                url: 'website',
+                url: 'https://website',
                 email: 'email',
                 telephone: 'phone',
                 openingHours: 'openingHours',
@@ -1027,7 +1027,7 @@ describe("map ceviProduct to abbProduct", () => {
                     }
                 ]);
             expect(result).toMatchObject([{
-                url: 'website delivering',
+                url: 'https://website delivering',
                 email: 'email delivering',
                 telephone: 'phone delivering',
                 openingHours: 'openingHours delivering',
@@ -1071,7 +1071,7 @@ describe("map ceviProduct to abbProduct", () => {
                     }
                 ]);
             expect(result).toMatchObject([{
-                url: 'website authorised',
+                url: 'https://website authorised',
                 email: 'email authorised',
                 telephone: 'phone authorised',
                 openingHours: 'openingHours authorised',
@@ -1091,7 +1091,7 @@ describe("map ceviProduct to abbProduct", () => {
 
             test('website', () => {
                 const result = mapDepartmentAddressToContactPoint({address: {website: 'website'}});
-                expect(result).toMatchObject({url: 'website'});
+                expect(result).toMatchObject({url: 'https://website'});
             });
 
             test('email', () => {
@@ -1271,7 +1271,7 @@ describe('map abbProduct to Triples', () => {
                 `<${testAbbProduct.id}> <http://data.europa.eu/m8g/hasCost> <http://data.lblod.info/id/cost/${testAbbProduct.cost?.uuid}> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ContactPoint> .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${testAbbProduct.contactPoints[0].uuid}""" .`,
-                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/url> """www.stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/url> """https://www.stekene.be""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&BS@stekene.be""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
                 `<http://data.lblod.info/form-data/nodes/${testAbbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """<p>Maandag 08:30-12:00;</p>
