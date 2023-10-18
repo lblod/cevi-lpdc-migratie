@@ -19,11 +19,22 @@ export class Logger {
         console.log(message);
     }
 
-    static logImported(title: string) {
+    static logImported(title: string | undefined) {
         this.importedLogList.push({
             id: this.id,
-            title: title
+            title: title ?? 'No title provided',
+            succes: true
         })
+    }
+
+    static logNotImported(title: string | undefined, reason: string, error?: unknown) {
+        this.importedLogList.push({
+            id: this.id,
+            title: title ?? 'No title provided',
+            succes: false,
+            reasonNotImported: reason
+        });
+        console.error(`${reason}`, error);
     }
 
     static mappedFieldsToCsv() {
@@ -51,5 +62,7 @@ type Log = {
 
 type ImportedLog = {
     id: string,
-    title: string
+    title: string,
+    succes: boolean,
+    reasonNotImported?: string
 }

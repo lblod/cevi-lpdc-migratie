@@ -1,5 +1,6 @@
 //@ts-ignore
 import SparqlClient from "sparql-client-2";
+import {Logger} from "./logger";
 
 async function executeQuery(sparqlClientUrL: string, query: any) {
     const sparqlClient = new SparqlClient(sparqlClientUrL);
@@ -26,12 +27,12 @@ export async function findUniqueConceptIdForProductId(productId: string, sparqlC
         response.map((item: any) => item.conceptId.value);
 
     if(conceptUrls.length > 1) {
-        throw Error(`Multiple conceptUrls [${conceptUrls}] found for '${productId}'.`);
+        Logger.log(`Multiple conceptUrls [${conceptUrls}] found for '${productId}'.`);
+        return undefined;
     }
     if(conceptUrls.length === 1) {
-        console.error(`Found unique conceptId '${conceptUrls[0]}' for productId '${productId}'`)
         return conceptUrls[0];
     }
-    console.error(`No conceptId found for productId '${productId}'`);
+    Logger.log(`No conceptId found for productId '${productId}'`);
     return undefined;
 }

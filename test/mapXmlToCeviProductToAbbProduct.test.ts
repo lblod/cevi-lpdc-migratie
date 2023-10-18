@@ -207,6 +207,14 @@ describe("map ceviProduct to abbProduct", () => {
         ceviProducts = await readCeviXml('src/resources/LPDC_CEVI.xml');
     })
 
+    test('should throw error when title contains te verwijderen', async () => {
+        const migrationDate = new Date();
+
+        await expect(async () => mapToABBProduct(ceviProducts[4], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL))
+            .rejects
+            .toThrowError(`Title of cevi product contains 'te verwijderen'`)
+    })
+
     test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
         const abbProduct = await mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);

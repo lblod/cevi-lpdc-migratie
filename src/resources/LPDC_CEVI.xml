@@ -389,5 +389,58 @@
               </Department>
           </AuthorisedDepartments>
       </Product>
+      <Product>
+          <Title>Levenloos geboren kind/foetus - Te verwijderen</Title>
+          <ProductType>
+              <Id>39376414-2a3a-4c64-8e26-93b3048c41ef</Id>
+              <Value>Advies en begeleiding</Value>
+          </ProductType>
+          <Keywords>
+              <Keyword>
+                  <Id>120032b</Id>
+                  <Value>luier</Value>
+              </Keyword>
+          </Keywords>
+          <InfoUrls>
+              <Url>
+                  <SequenceNumber>1</SequenceNumber>
+                  <Title>Inburgering.be</Title>
+                  <Location>http://www.inburgering.be</Location>
+              </Url>
+          </InfoUrls>
+          <Forms>
+              <Form>
+                  <SequenceNumber>1</SequenceNumber>
+                  <Title>Verbruik nutsvoorziening - Aanvraagformulier premie</Title>
+                  <Location>http://start.cevi.be/ELoket/Formulier.aspx?tnr_site=91&amp;amp;FormId=688849</Location>
+              </Form>
+          </Forms>
+          <TargetGroups>
+              <TargetGroup>
+                  <Id>fabba05c-ad35-48e3-ba03-a8947852c38e</Id>
+                  <Value>Onderneming</Value>
+              </TargetGroup>
+          </TargetGroups>
+          <Themes>
+              <Theme>
+                  <Id>108031</Id>
+                  <Value>Mobiliteit en Openbare Werken</Value>
+              </Theme>
+          </Themes>
+          <DeliveringDepartments>
+              <Department>
+                  <Id>ddfc31ff-909b-439d-a4d6-66c6b17801ed</Id>
+                  <Name>Vlaamse overheid</Name>
+                  <Addresses />
+              </Department>
+          </DeliveringDepartments>
+          <AuthorisedDepartments>
+              <Department>
+                  <Id>c2e69322-6ec4-4786-b05a-3ebc8beed3f5</Id>
+                  <Name>Federale overheid</Name>
+                  <Addresses />
+              </Department>
+          </AuthorisedDepartments>
+      </Product>
   </Products>
 </ProductCatalog></string>

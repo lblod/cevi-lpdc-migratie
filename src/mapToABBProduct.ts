@@ -20,6 +20,10 @@ import {Logger} from "./logger";
 
 export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, sparqlClientUrl: string): Promise<AbbProduct> {
 
+    if (product.title?.toLowerCase().includes('te verwijderen')) {
+        throw Error(`Title of cevi product contains \'te verwijderen\'`);
+    }
+
     const instanceUuid = uuid();
     const competentAuthorityLevel: CompetentAuthorityLevel[] = mapAuthorisedDepartmentsToCompetentAuthorityLevel(product.authorisedDepartments);
     const competentAuthority: string[] = mapCompetentAuthorityBasedOnCompetentAuthorityLevel(competentAuthorityLevel, lokaalBestuurUrl);

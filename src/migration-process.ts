@@ -19,7 +19,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
     // @ts-ignore
     const baseName = xmlFileName.match(/([^/]+)\.xml$/)[1];
     const migrationDate = new Date();
-    const logs:string[] = [];
+    const logs: string[] = [];
 
     console.log = function (message?: any, exception?: Error) {
         let logMessage = message;
@@ -41,14 +41,14 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
     fs.copyFileSync(xmlFileName, `src/migration-results/${baseName}-${migrationDate.toISOString()}.xml`)
 
     let abbProducts = [];
-    for(let index = 0; index < ceviProducts.length; index ++) {
+    for (let index = 0; index < ceviProducts.length; index++) {
         const ceviProduct = ceviProducts[index];
         try {
             Logger.setCeviId(ceviProduct.id);
-            ceviProduct.title ? Logger.logImported(ceviProduct.title) : Logger.logImported('No title provided');
             abbProducts.push(await mapToABBProduct(ceviProduct, migrationDate, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl));
-        } catch (error) {
-            console.error(`Cevi product ${ceviProduct.id} with name ${ceviProduct.name} could not be mapped to an ABB Product.`, error);
+            Logger.logImported(ceviProduct.title);
+        } catch (error: any) {
+            Logger.logNotImported(ceviProduct.title, error.message, error);
         }
     }
 
