@@ -15,6 +15,7 @@ export class Logger {
             id: this.id,
             message: message
         });
+        console.log(message);
     }
 
     static logImported(title: string) {
