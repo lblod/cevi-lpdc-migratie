@@ -61,3 +61,4 @@ main();
   - Upload
   - Should only take a few seconds
 - Execute the sparql file using the sparql endpoint. 
+- Run and execute the ['adres id migration script'](https://github.com/lblod/app-lpdc-digitaal-loket/tree/development/migration-scripts/adressen) to fill up the address id's for the migrated addresses.
