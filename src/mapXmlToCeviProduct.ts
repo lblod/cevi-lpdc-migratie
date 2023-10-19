@@ -139,7 +139,7 @@ function mapDepartmentAddress(addressValueInXml: any): Address {
             email: unescapeHtmlEntities(addressValueInXml.Email?._text),
             facebook: addressValueInXml.Facebook?._text,
             twitter: addressValueInXml.Twitter?._text,
-            openingHours: unescapeHtmlEntities(addressValueInXml.OpeningHours?._text),
+            openingHours: removeEmptyParagraphs(removeExtraSpaces(escapeNbsp(unescapeHtmlEntities(addressValueInXml.OpeningHours?._text)))),
         }
     } else {
         return {};
@@ -166,4 +166,15 @@ function unescapeHtmlEntities(input: string): string {
     return doc.documentElement.textContent || "";
 }
 
+function escapeNbsp(input: string | undefined): string | undefined {
+    return input?.replace(/&nbsp;/g, ' ');
+}
+
+function removeExtraSpaces(input: string | undefined): string | undefined {
+    return input?.replace(/ +/g, ' ');
+}
+
+function removeEmptyParagraphs(input: string | undefined): string | undefined {
+    return input?.replace(/<p> <\/p>/g, '');
+}
 
