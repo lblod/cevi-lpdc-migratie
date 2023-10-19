@@ -44,6 +44,7 @@ main();
 - Run the migrate script on command line: `npm run migrate-cevi`
 - Following timestamped files are created on each run under `\src\migration-results`:
   - ![lpdc-cevi-migration-results.png](images%2Flpdc-cevi-migration-results.png)
+  - All timestamps are [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
   - `LPDC_CEVI-2023-10-19T06:43:16.960Z.xml` : xml file is copied and versioned.
   - `LPDC_CEVI-2023-10-19T06:43:16.960Z-imported-cevi-instances.csv`: an overview of cevi instance id, title, whether import was successful, if not, augmented with reason 
   - `LPDC_CEVI-2023-10-19T06:43:16.960Z-mapping-failed-fields-log.csv`: each cevi instance id and non-mappable fields the reason
