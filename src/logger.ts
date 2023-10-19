@@ -23,7 +23,8 @@ export class Logger {
         this.importedLogList.push({
             id: this.id,
             title: title ?? 'No title provided',
-            succes: true
+            succes: true,
+            reasonNotImported: undefined
         })
     }
 
@@ -64,5 +65,5 @@ type ImportedLog = {
     id: string,
     title: string,
     succes: boolean,
-    reasonNotImported?: string
+    reasonNotImported: string | undefined
 }
