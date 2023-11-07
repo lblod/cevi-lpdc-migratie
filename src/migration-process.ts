@@ -22,12 +22,16 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
     const migrationDate = new Date();
     const logs: string[] = [];
 
+    const originalConsoleLog = console.log;
+    const originalConsoleError = console.error;
+
     console.log = function (message?: any, exception?: Error) {
         let logMessage = message;
         if (exception) {
             logMessage += ' Exception: ' + exception.stack;
         }
         logs.push(logMessage);
+        originalConsoleLog(logMessage);
     };
 
     console.error = function (message?: any, exception?: Error) {
@@ -36,6 +40,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
             errorMessage += ' Exception: ' + exception.stack;
         }
         logs.push(errorMessage);
+        originalConsoleError(errorMessage);
     };
 
     const ceviProducts: CeviProduct[] = await readCeviXml(xmlFileName);
