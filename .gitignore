@@ -1,5 +1,6 @@
 node_modules/
 .idea
-/src/resources/LPDC_Stekene.xml
+/src/resources
+!/src/resources/LPDC_CEVI.xml
 /src/migration-results/
 /build/

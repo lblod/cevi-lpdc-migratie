@@ -27,6 +27,7 @@ const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a
 const gemeente_nis2019_URL = "http://vocab.belgif.be/auth/refnis2019/46024";
 const sparqlClientUrL = `http://localhost:8896/sparql`;
 
+
 describe("map xml to ceviproduct", () => {
     let ceviProducts: CeviProduct[] = [];
 
@@ -62,29 +63,85 @@ describe("map xml to ceviproduct", () => {
             }, {
                 id: "108030",
                 value: "Cultuur, Sport en Vrije Tijd",
-            },
-                {
-                    id: "108031",
-                    value: "Mobiliteit en Openbare Werken",
-                }],
-            [{
-                address: {},
-                id: "c2e69322-6ec4-4786-b05a-3ebc8beed3f5",
-                name: "Federale overheid",
             }, {
-                address: {},
-                id: "ddfc31ff-909b-439d-a4d6-66c6b17801ed",
-                name: "Vlaamse overheid",
-            },
+                id: "108031",
+                value: "Mobiliteit en Openbare Werken",
+            }],
+            [
+                {
+                    addresses: [],
+                    id: "c2e69322-6ec4-4786-b05a-3ebc8beed3f5",
+                    name: "Federale overheid",
+                },
+                {
+                    addresses: [],
+                    id: "ddfc31ff-909b-439d-a4d6-66c6b17801ed",
+                    name: "Vlaamse overheid",
+                },
                 {
                     id: "210",
                     name: "Burgerzaken",
-                    address: {
+                    addresses: [
+                        {
+                            id: "40f3bed2-3cf4-4927-bbd5-7ceed31ae341",
+                            name: "Stadionstraat 2",
+                            street: "Stadionstraat",
+                            houseNumber: "2",
+                            boxNumber: "B",
+                            zipCode: "9190",
+                            municipality: "Stekene",
+                            phone: "03 790 02 12",
+                            fax: "03 790 02 10",
+                            website: "www.stekene.be",
+                            email: "Bevolking&BS@stekene.be",
+                            facebook: undefined,
+                            twitter: undefined,
+                            openingHours: "<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag 08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n"
+                        },
+                        {
+                            id: "88625e70-5356-44a1-b7b0-63f5c5b1c895",
+                            name: "Kerkstraat 35",
+                            street: "Kerkstraat",
+                            houseNumber: "35",
+                            boxNumber: "C",
+                            zipCode: "9190",
+                            municipality: "Stekene",
+                            phone: "03 790 02 12",
+                            fax: "03 790 02 10",
+                            website: "www.stekene.be",
+                            email: undefined,
+                            facebook: undefined,
+                            twitter: undefined,
+                            openingHours: undefined
+                        }
+                    ]
+                },
+                {
+                    addresses: [],
+                    id: "12",
+                    name: "Team Cultuur, Sport en Vrije tijd",
+                }
+            ],
+            [
+                {
+                    addresses: [],
+                    id: "10",
+                    name: "Team Lokale economie, Toerisme en Werk",
+                },
+                {
+                    addresses: [],
+                    id: "ddfc31ff-909b-439d-a4d6-66c6b17801ed",
+                    name: "Vlaamse overheid",
+                },
+                {
+                    id: "200",
+                    name: "Burger &amp; Welzijnszaken",
+                    addresses: [{
                         id: "40f3bed2-3cf4-4927-bbd5-7ceed31ae341",
                         name: "Stadionstraat 2",
                         street: "Stadionstraat",
                         houseNumber: "2",
-                        boxNumber: "B",
+                        boxNumber: "D",
                         zipCode: "9190",
                         municipality: "Stekene",
                         phone: "03 790 02 12",
@@ -93,46 +150,15 @@ describe("map xml to ceviproduct", () => {
                         email: "Bevolking&BS@stekene.be",
                         facebook: undefined,
                         twitter: undefined,
-                        openingHours: "<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag 08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n"
-                    }
+                        openingHours: `<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag 08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n`
+                    }]
                 },
                 {
-                    address: {},
-                    id: "12",
-                    name: "Team Cultuur, Sport en Vrije tijd",
-                }],
-            [{
-                address: {},
-                id: "10",
-                name: "Team Lokale economie, Toerisme en Werk",
-            }, {
-                address: {},
-                id: "ddfc31ff-909b-439d-a4d6-66c6b17801ed",
-                name: "Vlaamse overheid",
-            }, {
-                id: "200",
-                name: "Burger &amp; Welzijnszaken",
-                address: {
-                    id: "40f3bed2-3cf4-4927-bbd5-7ceed31ae341",
-                    name: "Stadionstraat 2",
-                    street: "Stadionstraat",
-                    houseNumber: "2",
-                    boxNumber: "D",
-                    zipCode: "9190",
-                    municipality: "Stekene",
-                    phone: "03 790 02 12",
-                    fax: "03 790 02 10",
-                    website: "www.stekene.be",
-                    email: "Bevolking&BS@stekene.be",
-                    facebook: undefined,
-                    twitter: undefined,
-                    openingHours: `<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag 08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n`
+                    addresses: [],
+                    id: "c2e69322-6ec4-4786-b05a-3ebc8beed3f5",
+                    name: "Federale overheid",
                 }
-            }, {
-                address: {},
-                id: "c2e69322-6ec4-4786-b05a-3ebc8beed3f5",
-                name: "Federale overheid",
-            },],
+            ],
             [{
                 id: "120032b",
                 value: "luier",
@@ -196,7 +222,6 @@ describe("map xml to ceviproduct", () => {
         ));
     });
 });
-
 
 describe("map ceviProduct to abbProduct", () => {
 
@@ -360,6 +385,20 @@ describe("map ceviProduct to abbProduct", () => {
                         street: "Stadionstraat",
                         houseNumber: "2",
                         boxNumber: "B",
+                        zipCode: "9190",
+                        municipality: "Stekene",
+                        country: "België"
+                    }
+                },
+                {
+                    url: "https://www.stekene.be",
+                    email: undefined,
+                    telephone: "03 790 02 12",
+                    openingHours: undefined,
+                    address: {
+                        street: "Kerkstraat",
+                        houseNumber: "35",
+                        boxNumber: "C",
                         zipCode: "9190",
                         municipality: "Stekene",
                         country: "België"
@@ -693,7 +732,7 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
 
             ]);
@@ -708,7 +747,7 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
 
             ]);
@@ -723,17 +762,17 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Departement Cultuur',
-                    address: {}
+                    addresses: []
                 },
             ]);
             expect(result).toEqual([
@@ -748,33 +787,32 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
-
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Departement Cultuur',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Departement Groendienst',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
             ]);
             expect(result).toEqual([
@@ -818,17 +856,17 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Departement Cultuur',
-                    address: {}
+                    addresses: []
                 },
             ]);
             expect(result).toEqual([
@@ -842,33 +880,32 @@ describe("map ceviProduct to abbProduct", () => {
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
-
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Departement Cultuur',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Federale overheid',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Departement Groendienst',
-                    address: {}
+                    addresses: []
                 },
                 {
                     id: 'ignored',
                     name: 'Vlaamse overheid',
-                    address: {}
+                    addresses: []
                 },
             ]);
             expect(result).toEqual([
@@ -908,24 +945,24 @@ describe("map ceviProduct to abbProduct", () => {
         });
 
         test('empty deliveringDepartment > address is not retained', () => {
-            const result = mapContactPoints([{}], []);
+            const result = mapContactPoints([{addresses: []}], []);
             expect(result).toEqual([]);
         });
 
         test('empty authorisedDepartment > address is not retained', () => {
-            const result = mapContactPoints([], [{}]);
+            const result = mapContactPoints([], [{addresses: []}]);
             expect(result).toEqual([]);
         });
 
         test('empty deliveringDepartment and authorisedDepartment > address are not retained', () => {
-            const result = mapContactPoints([{}], [{}]);
+            const result = mapContactPoints([{addresses: [{}]}], [{addresses: []}]);
             expect(result).toEqual([]);
         });
 
         test('maps an deliveringDepartments address to a ContactPoint', () => {
             const result = mapContactPoints([
                 {
-                    address: {
+                    addresses: [{
                         website: 'website',
                         email: 'email',
                         phone: 'phone',
@@ -935,26 +972,27 @@ describe("map ceviProduct to abbProduct", () => {
                         boxNumber: 'boxNumber',
                         zipCode: 'zipCode',
                         municipality: 'municipality'
-                    }
+                    }]
                 },
                 {
-                    address: undefined
+                    addresses: [{}]
                 }
-            ], [{}]);
+            ], [
+                {addresses: []}
+            ]);
             expect(result).toMatchObject([{
                 url: 'https://website',
                 email: 'email',
                 telephone: 'phone',
                 openingHours: 'openingHours',
-                address:
-                    {
-                        street: 'street',
-                        houseNumber: 'houseNumber',
-                        boxNumber: 'boxNumber',
-                        zipCode: 'zipCode',
-                        municipality: 'municipality',
-                        country: 'België',
-                    },
+                address: {
+                    street: 'street',
+                    houseNumber: 'houseNumber',
+                    boxNumber: 'boxNumber',
+                    zipCode: 'zipCode',
+                    municipality: 'municipality',
+                    country: 'België',
+                }
             }]);
         });
 
@@ -962,7 +1000,7 @@ describe("map ceviProduct to abbProduct", () => {
             const result = mapContactPoints([],
                 [
                     {
-                        address: {
+                        addresses: [{
                             website: 'website',
                             email: 'email',
                             phone: 'phone',
@@ -972,10 +1010,10 @@ describe("map ceviProduct to abbProduct", () => {
                             boxNumber: 'boxNumber',
                             zipCode: 'zipCode',
                             municipality: 'municipality'
-                        }
+                        }]
                     },
                     {
-                        address: undefined
+                        addresses: []
                     }
 
                 ]);
@@ -999,7 +1037,7 @@ describe("map ceviProduct to abbProduct", () => {
         test('a deliveringDepartment address takes precedence over authorised department address', () => {
             const result = mapContactPoints([
                     {
-                        address: {
+                        addresses: [{
                             website: 'website delivering',
                             email: 'email delivering',
                             phone: 'phone delivering',
@@ -1009,15 +1047,15 @@ describe("map ceviProduct to abbProduct", () => {
                             boxNumber: 'boxNumber delivering',
                             zipCode: 'zipCode delivering',
                             municipality: 'municipality delivering'
-                        }
+                        }]
                     },
                     {
-                        address: undefined
+                        addresses: []
                     }
                 ],
                 [
                     {
-                        address: {
+                        addresses: [{
                             website: 'website authorised',
                             email: 'email authorised',
                             phone: 'phone authorised',
@@ -1027,10 +1065,10 @@ describe("map ceviProduct to abbProduct", () => {
                             boxNumber: 'boxNumber authorised',
                             zipCode: 'zipCode authorised',
                             municipality: 'municipality authorised'
-                        }
+                        }]
                     },
                     {
-                        address: undefined
+                        addresses: []
                     }
                 ]);
             expect(result).toMatchObject([{
@@ -1053,15 +1091,15 @@ describe("map ceviProduct to abbProduct", () => {
         test('authorised department address is taken if there are no addresses in delivering departments', () => {
             const result = mapContactPoints([
                     {
-                        address: undefined
+                        addresses: []
                     },
                     {
-                        address: undefined
+                        addresses: []
                     }
                 ],
                 [
                     {
-                        address: {
+                        addresses: [{
                             website: 'website authorised',
                             email: 'email authorised',
                             phone: 'phone authorised',
@@ -1071,10 +1109,10 @@ describe("map ceviProduct to abbProduct", () => {
                             boxNumber: 'boxNumber authorised',
                             zipCode: 'zipCode authorised',
                             municipality: 'municipality authorised'
-                        }
+                        }]
                     },
                     {
-                        address: undefined
+                        addresses: []
                     }
                 ]);
             expect(result).toMatchObject([{
@@ -1097,48 +1135,48 @@ describe("map ceviProduct to abbProduct", () => {
         describe('partially filled in department address creates a ContactPoint', () => {
 
             test('website', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {website: 'website'}});
-                expect(result).toMatchObject({url: 'https://website'});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{website: 'website'}]});
+                expect(result).toMatchObject([{url: 'https://website'}]);
             });
 
             test('email', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {email: 'email'}});
-                expect(result).toMatchObject({email: 'email'});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{email: 'email'}]});
+                expect(result).toMatchObject([{email: 'email'}]);
             });
 
             test('phone', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {phone: 'phone'}});
-                expect(result).toMatchObject({telephone: 'phone'});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{phone: 'phone'}]});
+                expect(result).toMatchObject([{telephone: 'phone'}]);
             });
 
             test('openingHours', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {openingHours: 'openingHours'}});
-                expect(result).toMatchObject({openingHours: 'openingHours'});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{openingHours: 'openingHours'}]});
+                expect(result).toMatchObject([{openingHours: 'openingHours'}]);
             });
 
             test('street', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {street: 'street'}});
-                expect(result).toMatchObject({address: {street: 'street'}});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{street: 'street'}]});
+                expect(result).toMatchObject([{address: {street: 'street'}}]);
             });
 
             test('houseNumber', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {houseNumber: 'houseNumber'}});
-                expect(result).toMatchObject({address: {houseNumber: 'houseNumber'}});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{houseNumber: 'houseNumber'}]});
+                expect(result).toMatchObject([{address: {houseNumber: 'houseNumber'}}]);
             });
 
             test('boxNumber', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {boxNumber: 'boxNumber'}});
-                expect(result).toMatchObject({address: {boxNumber: 'boxNumber'}});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{boxNumber: 'boxNumber'}]});
+                expect(result).toMatchObject([{address: {boxNumber: 'boxNumber'}}]);
             });
 
             test('boxNumber', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {zipCode: 'zipCode'}});
-                expect(result).toMatchObject({address: {zipCode: 'zipCode'}});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{zipCode: 'zipCode'}]});
+                expect(result).toMatchObject([{address: {zipCode: 'zipCode'}}]);
             });
 
             test('municipality', () => {
-                const result = mapDepartmentAddressToContactPoint({address: {municipality: 'municipality'}});
-                expect(result).toMatchObject({address: {municipality: 'municipality'}});
+                const result = mapDepartmentAddressToContactPoint({addresses: [{municipality: 'municipality'}]});
+                expect(result).toMatchObject([{address: {municipality: 'municipality'}}]);
             });
 
         });
@@ -1318,6 +1356,22 @@ describe('map abbProduct to Triples', () => {
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].address?.uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ContactPoint> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.contactPoints[1].uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <http://schema.org/url> """https://www.stekene.be""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <http://www.w3.org/ns/shacl#order> 2 .`,
+                `<${abbProduct.id}> <http://data.europa.eu/m8g/hasContactPoint> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/locn#Address> .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.contactPoints[1].address?.uuid}""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Straatnaam> """Kerkstraat"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.huisnummer> """35""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#Adresvoorstelling.busnummer> """C""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#postcode> """9190""" .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#gemeentenaam> """Stekene"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
                 `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
                 `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,

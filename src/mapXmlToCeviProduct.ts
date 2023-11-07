@@ -1,5 +1,5 @@
 import {CeviProduct} from "./ceviProduct";
-import {Address} from "./types";
+import {Address, Department} from "./types";
 import {JSDOM} from 'jsdom';
 
 export function mapXmlToCeviProduct(product: any): CeviProduct {
@@ -114,17 +114,17 @@ function verifyThemesValueInXml(themesValue: object | any[] | undefined) {
         }));
 }
 
-function verifyDepartmentsValueInXml(departmentsValue: object | any[] | undefined) {
+function verifyDepartmentsValueInXml(departmentsValue: object | any[] | undefined): Department[] {
     return toArray(departmentsValue)
         .map(departmentsValue => ({
             id: departmentsValue.Id?._text,
             name: departmentsValue.Name?._text,
-            address: mapDepartmentAddress(departmentsValue.Addresses?.Address)
+            addresses: mapDepartmentAddress(toArray(departmentsValue.Addresses?.Address))
         }));
 }
 
-function mapDepartmentAddress(addressValueInXml: any): Address {
-    if (addressValueInXml) {
+function mapDepartmentAddress(addressesValueInXml: any[]): Address[] {
+    return addressesValueInXml.map(addressValueInXml => {
         return {
             id: addressValueInXml.Id?._text,
             name: addressValueInXml.Name?._text,
@@ -136,14 +136,13 @@ function mapDepartmentAddress(addressValueInXml: any): Address {
             phone: addressValueInXml.Phone?._text,
             fax: addressValueInXml.Fax?._text,
             website: addressValueInXml.Website?._text,
-            email: unescapeHtmlEntities(addressValueInXml.Email?._text),
+            email: unescapeOptionalHtmlEntities(addressValueInXml.Email?._text),
             facebook: addressValueInXml.Facebook?._text,
             twitter: addressValueInXml.Twitter?._text,
-            openingHours: removeEmptyParagraphs(removeExtraSpaces(escapeNbsp(unescapeHtmlEntities(addressValueInXml.OpeningHours?._text)))),
+            openingHours: removeEmptyParagraphs(removeExtraSpaces(escapeNbsp(unescapeOptionalHtmlEntities(addressValueInXml.OpeningHours?._text)))),
         }
-    } else {
-        return {};
-    }
+    });
+
 }
 
 function toArray(value: object | any[] | undefined) {

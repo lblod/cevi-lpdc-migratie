@@ -69,7 +69,7 @@ type Address = {
 type Department = {
     id?: string,
     name?: string,
-    address?: Address
+    addresses: Address[]
 }
 
 type UploadedAttachment = {

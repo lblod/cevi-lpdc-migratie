@@ -131,39 +131,36 @@ export function mapContactPoints(deliveringDepartments: Department[], authorised
 }
 
 function mapDepartmentAddressesToContactPoints(departments: Department[]): ContactPoint[] {
-    return departments.map(mapDepartmentAddressToContactPoint)
-        .filter((contactPoint): contactPoint is ContactPoint => !!contactPoint);
+    return departments.flatMap(mapDepartmentAddressToContactPoint);
 }
 
-export function mapDepartmentAddressToContactPoint(department: Department): ContactPoint | undefined {
-    if (!department.address?.website
-        && !department.address?.email
-        && !department.address?.phone
-        && !department.address?.openingHours
-        && !department.address?.street
-        && !department.address?.houseNumber
-        && !department.address?.boxNumber
-        && !department.address?.zipCode
-        && !department.address?.municipality) {
-        Logger.log(`No ContactPoint information for Department "${department.name}"`);
-        return undefined;
-    }
-    return new ContactPoint(
-        uuid(),
-        department.address?.website ? prependHttpsIfNeeded(department.address?.website) : undefined,
-        department.address?.email,
-        department.address?.phone,
-        department.address?.openingHours,
-        new ContactPointAddress(
-            uuid(),
-            department.address?.street,
-            department.address?.houseNumber,
-            department.address?.boxNumber,
-            department.address?.zipCode,
-            department.address?.municipality,
-            'België'
-        )
-    );
+export function mapDepartmentAddressToContactPoint(department: Department): ContactPoint[] {
+    return department.addresses.filter(address => !!address?.website
+        || !!address?.email
+        || !!address?.phone
+        || !!address?.openingHours
+        || !!address?.street
+        || !!address?.houseNumber
+        || !!address?.boxNumber
+        || !!address?.zipCode
+        || !!address?.municipality)
+        .map(address => new ContactPoint(
+                uuid(),
+                address?.website ? prependHttpsIfNeeded(address?.website) : undefined,
+                address?.email,
+                address?.phone,
+                address?.openingHours,
+                new ContactPointAddress(
+                    uuid(),
+                    address?.street,
+                    address?.houseNumber,
+                    address?.boxNumber,
+                    address?.zipCode,
+                    address?.municipality,
+                    'België'
+                )
+            )
+        );
 }
 
 function mapTargetGroupToTargetAudience(ceviTargetGroup: TargetGroup): TargetAudience | undefined {

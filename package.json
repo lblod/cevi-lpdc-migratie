@@ -5,6 +5,7 @@
   "scripts": {
     "migrate-cevi": "ts-node src/migrate-cevi.ts",
     "migrate-stekene": "ts-node src/migrate-stekene.ts",
+    "migrate-evergem": "ts-node src/migrate-evergem.ts",
     "test": "vitest run"
   },
   "author": "",
