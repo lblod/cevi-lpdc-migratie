@@ -141,7 +141,7 @@
               <Phone>03 790 02 12</Phone>
               <Fax>03 790 02 10</Fax>
               <Website>www.stekene.be</Website>
-              <Email>Bevolking&amp;amp;BS@stekene.be</Email>
+              <Email>Bevolking&amp;amp;BS@stekene.be </Email>
               <Facebook></Facebook>
               <Twitter></Twitter>
               <OpeningHours>&amp;lt;p&amp;gt;Maandag 08:30-12:00;&amp;lt;/p&amp;gt;
@@ -150,19 +150,19 @@
 &amp;lt;p&amp;gt;Donderdag 08:30-12:00;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Vrijdag 08:30-12:00;&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;Zaterdag 09:00-12:00&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;lt;/p&amp;gt;</OpeningHours>
+&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;lt;/p&amp;gt; </OpeningHours>
             </Address>
               <Address>
                   <Id>88625e70-5356-44a1-b7b0-63f5c5b1c895</Id>
                   <Name>Kerkstraat 35</Name>
-                  <Street>Kerkstraat</Street>
-                  <HouseNumber>35</HouseNumber>
-                  <BoxNumber>C</BoxNumber>
-                  <ZipCode>9190</ZipCode>
-                  <Municipality>Stekene</Municipality>
-                  <Phone>03 790 02 12</Phone>
-                  <Fax>03 790 02 10</Fax>
-                  <Website>www.stekene.be</Website>
+                  <Street>Kerkstraat </Street>
+                  <HouseNumber>35 </HouseNumber>
+                  <BoxNumber>C </BoxNumber>
+                  <ZipCode>9190 </ZipCode>
+                  <Municipality>Stekene </Municipality>
+                  <Phone>03 790 02 12 </Phone>
+                  <Fax>03 790 02 10 </Fax>
+                  <Website>www.stekene.be </Website>
                   <Email></Email>
                   <Facebook></Facebook>
                   <Twitter></Twitter>
