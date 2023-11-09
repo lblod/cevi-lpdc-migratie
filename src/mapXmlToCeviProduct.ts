@@ -1,6 +1,6 @@
 import {CeviProduct} from "./ceviProduct";
 import {Address, Department} from "./types";
-import {JSDOM} from 'jsdom';
+import he from "he";
 
 export function mapXmlToCeviProduct(product: any): CeviProduct {
 
@@ -158,11 +158,8 @@ function unescapeOptionalHtmlEntities(input: string | undefined): string | undef
     return input ? unescapeHtmlEntities(input) : undefined;
 }
 
-function unescapeHtmlEntities(input: string): string {
-    const dom = new JSDOM(`<!DOCTYPE html>`);
-    const domParser = new dom.window.DOMParser();
-    const doc = domParser.parseFromString(input, "text/html");
-    return doc.documentElement.textContent || "";
+export function unescapeHtmlEntities(input: string): string {
+    return he.decode(input);
 }
 
 function escapeNbsp(input: string | undefined): string | undefined {
