@@ -2,6 +2,9 @@
 
 Repository for the one-time migration of CEVI LPDC instances to ABB LPDC.
 
+> **Important!!** \
+> Rerun migration for each environment again by changing sparqlClientUrl, because concepts are different for each environment 
+
 ### preparation before use
 
 **Note**: in the next usage explanation `LPDC_CEVI.xml` is used as example, please add your own bestuurseenheid relevant files.
