@@ -22,7 +22,7 @@ export class Website {
             Triple.create(websiteId, Predicates.uuid, Literal.create(this._uuid)),
             Triple.createIfDefined(websiteId, Predicates.title, Literal.createIfDefined(this.title, languageVersion)),
             Triple.createIfDefined(websiteId, Predicates.description, Literal.createIfDefined(this.description, languageVersion)),
-            Triple.create(websiteId, Predicates.url, Uri.create(this.location)),
+            Triple.create(websiteId, Predicates.url, Literal.create(this.location)),
             Triple.create(websiteId, Predicates.order, Literal.create(index + 1)),
             Triple.create(owningId, owningLinkPredicate, websiteId),
         ];
