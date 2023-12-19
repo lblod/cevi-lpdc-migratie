@@ -6,6 +6,7 @@
     "migrate-cevi": "ts-node src/migrate-cevi.ts",
     "migrate-stekene": "ts-node src/migrate-stekene.ts",
     "migrate-evergem": "ts-node src/migrate-evergem.ts",
+    "migrate-ledegem": "ts-node src/migrate-ledegem.ts",
     "test": "vitest run"
   },
   "author": "",
