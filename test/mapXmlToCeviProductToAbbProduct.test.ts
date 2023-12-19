@@ -65,7 +65,7 @@ describe("map xml to ceviproduct", () => {
                 value: "Cultuur, Sport en Vrije Tijd",
             }, {
                 id: "108031",
-                value: "Mobiliteit en Openbare Werken",
+                value: "Mobiliteit en openbare werken",
             }],
             [
                 {
@@ -705,6 +705,33 @@ describe("map ceviProduct to abbProduct", () => {
                 , Theme.OnderwijsWetenschap
                 , Theme.WelzijnGezondheid]);
         });
+
+        test('Maps cevi themes to themes case insensitively', () => {
+            const result = mapCeviThemesToTheme([
+                {id: 'ignored', value: 'Bouwen en wonen'},
+                {id: 'ignored', value: 'Burger en overheid'},
+                {id: 'ignored', value: 'Cultuur, sport en Vrije Tijd'},
+                {id: 'ignored', value: 'Economie en werk'},
+                {id: 'ignored', value: 'energie'},
+                {id: 'ignored', value: 'energieloket'},
+                {id: 'ignored', value: 'milieu en Energie'},
+                {id: 'ignored', value: 'Mobiliteit en openbare Werken'},
+                {id: 'ignored', value: 'Onderwijs en wetenschap'},
+                {id: 'ignored', value: 'Welzijn en gezondheid'},
+            ]);
+            expect(result).toEqual([
+                Theme.BouwenWonen
+                , Theme.BurgerOverheid
+                , Theme.CultuurSportVrijeTijd
+                , Theme.EconomieWerk
+                , Theme.MilieuEnergie
+                , Theme.MilieuEnergie
+                , Theme.MilieuEnergie
+                , Theme.MobiliteitOpenbareWerken
+                , Theme.OnderwijsWetenschap
+                , Theme.WelzijnGezondheid]);
+        });
+
 
         test('Filters unknown cevi themes', () => {
             const result = mapCeviThemesToTheme([{id: 'ignored', value: 'unknown'}]);

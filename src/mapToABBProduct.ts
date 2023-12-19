@@ -212,19 +212,19 @@ export function mapProductType(ceviProductType: ProductType): PublicServiceType 
 
 function mapCeviThemeToTheme(ceviTheme: CeviTheme): Theme | undefined {
     const themeMapping: Record<string, Theme> = {
-        'Bouwen en Wonen': Theme.BouwenWonen,
-        'Burger en Overheid': Theme.BurgerOverheid,
-        'Cultuur, Sport en Vrije Tijd': Theme.CultuurSportVrijeTijd,
-        'Economie en Werk': Theme.EconomieWerk,
-        'Energie': Theme.MilieuEnergie,
-        'Energieloket': Theme.MilieuEnergie,
-        'Milieu en Energie': Theme.MilieuEnergie,
-        'Mobiliteit en Openbare Werken': Theme.MobiliteitOpenbareWerken,
-        'Onderwijs en Wetenschap': Theme.OnderwijsWetenschap,
-        'Welzijn en Gezondheid': Theme.WelzijnGezondheid
+        'bouwen en wonen': Theme.BouwenWonen,
+        'burger en overheid': Theme.BurgerOverheid,
+        'cultuur, sport en vrije tijd': Theme.CultuurSportVrijeTijd,
+        'economie en werk': Theme.EconomieWerk,
+        'energie': Theme.MilieuEnergie,
+        'energieloket': Theme.MilieuEnergie,
+        'milieu en energie': Theme.MilieuEnergie,
+        'mobiliteit en openbare werken': Theme.MobiliteitOpenbareWerken,
+        'onderwijs en wetenschap': Theme.OnderwijsWetenschap,
+        'welzijn en gezondheid': Theme.WelzijnGezondheid
     }
     if (ceviTheme.value) {
-        const abbTheme: Theme = themeMapping[ceviTheme.value];
+        const abbTheme: Theme = themeMapping[ceviTheme.value.toLowerCase()];
         if (abbTheme) {
             return abbTheme;
         } else {
