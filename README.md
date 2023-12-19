@@ -39,6 +39,15 @@ main();
 ```
 - Ensure you created in `package.json` a script to run the `\src\migrate-<bestuurseenheid>.ts` file
   - as an example:  `"migrate-cevi": "ts-node src/migrate-cevi.ts"`
+- As a pre running step : ensure that the product ids of following archived concepts are replaced. You have to manually replace in the xml. Is not programmed.
+  - 21629 -> 5006
+  - 21628 -> 5002
+  - 21625 -> 5008
+  - 21624 -> 5005
+  - 21620  -> 5003
+  - 21619 -> 5004
+  - 734 -> 5001
+  - 21591 -> 5007
 
 ### running the migration script: creating the ttl and sparql files
 
