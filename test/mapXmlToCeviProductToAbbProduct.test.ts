@@ -380,7 +380,7 @@ describe("map ceviProduct to abbProduct", () => {
                     url: "https://www.stekene.be",
                     email: "Bevolking&BS@stekene.be",
                     telephone: "03 790 02 12",
-                    openingHours: "<p>Maandag 08:30-12:00;</p>\n<p>Dinsdag 08:30-12:00;</p>\n<p>Woensdag 08:30-12;00; 13:30-16:30;</p>\n<p>Donderdag 08:30-12:00;</p>\n<p>Vrijdag 08:30-12:00;</p>\n<p>Zaterdag 09:00-12:00</p>\n",
+                    openingHours: "Maandag 08:30-12:00; \nDinsdag 08:30-12:00; \nWoensdag 08:30-12;00; 13:30-16:30; \nDonderdag 08:30-12:00; \nVrijdag 08:30-12:00; \nZaterdag 09:00-12:00 \n",
                     address: {
                         street: "Stadionstraat",
                         houseNumber: "2",
@@ -1208,6 +1208,24 @@ describe("map ceviProduct to abbProduct", () => {
 
         });
 
+        describe('openingHours has html tags removed', () => {
+
+            test('nothing to remove', () => {
+                const result = mapDepartmentAddressToContactPoint({addresses: [{openingHours: 'openingHours'}]});
+                expect(result).toMatchObject([{openingHours: 'openingHours'}]);
+            });
+
+            test('paragraphs removed', () => {
+                const result = mapDepartmentAddressToContactPoint({addresses: [{openingHours: '<p>openingHours</p> <p></p>'}]});
+                expect(result).toMatchObject([{openingHours: 'openingHours   '}]);
+            });
+
+            test('multiple paragraphs and breaks removed', () => {
+                const result = mapDepartmentAddressToContactPoint({addresses: [{openingHours: '<p>Enkel op afspraak!</p><p>Maandag: 9-12 uur en 13.30-19 uur<br />Dinsdag: 9-12 uur<br />Woensdag: 9-12 uur en 13.30-16.30 uur<br />Donderdag: 9-12 uur en 13.30-16.30 uur<br />Vrijdag: 9-12 uur</p>'}]});
+                expect(result).toMatchObject([{openingHours: 'Enkel op afspraak! Maandag: 9-12 uur en 13.30-19 uur; Dinsdag: 9-12 uur; Woensdag: 9-12 uur en 13.30-16.30 uur; Donderdag: 9-12 uur en 13.30-16.30 uur; Vrijdag: 9-12 uur '}]);
+            });
+
+        });
 
     })
 
@@ -1364,12 +1382,12 @@ describe('map abbProduct to Triples', () => {
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/url> """https://www.stekene.be""" .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/email> """Bevolking&BS@stekene.be""" .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/telephone> """03 790 02 12""" .`,
-                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """<p>Maandag 08:30-12:00;</p>
-<p>Dinsdag 08:30-12:00;</p>
-<p>Woensdag 08:30-12;00; 13:30-16:30;</p>
-<p>Donderdag 08:30-12:00;</p>
-<p>Vrijdag 08:30-12:00;</p>
-<p>Zaterdag 09:00-12:00</p>
+                `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://schema.org/openingHours> """Maandag 08:30-12:00; 
+Dinsdag 08:30-12:00; 
+Woensdag 08:30-12;00; 13:30-16:30; 
+Donderdag 08:30-12:00; 
+Vrijdag 08:30-12:00; 
+Zaterdag 09:00-12:00 
 """ .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
                 `<${abbProduct.id}> <http://data.europa.eu/m8g/hasContactPoint> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[0].uuid}> .`,

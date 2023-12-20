@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {unescapeHtmlEntities} from "../src/mapXmlToCeviProduct";
+import {unescapeHtmlEntities} from "../src/html-utils";
 import he from "he";
 
 test("unescaping characters", () => {

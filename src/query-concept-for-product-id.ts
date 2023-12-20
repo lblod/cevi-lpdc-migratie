@@ -23,6 +23,8 @@ export async function findUniqueConceptIdForProductId(productId: string, sparqlC
             } 
         `);
 
+    console.log(response);
+
     const conceptUrls =
         response.map((item: any) => item.conceptId.value);
 

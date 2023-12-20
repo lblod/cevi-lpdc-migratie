@@ -17,6 +17,7 @@ import {ContactPoint} from "./contactPoint";
 import {ContactPointAddress} from "./contactPointAddress";
 import {findUniqueConceptIdForProductId} from "./query-concept-for-product-id";
 import {Logger} from "./logger";
+import {carefullyCleanUpSomeHtmlTags} from "./html-utils";
 
 export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, sparqlClientUrl: string): Promise<AbbProduct> {
 
@@ -149,7 +150,7 @@ export function mapDepartmentAddressToContactPoint(department: Department): Cont
                 address?.website ? prependHttpsIfNeeded(address?.website) : undefined,
                 address?.email,
                 address?.phone,
-                address?.openingHours,
+                carefullyCleanUpSomeHtmlTags(address?.openingHours),
                 new ContactPointAddress(
                     uuid(),
                     address?.street,
