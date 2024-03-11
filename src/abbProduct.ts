@@ -30,6 +30,7 @@ export class AbbProduct {
         private endDate: Date | undefined,
         private productId: string | undefined,
         private conceptUrl: string | undefined,
+        private conceptSnapshotUrl: string | undefined,
         private _requirement: Requirement | undefined,
         private _procedure: Procedure | undefined,
         private _moreInfo: Website[],
@@ -104,6 +105,7 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.endDate, Literal.createIfDefined(this.endDate?.toISOString(), undefined, 'http://www.w3.org/2001/XMLSchema#dateTime')),
             Triple.createIfDefined(id, Predicates.productId, Literal.createIfDefined(this.productId)),
             Triple.createIfDefined(id, Predicates.source, Uri.createIfDefined(this.conceptUrl)),
+            Triple.createIfDefined(id, Predicates.hasVersionedSource, Uri.createIfDefined(this.conceptSnapshotUrl)),
             ...(this.requirement ? this.requirement.toTriples(id, 0, languageVersion) : []),
             ...(this._procedure ? this._procedure.toTriples(id, 0, languageVersion) : []),
             ...this._moreInfo?.map((aMoreInfo, index) => aMoreInfo.toTriples(id, Predicates.hasMoreInfo, index, languageVersion)).flat(),
@@ -111,7 +113,7 @@ export class AbbProduct {
             ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index, languageVersion)).flat(),
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
-            Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd')) //concept
+            Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/instance-status/ontwerp')) //concept
         ];
 
         return triples.filter((triple): triple is Triple => triple !== undefined);

@@ -9,6 +9,7 @@
     "migrate-ledegem": "ts-node src/migrate-ledegem.ts",
     "migrate-herzele": "ts-node src/migrate-herzele.ts",
     "migrate-zedelgem": "ts-node src/migrate-zedelgem.ts",
+    "migrate-torhout": "ts-node src/migrate-torhout.ts",
     "test": "vitest run"
   },
   "author": "",

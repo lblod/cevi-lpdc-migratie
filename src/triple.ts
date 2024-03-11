@@ -139,4 +139,5 @@ export const Predicates = {
     postcode: new Uri('https://data.vlaanderen.be/ns/adres#postcode'),
     straatnaam: new Uri('https://data.vlaanderen.be/ns/adres#Straatnaam'),
     spatial: new Uri('http://purl.org/dc/terms/spatial'),
+    hasVersionedSource: new Uri('http://mu.semte.ch/vocabularies/ext/hasVersionedSource'),
 }

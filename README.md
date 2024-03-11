@@ -72,6 +72,5 @@ main();
   - No need to fill in the Named Graph IRI*
   - Upload
   - Should only take a few seconds
-- Execute the sparql file using the sparql endpoint. 
-- Run and execute the ['link instantie to snapshot migratie script'](https://github.com/lblod/app-lpdc-digitaal-loket/tree/development/migration-scripts/link-instantie-to-snapshot) to fill up the hasVersioned source predicate for each instantie that had a concept linked.
+- Execute the sparql file using the sparql endpoint.
 - Run and execute the ['adres id migration script'](https://github.com/lblod/app-lpdc-digitaal-loket/tree/development/migration-scripts/adressen) to fill up the address id's for the migrated addresses.

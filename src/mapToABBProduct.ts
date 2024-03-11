@@ -18,6 +18,7 @@ import {ContactPointAddress} from "./contactPointAddress";
 import {findUniqueConceptIdForProductId} from "./query-concept-for-product-id";
 import {Logger} from "./logger";
 import {carefullyCleanUpSomeHtmlTags} from "./html-utils";
+import {findLastConceptSnapshotForConceptId} from "./query-concept-snapshot-for-concept-id";
 
 export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, sparqlClientUrl: string): Promise<AbbProduct> {
 
@@ -31,6 +32,8 @@ export async function mapToABBProduct(product: CeviProduct, migrationDate: Date,
     const executingAuthorityLevel: ExecutingAuthorityLevel[] = mapDeliveringDepartmentsToExecutingAuthorityLevel(product.deliveringDepartments);
     const executingAuthority: string[] = mapExecutingAuthorityBasedOnExecutingAuthorityLevel(executingAuthorityLevel, lokaalBestuurUrl);
     const productId: string | undefined = mapProductId(product.id, product.source);
+
+    const conceptUrl = await mapConceptUrl(productId, sparqlClientUrl);
 
     return new AbbProduct(
         `http://data.lblod.info/id/public-service/${instanceUuid}`,
@@ -52,8 +55,9 @@ export async function mapToABBProduct(product: CeviProduct, migrationDate: Date,
         mapProductType(product.productType),
         product.startDate ? new Date(product.startDate) : undefined,
         product.endDate ? new Date(product.endDate) : undefined,
-        productId,
-        await mapConceptUrl(productId, sparqlClientUrl),
+        conceptUrl ? productId : undefined,
+        conceptUrl,
+        conceptUrl ? await findLastConceptSnapshotForConceptId(conceptUrl, sparqlClientUrl) : undefined,
         mapConditionsToRequirement(product.conditions, product.bringToApply),
         mapProcedureAndForms(product.procedure, product.forms),
         mapInfoUrlsToMoreInfo(product.infoUrls),
