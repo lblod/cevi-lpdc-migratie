@@ -5,6 +5,7 @@ import {Cost} from "./cost";
 import {ContactPoint} from "./contactPoint";
 import {Literal, Predicates, Triple, Uri} from "./triple";
 import {Language} from "./language";
+import {LegalResource} from "./legal-resource";
 
 export class AbbProduct {
 
@@ -36,7 +37,9 @@ export class AbbProduct {
         private _moreInfo: Website[],
         private _cost: Cost | undefined,
         private spatial: string,
-        private createdBy: string) {
+        private createdBy: string,
+        private legalResources: LegalResource[]) {
+        //TODO LPDC-1111: create a class LegalResource, add the fields on them, provide mapping data
     }
 
     get id(): string {
@@ -113,7 +116,8 @@ export class AbbProduct {
             ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index, languageVersion)).flat(),
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
-            Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/instance-status/ontwerp')) //concept
+            Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/instance-status/ontwerp')), //concept
+            ...this.legalResources?.map((legalResource, index) => legalResource.toTriples(id, index, languageVersion)).flat()
         ];
 
         return triples.filter((triple): triple is Triple => triple !== undefined);

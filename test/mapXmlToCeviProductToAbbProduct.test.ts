@@ -1420,6 +1420,7 @@ Zaterdag 09:00-12:00
                 `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
                 `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
                 `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/instance-status/ontwerp> .`,
+
             ]
         )
     });

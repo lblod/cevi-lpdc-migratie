@@ -64,6 +64,8 @@ export async function mapToABBProduct(product: CeviProduct, migrationDate: Date,
         mapAmountToApplyToCost(product.amountToApply),
         lokaalBestuurNis2019Url,
         lokaalBestuurUrl,
+        [],//TODO LPDC-1111: find the legalresources linked to the concept url -> find them and map them to the legalresource object (reuse the queries from the other migration script for legal resources)
+        //TODO LPDC-1111: we use in our tests a linked concept out of app-lpdc-digitaal-loket that has 2 legal resources -> verify that they were added in the end result.
     )
 }
 

@@ -101,6 +101,7 @@ export const Predicates = {
     createdBy: new Uri('http://purl.org/pav/createdBy'),
     status: new Uri('http://www.w3.org/ns/adms#status'),
     hasRequirement: new Uri('http://vocab.belgif.be/ns/publicservice#hasRequirement'),
+    hasLegalResource: new Uri('http://data.europa.eu/m8g/hasLegalResource'),
     chosenForm: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#chosenForm'),
     dateCreated: new Uri('http://schema.org/dateCreated'),
     relation: new Uri('http://purl.org/dc/terms/relation'),
