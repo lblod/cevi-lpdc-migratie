@@ -27,7 +27,6 @@ const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a
 const gemeente_nis2019_URL = "http://vocab.belgif.be/auth/refnis2019/46024";
 const sparqlClientUrL = `http://localhost:8896/sparql`;
 
-
 describe("map xml to ceviproduct", () => {
     let ceviProducts: CeviProduct[] = [];
 
@@ -1269,7 +1268,7 @@ describe('map abbProduct to Triples', () => {
             `<${abbProduct.id}> <http://purl.org/dc/terms/modified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
             `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
             `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
-            `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
+            `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/instance-status/ontwerp> .`,
         ]);
     });
 
@@ -1321,6 +1320,7 @@ describe('map abbProduct to Triples', () => {
                 `<${abbProduct.id}> <http://schema.org/endDate> """2023-10-12T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
                 `<${abbProduct.id}> <http://schema.org/productID> """1502""" .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/source> <https://ipdc.tni-vlaanderen.be/id/concept/705d401c-1a41-4802-a863-b22499f71b84> .`,
+                `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/ext/hasVersionedSource> <https://ipdc.tni-vlaanderen.be/id/conceptsnapshot/50fd7f03-276f-403e-ad39-152dba4e39be> .`,
                 `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/m8g/Requirement> .`,
                 `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.requirement?.uuid}""" .`,
                 `<http://data.lblod.info/id/requirement/${abbProduct.requirement?.uuid}> <http://purl.org/dc/terms/description> """<ul>
@@ -1419,7 +1419,7 @@ Zaterdag 09:00-12:00
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
                 `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
-                `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/79a52da4-f491-4e2f-9374-89a13cde8ecd> .`,
+                `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/instance-status/ontwerp> .`,
             ]
         )
     });
