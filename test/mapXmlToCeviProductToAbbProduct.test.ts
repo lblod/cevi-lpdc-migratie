@@ -1260,12 +1260,12 @@ describe('map abbProduct to Triples', () => {
 
         expect(triplesAsStringForAbbProduct).toMatchObject([
             `<${abbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
-            `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
+            `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService> .`,
             `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
             `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Lokaal> .`,
             `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <${gemeente_URL}> .`,
-            `<${abbProduct.id}> <http://purl.org/dc/terms/created> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
-            `<${abbProduct.id}> <http://purl.org/dc/terms/modified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+            `<${abbProduct.id}> <http://schema.org/dateCreated> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+            `<${abbProduct.id}> <http://schema.org/dateModified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
             `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
             `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
             `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/instance-status/ontwerp> .`,
@@ -1281,7 +1281,7 @@ describe('map abbProduct to Triples', () => {
 
         expect(triplesAsStringForAbbProduct).toMatchObject([
                 `<${abbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
-                `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/vocab/cpsv#PublicService> .`,
+                `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService> .`,
                 `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/title> """Levenloos geboren kind/foetus"""@nl-be-x-informal .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/description> """<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>
@@ -1314,8 +1314,8 @@ describe('map abbProduct to Triples', () => {
                 `<${abbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """pamper"""@nl .`,
                 `<${abbProduct.id}> <http://www.w3.org/ns/dcat#keyword> """herbruikbaar"""@nl .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/type> <https://productencatalogus.data.vlaanderen.be/id/concept/Type/AdviesBegeleiding> .`,
-                `<${abbProduct.id}> <http://purl.org/dc/terms/created> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
-                `<${abbProduct.id}> <http://purl.org/dc/terms/modified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${abbProduct.id}> <http://schema.org/dateCreated> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+                `<${abbProduct.id}> <http://schema.org/dateModified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
                 `<${abbProduct.id}> <http://schema.org/startDate> """2023-09-10T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
                 `<${abbProduct.id}> <http://schema.org/endDate> """2023-10-12T00:00:00.000Z"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
                 `<${abbProduct.id}> <http://schema.org/productID> """1502""" .`,
