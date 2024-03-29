@@ -51,7 +51,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
         const ceviProduct = ceviProducts[index];
         try {
             Logger.setCeviId(ceviProduct.id);
-            abbProducts.push(await mapToABBProduct(ceviProduct, migrationDate, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl));
+            abbProducts.push(await mapToABBProduct(ceviProduct, migrationDate, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, bestuurseenheidGraph, sparqlClientUrl));
             Logger.logImported(ceviProduct.title);
         } catch (error: any) {
             Logger.logNotImported(ceviProduct.title, error.message, error);

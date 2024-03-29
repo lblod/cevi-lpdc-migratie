@@ -24,6 +24,7 @@ import {CompetentAuthorityLevel, ExecutingAuthorityLevel, TargetAudience, Theme}
 import {Language} from "../src/language";
 
 const gemeente_URL = "http://data.lblod.info/id/bestuurseenheden/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af";
+const bestuurseenheidGraph = `http://mu.semte.ch/graphs/organizations/6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af/LoketLB-LPDCGebruiker`;
 const gemeente_nis2019_URL = "http://vocab.belgif.be/auth/refnis2019/46024";
 const sparqlClientUrL = `http://localhost:8896/sparql`;
 
@@ -233,14 +234,14 @@ describe("map ceviProduct to abbProduct", () => {
     test('should throw error when title contains te verwijderen', async () => {
         const migrationDate = new Date();
 
-        await expect(async () => mapToABBProduct(ceviProducts[4], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL))
+        await expect(async () => mapToABBProduct(ceviProducts[4], migrationDate, gemeente_URL, gemeente_nis2019_URL, bestuurseenheidGraph, sparqlClientUrL))
             .rejects
             .toThrowError(`Title of cevi product contains 'te verwijderen'`)
     })
 
     test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL, bestuurseenheidGraph, sparqlClientUrL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -250,7 +251,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map with arrays of one element xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL, bestuurseenheidGraph, sparqlClientUrL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -297,7 +298,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map full item from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, bestuurseenheidGraph, sparqlClientUrL);
 
         expect(abbProduct).toMatchObject({
             productId: '1502',
@@ -1253,7 +1254,7 @@ describe('map abbProduct to Triples', () => {
 
     test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[5], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[5], migrationDate, gemeente_URL, gemeente_nis2019_URL, bestuurseenheidGraph, sparqlClientUrL);
 
         const triplesArrayForAbbProduct = abbProduct.toTriples(Language.INFORMAL);
         const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
@@ -1275,7 +1276,7 @@ describe('map abbProduct to Triples', () => {
 
     test('map full item from xml to ceviProduct to abbProduct and to a list of triples', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, bestuurseenheidGraph, sparqlClientUrL);
         const triplesArrayForAbbProduct = abbProduct.toTriples(Language.INFORMAL);
         const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
 

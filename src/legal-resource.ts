@@ -7,14 +7,15 @@ export class LegalResource {
         private _uuid: string,
         private title: string | undefined,
         private description: string | undefined,
-        private location: string) {
+        private location: string,
+        private order: string) {
     }
 
     get uuid(): string {
         return this._uuid;
     }
 
-    toTriples(abbInstanceId: Uri, index: number, languageVersion: Language): (Triple | undefined)[] {
+    toTriples(abbInstanceId: Uri, languageVersion: Language): (Triple | undefined)[] {
         const id: Uri = new Uri(`http://data.lblod.info/id/legal-resource/${this._uuid}`);
 
         return [
@@ -23,7 +24,7 @@ export class LegalResource {
             Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, languageVersion)),
             Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, languageVersion)),
             Triple.create(id, Predicates.url, Literal.create(this.location)),
-            Triple.create(id, Predicates.order, Literal.create(index + 1)),
+            Triple.create(id, Predicates.order, Literal.create(this.order)),
             Triple.create(abbInstanceId, Predicates.hasLegalResource, id),
         ];
     }

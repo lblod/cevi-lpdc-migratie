@@ -117,7 +117,7 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
             Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/instance-status/ontwerp')), //concept
-            ...this.legalResources?.map((legalResource, index) => legalResource.toTriples(id, index, languageVersion)).flat()
+            ...this.legalResources?.map((legalResource, index) => legalResource.toTriples(id, languageVersion)).flat()
         ];
 
         return triples.filter((triple): triple is Triple => triple !== undefined);

@@ -19,8 +19,9 @@ import {findUniqueConceptIdForProductId} from "./query-concept-for-product-id";
 import {Logger} from "./logger";
 import {carefullyCleanUpSomeHtmlTags} from "./html-utils";
 import {findLastConceptSnapshotForConceptId} from "./query-concept-snapshot-for-concept-id";
+import {findAllLegalResourcesForInstance} from "./query-legal-resources-for-instance";
 
-export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, sparqlClientUrl: string): Promise<AbbProduct> {
+export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, bestuurseenheidGraph: string, sparqlClientUrl: string): Promise<AbbProduct> {
 
     if (product.title?.toLowerCase().includes('te verwijderen')) {
         throw Error(`Title of cevi product contains \'te verwijderen\'`);
@@ -35,8 +36,10 @@ export async function mapToABBProduct(product: CeviProduct, migrationDate: Date,
 
     const conceptUrl = await mapConceptUrl(productId, sparqlClientUrl);
 
+    const instanceId = `http://data.lblod.info/id/public-service/${instanceUuid}`;
+
     return new AbbProduct(
-        `http://data.lblod.info/id/public-service/${instanceUuid}`,
+        instanceId,
         mapTargetGroupsToTargetAudience(product.targetGroups),
         instanceUuid,
         migrationDate,
@@ -64,7 +67,7 @@ export async function mapToABBProduct(product: CeviProduct, migrationDate: Date,
         mapAmountToApplyToCost(product.amountToApply),
         lokaalBestuurNis2019Url,
         lokaalBestuurUrl,
-        [],//TODO LPDC-1111: find the legalresources linked to the concept url -> find them and map them to the legalresource object (reuse the queries from the other migration script for legal resources)
+        conceptUrl ? await findAllLegalResourcesForInstance(instanceId, bestuurseenheidGraph, sparqlClientUrl) : []
         //TODO LPDC-1111: we use in our tests a linked concept out of app-lpdc-digitaal-loket that has 2 legal resources -> verify that they were added in the end result.
     )
 }
