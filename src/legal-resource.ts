@@ -5,8 +5,6 @@ export class LegalResource {
 
     constructor(
         private _uuid: string,
-        private title: string | undefined,
-        private description: string | undefined,
         private location: string,
         private order: string) {
     }
@@ -21,8 +19,6 @@ export class LegalResource {
         return [
             Triple.create(id, Predicates.type, new Uri('http://data.europa.eu/eli/ontology#LegalResource')),
             Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
-            Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, languageVersion)),
-            Triple.createIfDefined(id, Predicates.description, Literal.createIfDefined(this.description, languageVersion)),
             Triple.create(id, Predicates.url, Literal.create(this.location)),
             Triple.create(id, Predicates.order, Literal.create(this.order)),
             Triple.create(abbInstanceId, Predicates.hasLegalResource, id),

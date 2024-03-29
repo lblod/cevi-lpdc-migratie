@@ -38,7 +38,7 @@ export class AbbProduct {
         private _cost: Cost | undefined,
         private spatial: string,
         private createdBy: string,
-        private legalResources: LegalResource[]) {
+        private _legalResources: LegalResource[]) {
         //TODO LPDC-1111: create a class LegalResource, add the fields on them, provide mapping data
     }
 
@@ -80,6 +80,10 @@ export class AbbProduct {
         return this._contactPoints;
     }
 
+    get legalResources(): LegalResource[] {
+        return this._legalResources;
+    }
+
     toTriples(languageVersion: Language): Triple[] {
         const id = new Uri(this._id);
         const publicServiceType = 'https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService';
@@ -117,7 +121,7 @@ export class AbbProduct {
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
             Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/instance-status/ontwerp')), //concept
-            ...this.legalResources?.map((legalResource, index) => legalResource.toTriples(id, languageVersion)).flat()
+            ...this._legalResources?.map((legalResource, index) => legalResource.toTriples(id, languageVersion)).flat()
         ];
 
         return triples.filter((triple): triple is Triple => triple !== undefined);
