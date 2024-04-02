@@ -1260,7 +1260,6 @@ describe('map abbProduct to Triples', () => {
         const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
 
         expect(triplesAsStringForAbbProduct).toMatchObject([
-            `<${abbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
             `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService> .`,
             `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
             `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Lokaal> .`,
@@ -1281,7 +1280,6 @@ describe('map abbProduct to Triples', () => {
         const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
 
         expect(triplesAsStringForAbbProduct).toMatchObject([
-                `<${abbProduct.id}> <http://www.w3.org/ns/shacl#order> 1 .`,
                 `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService> .`,
                 `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/title> """Levenloos geboren kind/foetus"""@nl-be-x-informal .`,

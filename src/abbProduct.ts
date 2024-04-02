@@ -91,7 +91,6 @@ export class AbbProduct {
         const triples: (Triple | undefined)[] = [
             //TODO LPDC-718: instructions for use in README.md
 
-            Triple.createIfDefined(id, Predicates.order, Literal.create(1)),
             Triple.createIfDefined(id, Predicates.type, Uri.createIfDefined(publicServiceType)),
             Triple.createIfDefined(id, Predicates.uuid, Literal.createIfDefined(this._uuid)),
             Triple.createIfDefined(id, Predicates.title, Literal.createIfDefined(this.title, languageVersion)),
