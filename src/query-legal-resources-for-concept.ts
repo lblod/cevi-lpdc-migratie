@@ -9,7 +9,6 @@ async function executeQuery(sparqlClientUrL: string, query: any) {
     return JSON.parse(response.body)?.results?.bindings;
 }
 
-//TODO LPDC-1111: verify if this query also works for multiple legal resources linked to concept
 export async function findAllLegalResourcesForConcept(conceptUri: string, sparqlClientUrl: string): Promise<LegalResource[]> {
     const query = `
         SELECT DISTINCT ?legalResource ?url ?order

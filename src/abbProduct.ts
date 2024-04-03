@@ -39,7 +39,6 @@ export class AbbProduct {
         private spatial: string,
         private createdBy: string,
         private _legalResources: LegalResource[]) {
-        //TODO LPDC-1111: create a class LegalResource, add the fields on them, provide mapping data
     }
 
     get id(): string {
