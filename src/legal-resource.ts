@@ -20,7 +20,7 @@ export class LegalResource {
             Triple.create(id, Predicates.type, new Uri('http://data.europa.eu/eli/ontology#LegalResource')),
             Triple.create(id, Predicates.uuid, Literal.create(this._uuid)),
             Triple.create(id, Predicates.url, Literal.create(this.location)),
-            Triple.create(id, Predicates.order, Literal.create(this.order)),
+            Triple.create(id, Predicates.order, Literal.create(Number(this.order))),
             Triple.create(abbInstanceId, Predicates.hasLegalResource, id),
         ];
     }

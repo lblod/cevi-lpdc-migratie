@@ -86,7 +86,7 @@ export class AbbProduct {
 
     toTriples(languageVersion: Language): Triple[] {
         const id = new Uri(this._id);
-        const publicServiceType = 'https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService';
+        const publicServiceType = 'https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#InstancePublicService';
 
         const triples: (Triple | undefined)[] = [
             //TODO LPDC-718: instructions for use in README.md

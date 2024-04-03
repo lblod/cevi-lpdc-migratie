@@ -61,7 +61,7 @@ export class Literal {
     }
 
     static create(value: string | number): Literal {
-        if (!value) {
+        if (value === undefined) {
             throw new Error('Literal cannot be created!');
         }
         return new Literal(value);
