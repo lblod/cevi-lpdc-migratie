@@ -234,14 +234,14 @@ describe("map ceviProduct to abbProduct", () => {
     test('should throw error when title contains te verwijderen', async () => {
         const migrationDate = new Date();
 
-        await expect(async () => mapToABBProduct(ceviProducts[4], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL))
+        await expect(async () => mapToABBProduct(ceviProducts[4], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL, Language.INFORMAL))
             .rejects
             .toThrowError(`Title of cevi product contains 'te verwijderen'`)
     })
 
     test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[2], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL, Language.INFORMAL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -251,7 +251,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map with arrays of one element xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[3], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL, Language.INFORMAL);
 
         expect(abbProduct).toMatchObject({
             productType: "AdviesBegeleiding",
@@ -298,7 +298,7 @@ describe("map ceviProduct to abbProduct", () => {
 
     test('map full item from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL,Language.INFORMAL);
 
         expect(abbProduct).toMatchObject({
             productId: '1502',
@@ -1254,18 +1254,20 @@ describe('map abbProduct to Triples', () => {
 
     test('map minimal required items from xml to ceviProduct and to abbProduct', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[5], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[5], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL, Language.INFORMAL);
 
         const triplesArrayForAbbProduct = abbProduct.toTriples(Language.INFORMAL);
         const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
 
         expect(triplesAsStringForAbbProduct).toMatchObject([
-            `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService> .`,
+            `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#InstancePublicService> .`,
             `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
             `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#executingAuthorityLevel> <https://productencatalogus.data.vlaanderen.be/id/concept/UitvoerendBestuursniveau/Lokaal> .`,
             `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#hasExecutingAuthority> <${gemeente_URL}> .`,
             `<${abbProduct.id}> <http://schema.org/dateCreated> """${abbProduct.created.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
             `<${abbProduct.id}> <http://schema.org/dateModified> """${abbProduct.modified.toISOString()}"""^^<http://www.w3.org/2001/XMLSchema#dateTime> .`,
+            `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#dutchLanguageVariant> """nl-be-x-informal""" .`,
+            `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#needsConversionFromFormalToInformal> """false"""^^<http://www.w3.org/2001/XMLSchema#boolean> .`,
             `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
             `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
             `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/instance-status/ontwerp> .`,
@@ -1275,12 +1277,12 @@ describe('map abbProduct to Triples', () => {
 
     test('map full item from xml to ceviProduct to abbProduct and to a list of triples', async () => {
         const migrationDate = new Date();
-        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL);
+        const abbProduct = await mapToABBProduct(ceviProducts[0], migrationDate, gemeente_URL, gemeente_nis2019_URL, sparqlClientUrL, Language.INFORMAL);
         const triplesArrayForAbbProduct = abbProduct.toTriples(Language.INFORMAL);
         const triplesAsStringForAbbProduct = triplesArrayForAbbProduct.map(aTriple => aTriple.toString());
 
         expect(triplesAsStringForAbbProduct).toMatchObject([
-                `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc##InstancePublicService> .`,
+                `<${abbProduct.id}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#InstancePublicService> .`,
                 `<${abbProduct.id}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.uuid}""" .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/title> """Levenloos geboren kind/foetus"""@nl-be-x-informal .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/description> """<p>Sterft je kindje tijdens de zwangerschap? Dan voelen we in de eerste plaats heel erg met je mee.</p>
@@ -1416,13 +1418,15 @@ Zaterdag 09:00-12:00
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <https://data.vlaanderen.be/ns/adres#land> """België"""@nl .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> <http://www.w3.org/ns/shacl#order> 1 .`,
                 `<http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].uuid}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#address> <http://data.lblod.info/form-data/nodes/${abbProduct.contactPoints[1].address?.uuid}> .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#dutchLanguageVariant> """nl-be-x-informal""" .`,
+                `<${abbProduct.id}> <https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#needsConversionFromFormalToInformal> """false"""^^<http://www.w3.org/2001/XMLSchema#boolean> .`,
                 `<${abbProduct.id}> <http://purl.org/dc/terms/spatial> <${gemeente_nis2019_URL}> .`,
                 `<${abbProduct.id}> <http://purl.org/pav/createdBy> <${gemeente_URL}> .`,
                 `<${abbProduct.id}> <http://www.w3.org/ns/adms#status> <http://lblod.data.gift/concepts/instance-status/ontwerp> .`,
                 `<http://data.lblod.info/id/legal-resource/${abbProduct.legalResources[0].uuid}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.europa.eu/eli/ontology#LegalResource> .`,
                 `<http://data.lblod.info/id/legal-resource/${abbProduct.legalResources[0].uuid}> <http://mu.semte.ch/vocabularies/core/uuid> """${abbProduct.legalResources[0].uuid}""" .`,
                 `<http://data.lblod.info/id/legal-resource/${abbProduct.legalResources[0].uuid}> <http://schema.org/url> """https://ipdc.be/regelgeving""" .`,
-                `<http://data.lblod.info/id/legal-resource/${abbProduct.legalResources[0].uuid}> <http://www.w3.org/ns/shacl#order> """0""" .`,
+                `<http://data.lblod.info/id/legal-resource/${abbProduct.legalResources[0].uuid}> <http://www.w3.org/ns/shacl#order> 0 .`,
                 `<${abbProduct.id}> <http://data.europa.eu/m8g/hasLegalResource> <http://data.lblod.info/id/legal-resource/${abbProduct.legalResources[0].uuid}> .`,
 
             ]

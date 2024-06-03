@@ -36,6 +36,7 @@ export class AbbProduct {
         private _procedure: Procedure | undefined,
         private _moreInfo: Website[],
         private _cost: Cost | undefined,
+        private dutchLanguageVariant: Language,
         private spatial: string,
         private createdBy: string,
         private _legalResources: LegalResource[]) {
@@ -116,6 +117,8 @@ export class AbbProduct {
             ...this._moreInfo?.map((aMoreInfo, index) => aMoreInfo.toTriples(id, Predicates.hasMoreInfo, index, languageVersion)).flat(),
             ...(this._cost ? this._cost.toTriples(id, 0, languageVersion) : []),
             ...this._contactPoints?.map((aContactPoint, index) => aContactPoint.toTriples(id, index, languageVersion)).flat(),
+            Triple.createIfDefined(id, Predicates.dutchLanguageVariant, Literal.create(this.dutchLanguageVariant)),
+            Triple.createIfDefined(id, Predicates.needsConversionFromFormalToInformal, Literal.createIfDefined('false', undefined,'http://www.w3.org/2001/XMLSchema#boolean')),
             Triple.createIfDefined(id, Predicates.spatial, Uri.createIfDefined(this.spatial)),
             Triple.createIfDefined(id, Predicates.createdBy, Uri.createIfDefined(this.createdBy)),
             Triple.createIfDefined(id, Predicates.status, Uri.createIfDefined('http://lblod.data.gift/concepts/instance-status/ontwerp')), //concept
