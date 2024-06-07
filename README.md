@@ -16,7 +16,7 @@ Repository for the one-time migration of CEVI LPDC instances to ABB LPDC.
   - It contains 
     - The xml file to process
     - the bestuurseenheid uuid
-    - the lokaal bestuurd nis 2019 url
+    - the lokaal bestuur nuts lau code url
     - the language chosen by the bestuurseenheid: `Language.INFORMAL` or `Language.FORMAL`
     - the sparqlclienturl for the environment where you will upload the results. This is internally use to look up the correct concept id for a given product number. You might need to tunnel locally. And of course, the environment needs to be running.
   - as an example: `\src\migrate-cevi.ts` 
@@ -26,13 +26,13 @@ import {Language} from "./language";
 
 async function main() {
 
-    const xmlFileName = 'src/resources/LPDC_CEVI.xml';
-    const bestuurseenheidUuid = '6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af';
-    const lokaalBestuurNis2019Url = 'http://vocab.belgif.be/auth/refnis2019/46024';
-    const language = Language.INFORMAL;
-    const sparqlClientUrl = `http://localhost:8896/sparql`;
+  const xmlFileName = 'src/resources/LPDC_CEVI.xml';
+  const bestuurseenheidUuid = '6025a5d1ca2262a784f002edd8ce9ca9073ae3d5ebc6b6b5531f05a29e9250af';
+  const lokaalBestuurNutsLauUrl = 'http://data.europa.eu/nuts/code/BE23646024';
+  const language = Language.INFORMAL;
+  const sparqlClientUrl = `http://localhost:8896/sparql`;
 
-    await runProcess(xmlFileName, bestuurseenheidUuid, lokaalBestuurNis2019Url, language, sparqlClientUrl);
+  await runProcess(xmlFileName, bestuurseenheidUuid, lokaalBestuurNutsLauUrl, language, sparqlClientUrl);
 }
 
 main();
