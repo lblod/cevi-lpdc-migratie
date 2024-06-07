@@ -8,7 +8,7 @@ import {Logger} from "./logger";
 import {queryToUpdateConceptDisplayConfigurations} from "./concept-display-configuration-new-instantiated";
 import {Uri} from "./triple";
 
-export async function runProcess(xmlFileName: string, bestuurseenheidUuid: string, lokaalBestuurNis2019Url: string, language: Language, sparqlClientUrl: string) {
+export async function runProcess(xmlFileName: string, bestuurseenheidUuid: string, lokaalBestuurNutsLauUrl: string, language: Language, sparqlClientUrl: string) {
 
     const bestuurseenheidGraph = `http://mu.semte.ch/graphs/organizations/${bestuurseenheidUuid}/LoketLB-LPDCGebruiker`;
 
@@ -51,7 +51,7 @@ export async function runProcess(xmlFileName: string, bestuurseenheidUuid: strin
         const ceviProduct = ceviProducts[index];
         try {
             Logger.setCeviId(ceviProduct.id);
-            abbProducts.push(await mapToABBProduct(ceviProduct, migrationDate, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNis2019Url, sparqlClientUrl, language));
+            abbProducts.push(await mapToABBProduct(ceviProduct, migrationDate, `http://data.lblod.info/id/bestuurseenheden/${bestuurseenheidUuid}`, lokaalBestuurNutsLauUrl, sparqlClientUrl, language));
             Logger.logImported(ceviProduct.title);
         } catch (error: any) {
             Logger.logNotImported(ceviProduct.title, error.message, error);

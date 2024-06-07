@@ -22,7 +22,7 @@ import {findLastConceptSnapshotForConceptId} from "./query-concept-snapshot-for-
 import {findAllLegalResourcesForConcept} from "./query-legal-resources-for-concept";
 import {Language} from "./language";
 
-export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNis2019Url: string, sparqlClientUrl: string, lanugage: Language): Promise<AbbProduct> {
+export async function mapToABBProduct(product: CeviProduct, migrationDate: Date, lokaalBestuurUrl: string, lokaalBestuurNutsLauUrl: string, sparqlClientUrl: string, lanugage: Language): Promise<AbbProduct> {
 
     if (product.title?.toLowerCase().includes('te verwijderen')) {
         throw Error(`Title of cevi product contains \'te verwijderen\'`);
@@ -67,7 +67,7 @@ export async function mapToABBProduct(product: CeviProduct, migrationDate: Date,
         mapInfoUrlsToMoreInfo(product.infoUrls),
         mapAmountToApplyToCost(product.amountToApply),
         lanugage,
-        lokaalBestuurNis2019Url,
+        lokaalBestuurNutsLauUrl,
         lokaalBestuurUrl,
         conceptUrl ? await findAllLegalResourcesForConcept(conceptUrl, sparqlClientUrl) : []
     )
