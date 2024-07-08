@@ -142,5 +142,6 @@ export const Predicates = {
     spatial: new Uri('http://purl.org/dc/terms/spatial'),
     dutchLanguageVariant: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#dutchLanguageVariant'),
     needsConversionFromFormalToInformal: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#needsConversionFromFormalToInformal'),
+    forMunicipalityMerger: new Uri('https://productencatalogus.data.vlaanderen.be/ns/ipdc-lpdc#forMunicipalityMerger'),
     hasVersionedSource: new Uri('http://mu.semte.ch/vocabularies/ext/hasVersionedSource'),
 }
